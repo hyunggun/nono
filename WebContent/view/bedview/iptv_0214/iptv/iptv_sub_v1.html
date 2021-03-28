@@ -1,0 +1,422 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+	<head>
+		<title> 병상용TV </title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="dist/jR3DCarousel.min.js"></script>
+		
+		<style type="text/css">
+			body, table, div, p {font-family:'NanumSquareRound','NanumSquare',"Nanum Gothic", sans-serif;}
+				.normal { font-weight: 400 }  .bold { font-weight: 700 } .bolder { font-weight: 900 } .light{ font-weight: 300 }
+			body{
+				width: 1920px;
+				height: 1008px;
+				margin: 0;
+				padding: 0;				
+			}
+			.container{
+				width: 100%;
+				height: 100%;
+				text-align: center;				
+				background-image:url('img/bigbg-1.jpg');
+				background-size: cover;
+				font-family: 'NanumSquare';
+			}
+			.top-container{
+				width: 100%;
+				height: 7.5%;
+				border-bottom: 4px solid #ccc;
+				position: relative;
+				background: #fff;
+			}
+			.top-left-box{
+				width: 45%;
+				height: 100%;
+				float: left;
+				position: relative;
+			}
+			.top-left-box>.img-deco{
+				width: 12%;
+				height: 130%;
+				float: left;
+				position: relative;
+				border-radius: 50%; 
+				background: #ccc;
+				margin: 2% 0% 0% 6%;
+				z-index: 2;
+			}
+			.img-deco>img{
+				width: 90%;
+				height: 90%;
+				border-radius: 50%;
+				margin-top: 5%;
+			}
+			.top-left-box>.name-box1{
+				min-width: 28%;
+				width: auto;
+				height: 100%;
+				margin-left:2%;
+				line-height: 3.9;
+				position: relative;
+				float: left;
+			}
+			.top-left-box>.name-box2{
+				min-width: 23%;
+				width: auto;
+				height: 100%;
+				margin: 0%;
+				line-height: 3.8;
+				position: relative;
+				float: left;
+			}
+			.top-left-box>.name-box-deco{
+				width: 0.35%;
+				height: 30%;
+				margin: 4% 1%;				
+				position: relative;
+				float: left;
+				background: rgba(0,0,0, .5);
+				border-radius: 2px;
+			}
+			.name-box1>.title,.name-box2>.title{
+				text-align: left;
+				color: rgba(102,102,102, .9);
+				text-shadow: 0px 1px 1px rgba(102,102,102, .9);
+				font-weight: bold;
+				display: block;
+				font-size: 1.5rem;
+				letter-spacing: 0.15rem;
+				float: left;
+			}
+			.name-box1>.contants,.name-box2>.contants{
+				margin: -1.25% 4% 0% 4%;
+				text-align:  right;
+				text-shadow: 0px 1px 1px rgba(51,51,51, .9);
+				font-weight: bolder;
+				float: left;
+				font-size: 1.6rem;
+				letter-spacing: 0.15rem;
+			}
+			.top-right-box{
+				width: 13%;
+				height: 100%;
+				float: right;
+				position: relative;
+				/*background: rgba(0,0,0, .5);*/				
+			}
+			.top-right-box> img{
+				width: auto;
+				height: 60%;
+				margin-top: 5%; 
+			}
+			.mid-container{
+				width: 100%;
+				height: 92.2%;
+				display: block;
+			}
+			.mid-left-box{
+				width: 17.8%;
+				height: 100%;
+				float: left;
+				position: relative;
+			}
+			.mid-left-box>.nav-box{
+				width: 85%;
+				height: 44%;
+				float: left;
+				margin: 18% 0% 0% 10%;
+			}
+			.nav-box>.sub-title-box{
+				width:100%;
+				height: 18%;
+				float: left;
+				color: #fff;
+				border-bottom: inset 1px #FFF;
+			}
+			.sub-title-box>h1{max-width: 70%; margin: 2% 0% 0% 5.5%; font-size: 2.7rem; font-weight: bold; float: left; letter-spacing: 0.23rem;}
+			.sub-title-box>img{	width: auto; height: 70%; margin: 1% 4%; float: left; }
+			
+			.nav-box>.sub-con-box{
+				width: 97%;
+				height: 71.5%;
+				margin: 0%;
+				float: right;
+			}
+			.sub-con-box>ul{ list-style: none; padding: 0; text-align: left; padding-left: 2%;}
+			.sub-con-box>ul>li{
+				font-size: 1.6rem;
+				font-weight: bolder;
+				letter-spacing: 0.125rem;
+				text-shadow: 0px 1px 0.5px #ccc;
+				color: #fff;
+				text-align: left;
+				line-height: 1.8;
+			}
+			
+			.mid-left-box>.info-box{
+				width: 82.5%;
+				height: 47%;
+				text-align: left;
+				float: left;
+				margin: 1% 8.8%;
+				position: relative;
+			}
+			.item-1>.text-box,.item-2>.text-box,.item-3>.text-box{
+				width: 90%;
+				height:80%;
+				position: relative;
+				margin: 3% 0% 0% 5%;
+				color: #fff;
+			}
+			
+			.text-box>h1,.text-box>h1,.text-box>h1{
+				font-size: 2.0rem;
+				font-weight: bolder;
+				padding: 0;
+				margin: 2% 0% 0% 2%;
+				letter-spacing: 0.05rem;
+			}
+			.text-box>h2,.text-box>h2,.text-box>h2{
+				margin-left: 1.75%; 
+				font-size: 1.25rem;
+				text-align: left;
+				font-weight: bold;
+				margin: 3.5% 0% 0% 1.25%;
+			}
+			.text-box>h3,.text-box>h3,.text-box>h3{
+				font-size: 1.15rem;
+				font-weight: bold;
+				padding: 0;
+				margin: 3% 0% 0% 2%;
+			}
+			.text-box>h4,.text-box>h4,.text-box>h4{
+				font-size: 1.15rem;
+				font-weight: bolder;
+				padding: 0;
+				margin: 4.5% 0% 0% 2%;
+				letter-spacing: 0.05rem;
+			}
+			.text-box>h5,.text-box>h5,.text-box>h5{
+				font-size: 1.4rem;
+				font-weight: bolder;
+				padding: 0;
+				margin: 1.5% 0% 0% 2%;
+			}
+			
+			.info-box>.item-1{
+				width: 99.3%;
+				height: 19%;
+				min-height: 10%;
+				border: 1px solid #fff;
+				float: left;
+				position: relative;
+			}
+			.info-box>.item-2{
+				width: 100%;
+				height: 36%;
+				min-height: 10%;
+				border-bottom: 1px solid #fff;
+				float: left;
+				position: relative;
+			}
+			.info-box>.item-3{
+				width: 100%;
+				height: 19%;
+				min-height: 10%;
+				float: left;
+				position: relative;
+			}
+			
+			.mid-right-box{
+				width: 82.2%;
+				height: 92.5%;
+				float: left;
+				position: relative;
+			}
+			.mid-right-box>.contants-box{
+				width: 95%;
+				height: 93%;
+				margin-top: 4%;
+				margin-left: 5%;
+			}
+			.mid-right-box>img{
+				width:100%;
+				height:100%;
+			}
+			
+			.contants-box> h1{
+				font-size: 2.5rem;
+				font-weight: bolder;
+				text-align: left; 
+				padding: 0;
+				line-height: 1.5;
+				letter-spacing: 0.15rem;
+			}
+			.contants-box> h2{
+				font-size: 1.5rem;
+				font-weight: bolder;
+				text-align: left; 
+				padding: 0;
+				margin: 2% 0% 0% 0.5%;
+				letter-spacing: 0.05rem;
+			}
+			
+			
+			
+			/*btn-type1*/
+			/*.btn-box-container>.btn-type1-1{
+				width: 50%;
+				height: 20%;
+				float: left;
+				line-height: 6;
+				text-align: left;
+			}
+			.btn-box-container>.btn-type1-2{
+				width: 100%;
+				height: 20%;
+				float: left;
+				line-height: 6.5;
+				background: rgba(0,0,0, .3);
+				margin-top: 0%;
+				text-align: center;
+			}
+			.btn-type1-1> div img{
+				width: 35%;
+				height: auto;
+				max-height: 100%;
+				float: left;
+				margin: 2% 7%;
+				vertical-align: middle;
+			}
+			.btn-type1-2> div img{
+				width: 35%;
+				height: auto;
+				max-height: 100%;
+				float: left;
+				vertical-align: middle;
+			}
+			.btn-type1-1> div a{
+				width: 55%;
+				height: 100%;
+				vertical-align: bottom;
+				margin-left: 8%;
+				}
+			.btn-type1-2> div a{
+				width: 60%;
+				height: 100%;
+				vertical-align: middle;
+				float: right;
+			}
+			.btn-box-container>.margin-l{ margin-left: 0%;}
+			.btn-box-container>.margin-lt{ margin-top:0%;}*/
+
+			
+			.bg0{background: #fff; color:#000; box-shadow: inset 0 0 1px #000;}
+			.bg1{background: #1D3A5A;}
+			.bg2{background: #F37E53;}
+			.bg3{background: #FAB235;}
+			.bg4{background: #B3AF44;}
+			.bg5{background: #976EE8;}
+			.bg6{background: #4B83C0;}
+			.bg7{background: #23B6A6;}
+			
+			
+			.bg1-1{background: rgba(29,58,90,0.95);}
+			.bg2-1{background: rgba(243,126,83,0.95);}
+			.bg3-1{background: rgba(250,178,53,0.95);}
+			.bg4-1{background: rgba(179,175,68,0.95);}
+			.bg5-1{background: rgba(151,110,232, .95);}
+			.bg6-1{background: rgba(75,131,192, .95);}
+			.bg7-1{background: rgba(35,182,166, .95);}
+			.bg111{background: rgba(255,255,255, .9);}
+			
+	</style>
+	</head>		
+	
+	<body>
+		<div class="container">
+			<div class="top-container">
+				<div class="top-left-box">
+					<div class="img-deco"><img src="img/test6.jpg"></div>
+					<div class="name-box1">
+						<div class="title">주치의</div>
+						<div class="contants">김영태</div>
+						<div class="title">병원장</div>
+					</div>
+					<div class="name-box-deco"></div>
+					
+					<div class="name-box2">
+						<div class="title">병실명</div>
+						<div class="contants">1301</div>
+						<div class="title">호</div>
+					</div>
+					
+					<div class="name-box-deco"></div>					
+					
+					<div class="name-box2">
+						<div class="title">환자명</div>
+						<div class="contants">김한일</div>
+						<div class="title">님</div>
+					</div>
+				</div>
+				<div class="top-right-box">	<img src="img/logo.png"></div>	
+			</div>
+			<div class="mid-container">
+				<div class="mid-left-box bg1-1">
+					<div class="nav-box">
+						<div class="sub-title-box"><h1>병원소개</h1><img src="img/icon/1.png"></div>
+						<div class="sub-con-box">
+							 <ul>
+								<li><a>한일병원이란</a></li>
+								<li><a>병원장인삿말</a></li>
+								<li><a>이념과비젼</a></li>
+								<li><a>협력병원</a></li>
+								<li><a>한일가족갤러리</a></li>
+								<li><a>5번째는모르겠다</a></li>
+							 </ul>
+						</div>						
+					</div>
+					<div class="info-box">
+						<div class="item-1">
+							<div class="text-box">
+								<h2>대표전화</h2>
+								<h1>055-759-7777</h1>
+							</div>
+						</div>
+						<div class="item-2">
+							<div class="text-box">
+								<h2>진료시간안내</h2>
+								<h3>월요일 AM 09:00~ PM 06:00</h3>
+								<h3>월요일 AM 09:00~ PM 06:00</h3>
+								<h3>월요일 AM 09:00~ PM 06:00</h3>
+								<h3>일요일/법정 공휴일 휴진</h3>
+							</div>
+						</div>
+						<div class="item-3">
+							<div class="text-box">
+								<h4>응급실(24시간)</h4>
+								<h5>055-750-1333</h5>
+								<h4>종합검진센터</h4>
+								<h5>055-750-1321~5</h5>
+								<h4>첨단자기공명영상진단</h4>
+								<h5>055-750-1888</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="mid-right-box bg111">
+					<div class="contants-box">
+						<h1>믿음과 희망으로 환우여러분의 건강을 지키는 한일병원 입니다.</h1>
+					</div>
+				</div>				
+			</div>
+			
+		</div>
+		
+			
+	
+	</body>
+</html>

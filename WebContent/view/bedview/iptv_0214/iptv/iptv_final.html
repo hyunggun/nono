@@ -1,0 +1,632 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+	<head>
+		<title> 병상용TV </title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" src="dist/jR3DCarousel.min.js"></script>
+		
+		<style type="text/css">
+			body, table, div, p {font-family:"Nanum Gothic", sans-serif;}
+				.normal { font-weight: 400 }  .bold { font-weight: 700 } .bolder { font-weight: 900 } .light{ font-weight: 300 }
+			a {	text-decoration: none; }
+			a:link{ color: #fff; }
+			a:visited { color: #fff; text-decoration: none; }
+			a:hover { color:#00A0C6; text-decoration:none; cursor:pointer; }
+			p{margin: 0; padding: 0;}
+			body{
+				width: 1920px;
+				height: 1008px;
+				margin: 0;
+				padding: 0;				
+			}
+			
+			.container{
+				width: 100%;
+				height: 100%;
+			}
+			.top-container{
+				width: 100%;
+				height: 7.5%;
+				border-bottom: 4px solid #ccc;
+				background: none;
+				position: relative;
+				
+			}
+			.mid-container{
+				width: 100%;
+				height: 92.2%;
+				display: block;
+				background-image: url(img/bigbg-2.jpg);
+				background-size: cover;
+				background-repeat: no-repeat
+			}
+			.mid-container>.con-box{width: 33.33%; height: 85%; float: left; background: rgba(255,255,255, .95);}
+			.mid-container>.btn-box{width: 33.33%; height: 85%; float: left; background: rgba(255,255,255, .95);}
+			.mid-container>.slide-box{width: 33.33%; height: 85%; float: left; background: rgba(255,255,255, .95); position: relative; top:-7.7%;}
+			.mid-container>.bottom-box{width: 70%; height: 8%; float: left; background: rgba(0,0,0, .8); position: relative; top:-7.7%;}
+			
+			
+		
+			.mid-contants-box{
+				width: 88%;
+				height: 90%;
+				margin: 9.5% 6% 0%;
+			}
+			.top-left-box{
+				width: 20%;
+				height: 100%;
+				position: relative;
+				left: 3%; top: 10%;
+			}
+			.top-right-box{
+				width: auto;
+				height: 100%;
+				float: right;
+				position: relative;
+				top: -100%; right: 1.5%;
+			}
+			.top-right-box>img{
+				width: auto;
+				height: auto;
+				max-height: 60%;
+				margin-top: 10%;
+			}
+			.top-left-box>.icon-deco{
+				width: 30%;
+				height: 140%;
+				border-radius: 50%;
+				background: #ccc;
+				text-align: center;
+				position: relative;
+			}
+			.top-left-box>.icon-deco> img{
+				width: 94%;
+				height: 94%;
+				margin-top: 3%;
+				border-radius: 50%;
+			}
+			.top-container>.top-left-box>a{
+				width: auto;
+				height: auto;
+				font-size: 1.5rem;
+				color: rgba(0,0,0, .6);
+				font-weight: bold;
+				display: block;
+				position: relative;
+				left: 33%; top: -90%;
+				text-shadow: 0px 1px 0.5px rgba(0,0,0, .6);				
+			}
+			
+			.con-box-con1{width: 100%; height: 40%; margin: auto;}
+			.con-box-con2{width: 100%; height: 32%; margin: auto;}
+			.con-box-con4{width: 100%; height: 28%; margin: auto;}
+			
+			.con-box-con1>.title-box{
+				width: 100%;
+				height: 20%;
+				background: #ccc;
+				border-radius: 10px 10px 0px 0px;
+				box-shadow: 0px 0.5px 5px #ccc;
+				text-align: center;
+				line-height: 1.5;
+				margin-top: 1%;
+			}
+			.con-box-con1>.title-box>p{
+				font-size: 2.25rem;
+				font-weight: bold;
+				color: #fff;				
+				text-transform: uppercase;
+				vertical-align: middle;
+			}
+			.con-box-con1>.info-box{
+				width: 99%;
+				height: auto;
+				margin: 2% 0.3%;
+				border-bottom: 1px solid #000;
+			}
+			
+			.title-box>a{vertical-align: middle;}
+			.con-box-con1>.info-box>.name-box-container{
+				width: 100%;
+				height: auto;
+				margin: 0%;
+			}
+			.name-box-container>.name-box1{
+				width: 30%;
+				height: auto;
+				float: left;
+				margin:0% 10%;
+			}
+			.name-box1>.title{
+				width: 90%;
+				height: auto;
+				margin: 0%;
+				padding: 0%;
+				text-align: left;
+				font-size: 1.45rem;
+				font-weight: bolder;
+				color: rgba(0,0,0, .75);
+				text-shadow: 0px 1px 2px #ccc;
+			}
+			.name-box1>.contants{
+				width: 90%;
+				height: auto;
+				margin: 0;
+				padding-top: 5%;
+				text-align: left;
+				font-size: 3rem;
+				font-weight: bold;
+				text-shadow: 0px 1px 2px #b2b2b2;
+				color: rgba(0,0,0, .8);
+			}
+			.name-box-container>.con-box{
+				width: 99.6%;
+				height: auto;
+				margin-top: 1%;
+				min-height: 10%;
+				display: inline-block;
+				line-height: 1.75;
+				border-top: 1px solid rgba(0,0,0, .5);
+			}
+			.name-box-container>.con-box>.title{
+				width: 35%;
+				height: auto;
+				margin: 0;
+				padding: 0;
+				float: left;
+				font-size: 1.75rem;
+				font-weight: bolder;
+				text-shadow: 0px 1px 2px #ccc;
+				color: rgba(0,0,0, .5);
+				vertical-align: bottom;
+			}
+			.name-box-container>.con-box>.contants{
+				width: 65%;
+				height: auto;
+				margin-top: 1.25%;
+				margin-bottom: 0.5%;
+				padding: 0; 
+				float: left;
+				font-size: 1.4rem;
+				font-weight: bolder;
+				text-shadow: 0px 1px 2px #ccc;
+				color: rgba(0,0,0, .85);
+				vertical-align: middle;
+				text-transform: capitalize;
+			}
+			.con-box-con2>.con-box{
+				width: 40%;
+				height: 80%;
+				float: left;
+				margin: 0% 4.5%;
+				text-align: center;
+				border-radius: 10px;
+			}
+			.con-box-con2>.con-box> img{width: 45%; height: auto; margin: 8% 22%;}
+			.con-box-con2>.con-box>a{ font-size: 2rem; font-weight:bold; color: white;}
+			.con-box-con4>.con-box1{
+					width: 20%;
+					height: 100%;
+					color: #000;
+					text-shadow: 0.5px 1px 2px #ccc;
+					font-size: 2.2rem;
+					text-align:	center;
+					float: left;}
+			.con-box-con4>.con-box2{
+					width: 50%;
+					height: auto;
+					min-height: 20%;
+					margin-left: 5%;
+					line-height: 1.5;
+					color: #000;
+					text-shadow: 0.5px 1px 2px #ccc;
+					font-size: 1.3rem;
+					text-align:	left;
+					float: left;
+				}
+			.con-box-con4>.con-box3{
+					width: 23%;
+					height: 20%;
+					margin-left:2%;
+					text-shadow: 0.5px 1px 2px #ccc;
+					font-size: 1.3rem;
+					text-align:	center;
+					float: left;
+				}
+				
+			.btn-box-container{
+				width: 95%;
+				height: 90%;
+				display: block;
+				margin-top: 8.5%;
+				color: #fff;
+				font-size: 1.5rem;
+				text-align: left;
+				font-weight: bold;
+			}
+			.btn-box-container>.btn-type2-1,.btn-box-container>.btn-type2-2,.btn-box-container>.btn-type2-3{
+				border-radius: 6px;
+				margin-left: 1.5%;
+				margin-top: 1.2%;
+				position: relative;
+				float: left;
+				text-align: center;
+			}
+			.btn-box-container>.btn-type2-1{width:31.7%; height:24%;}
+			.btn-box-container>.btn-type2-2{width:64.9%; height:24%;}
+			.btn-box-container>.btn-type2-3{width:31.7%; height:49.0%;}
+			.btn-type2-1> div img{
+				width: 40%;
+				height: auto;
+				max-height: 30%;
+				float: left;
+				margin: 15% 30% 3% 30%;
+				vertical-align: middle;
+			}
+			.btn-type2-1> div a{
+				width: 100%;
+				height: auto;
+				vertical-align: bottom;
+				text-decoration: none;
+			
+			}
+			.btn-type2-2> div img{
+				width: 23%;
+				height: auto;
+				max-height: 30%;
+				float:  none;
+				margin: 7% 38% 2% 38%;
+				vertical-align: middle;
+			}
+			.btn-type2-2> div a{
+				width: 50%;
+				height: auto;
+				vertical-align: bottom;
+				text-decoration: none;
+			
+			}
+			.btn-type2-3> div img{
+				width: 40%;
+				height: auto;
+				max-height: 30%;
+				float: left;
+				margin: 50% 30% 5% 30%;
+				vertical-align: middle;
+				text-decoration: none;
+			
+			}
+			.btn-type2-3> div a{
+				width: 100%;
+				height: auto;
+				vertical-align: bottom;
+			}
+			
+			/*btn-type1*/
+			/*.btn-box-container>.btn-type1-1{
+				width: 50%;
+				height: 20%;
+				float: left;
+				line-height: 6;
+				text-align: left;
+			}
+			.btn-box-container>.btn-type1-2{
+				width: 100%;
+				height: 20%;
+				float: left;
+				line-height: 6.5;
+				background: rgba(0,0,0, .3);
+				margin-top: 0%;
+				text-align: center;
+			}
+			.btn-type1-1> div img{
+				width: 35%;
+				height: auto;
+				max-height: 100%;
+				float: left;
+				margin: 2% 7%;
+				vertical-align: middle;
+			}
+			.btn-type1-2> div img{
+				width: 35%;
+				height: auto;
+				max-height: 100%;
+				float: left;
+				vertical-align: middle;
+			}
+			.btn-type1-1> div a{
+				width: 55%;
+				height: 100%;
+				vertical-align: bottom;
+				margin-left: 8%;
+				}
+			.btn-type1-2> div a{
+				width: 60%;
+				height: 100%;
+				vertical-align: middle;
+				float: right;
+			}
+			.btn-box-container>.margin-l{ margin-left: 0%;}
+			.btn-box-container>.margin-lt{ margin-top:0%;}*/
+
+			.jR3DCarouselGalleryCustomeTemplate .btn-captions{
+				position: relative;
+				padding: 10px 0;
+				bottom: 27px;
+				background: #ec1c8e;
+				display:block;
+			}
+			.jR3DCarouselGalleryCustomeTemplate a{
+				text-decoration: none;			
+			}
+			.slide-captions{
+				width: 90%;
+				height: 18%;
+				position: relative;
+				float: right;
+				box-shadow: inset 0px 0px 2px rgba(226,124,77,1);
+				background: rgba(255,153,102,0.85);  /* fallback for old browsers */
+				background: -webkit-linear-gradient(to right tp top, rgba(255,94,98,0.85), rgba(255,153,102,0.85));  /* Chrome 10-25, Safari 5.1-6 */
+				background: linear-gradient(to right, rgba(255,94,98,0.85), rgba(255,153,102,0.85)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+				margin-top: -10%;				
+				text-align: right;
+				border-radius: 12px 0px 0px 12px;
+			}
+			.slide-captions>img{
+				width: auto;
+				height: 30%;
+				float: left;
+				line-height: 1.5;
+				margin-left: 2.5%;
+				; 
+			}
+			.slide-captions>a{
+				width: 65%;
+				float: right;
+				text-align: left;
+				color: #fff;
+				font-size: 1.3rem;
+				font-weight: bold;
+				line-height: 1.5;
+				margin-left: 0.5%; 
+			}
+			/* 공지사항 슬라이드 */
+			.notice{width:100%; height:auto; overflow:hidden;}
+			.rolling{position:relative; width:100%; height:auto;}
+			.rolling li{width:100%; height:50px; line-height:50px;}
+			
+			.bg0{background: #fff; color:#000; box-shadow: inset 0 0 1px #000;}
+			.bg1{background: #1D3A5A;}
+			.bg2{background: #F37E53;}
+			.bg3{background: #FAB235;}
+			.bg4{background: #B3AF44;}
+			.bg5{background: #976EE8;}
+			.bg6{background: #4B83C0;}
+			.bg7{background: #23B6A6;}
+		
+		</style>
+		<script type="text/javascript">
+
+$(document).ready(function(){
+	var slideImages = [ {src: 'img/jj-01.png'},
+	              		{src: 'img/jj-00.png'},
+	              		{src: 'img/jj-02.png'},
+	              		{src: 'img/jj-03.png'},
+					  ];
+	//var jR3DCarousel;
+	
+	jR3DCarousel = $('.jR3DCarouselGallery').jR3DCarousel({
+		width: 639.27, 		/* largest allowed width */
+		height: 790, 		/* largest allowed height */
+		slides: slideImages /* array of images source */
+	});
+	
+	var carouselCustomeTemplateProps =  {
+	 		  width: 639.27, 				/* largest allowed width */
+			  height: 790, 				/* largest allowed height */
+			  slideLayout : 'fill',     /* "contain" (fit according to aspect ratio), "fill" (stretches object to fill) and "cover" (overflows box but maintains ratio) */
+			  animation: 'slide3D', 	/* slide | scroll | fade | zoomInSlide | zoomInScroll */
+			  animationCurve: 'ease',
+			  animationDuration: 1900,
+			  animationInterval: 4000,
+			  slideClass: 'jR3DCarouselCustomSlide',
+			  autoplay: false,
+			  controls: false,			/* control buttons */
+			  navigation: ''			/* circles | squares | '' */,
+			  perspective: 2200,
+			  rotationDirection: 'ltr',
+			  onSlideShow: slideShownCallback
+				  
+		};
+	function slideShownCallback($slide){
+		console.log("Slide shown: ", $slide.find('img').attr('src'));
+	}
+
+	jR3DCarouselCustomeTemplate = $('.jR3DCarouselGalleryCustomeTemplate').jR3DCarousel(carouselCustomeTemplateProps);
+
+  });
+</script>
+
+
+	</head>		
+	
+	<body>
+		<div class="container">
+			<div class="top-container">
+				<div class="top-left-box">
+					<div class="icon-deco"><img src="img/test6.jpg"></div>
+					<a>주치의 : 김영태 병원장</a>
+				</div>
+				<div class="top-right-box"><img src="img/logo.png"></div>
+			</div> 			
+			
+			<div class="mid-container">
+				<div class="con-box">
+					<div class="mid-contants-box">
+						<div class="con-box-con1">
+							<div class="title-box">
+								<p>infomation</p>
+							</div>
+							<div class="info-box">
+								<div class="name-box-container">
+									<div class="name-box1">
+										<p class="title">병실명</p>
+										<p class="contants">301호</p>
+									</div>
+									<div class="name-box1">
+										<p class="title">환자명</p>
+										<p class="contants">윤필선</p>
+									</div>								
+								
+									<div class="con-box">
+										<p  class=title>오늘의일정 :</p>
+										<p  class=contants> am 10:00 CT검사 예약 있습니다.</p>
+									</div>
+									<div class="con-box">
+										<p  class=title>입원경과일 :</p>
+										<p  class=contants> 14일</p>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="con-box-con2">
+							<div class="con-box bg2">
+								<img src="img/icon/new2/03.png">
+								<a>TV시청</a>
+							</div>
+							<div class="con-box bg3">
+								<img src="img/icon/new2/04.png">
+								<a>의료진호출</a>
+							</div>
+						</div>
+						<div class="con-box-con4">
+							<div class="con-box1">Notice</div>
+							<div class="con-box2">처음 오신분 이용안내</div>
+							<div class="con-box3">2019.01.28</div>
+							<div class="con-box2">암센터 정보 이용안내</div>
+							<div class="con-box3">2019.01.28</div>
+							<div class="con-box2">2019년 새롭게 태어납니다.</div>
+							<div class="con-box3">2019.01.28</div>
+							<div class="con-box2">보건복지부 인증 안내</div>
+							<div class="con-box3">2019.01.28</div>
+							<div class="con-box2">최신검진 및 진료 시스템</div>
+							<div class="con-box3">2019.01.28</div>
+						</div>
+					</div>
+				</div>
+				<div class="btn-box">
+					<div class="btn-box-container">
+						<div class="btn-type2-3 bg1">
+							<div><img src="img/icon/new2/02.png">
+								 <a href="iptv_sub_v1.html">병실생활안내</a>
+							</div>
+						</div>
+						<div class="btn-type2-1 bg2">
+							<div><img src="img/icon/new2/03.png">
+								 <a href="iptv_sub_v2.html">진료비내역</a>
+							</div>
+						</div>
+						<div class="btn-type2-1 bg3">
+							<div class="img-box"><img src="img/icon/new2/01.png">
+								 <a href="iptv_sub_v3.html">보험청구대행</a>
+							</div>
+							
+						</div>
+						<div class="btn-type2-1 bg4">
+							<div><img src="img/icon/new2/08.png">
+								 <a href="iptv_sub_v4.html">재증명발급신청</a>
+							</div>
+						</div>
+						<div class="btn-type2-1 bg0">
+							<div><img src="img/icon/new2/05.png">
+								 <a href="iptv_sub_v5.html" style="color: #000;">비보험진료안내</a>
+							</div>
+						</div>
+						<div class="btn-type2-2 bg0">
+							<div  style="width: 100%; height: 100%; background-image: url('img/mtv-box.png'); background-size: cover; border-radius: 8px;  "></div>
+							
+						</div>
+						<div class="btn-type2-1 bg5">
+							<div><img src="img/icon/new2/04.png">
+								 <a>병원소개</a>
+							</div>
+						</div>
+						<div class="btn-type2-1 bg6">
+							<div><img src="img/icon/new2/07.png">
+								 <a>편의시설</a>
+							</div>
+						</div>
+						<div class="btn-type2-2 bg7">
+							<div><img src="img/icon/new2/06.png">
+								 <a>피난정보안내</a>
+							</div>
+							
+						</div>	
+					</div>
+				</div>
+				<div class="slide-box">
+					<div class="jR3DCarouselGallery"></div>
+					<div class="slide-captions">
+						<img src="img/logo.png">
+						<a>진주한일병원이 새롭게 오픈 하였습니다.</a>
+						<a>텍스트 & 박스이미지 배너가능</a>
+						<a>fixed-img</a>
+						<a>진주한일병원이 새롭게 오픈 하였습니다.</a>
+					</div>					
+				</div>
+<!-- 				<div class="bottom-box"> -->
+<!-- 					<div class="notice"> -->
+<!-- 						<ul class="rolling"> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">공지사항 내용 1입니다.</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">공지사항 내용 2입니다.</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">공지사항 내용 3입니다.</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">공지사항 내용 4입니다.</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="#">공지사항 내용 5입니다.</a> -->
+<!-- 							</li> -->
+<!-- 						</ul> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			</div>
+			
+		</div>
+		<script>
+				$(document).ready(function(){
+// 					var height =  $(".notice").height();
+// 					var num = $(".rolling li").length;
+// 					var max = height * num;
+// 					var move = 0;
+// 					function noticeRolling(){
+// 						move += height;
+// 						$(".rolling").animate({"top":-move},600,function(){
+// 							if( move >= max ){
+// 								$(this).css("top",0);
+// 								move = 0;
+// 											};
+// 						});
+// 					};
+// 					noticeRollingOff = setInterval(noticeRolling,1000);
+// 					$(".rolling").append($(".rolling li").first().clone());
+				
+// 					$(".rolling_stop").click(function(){
+// 						clearInterval(noticeRollingOff);
+// 					});
+// 					$(".rolling_start").click(function(){
+// 						noticeRollingOff = setInterval(noticeRolling,1000);
+// 					});
+				});		
+		</script>
+			
+	
+	</body>
+</html>

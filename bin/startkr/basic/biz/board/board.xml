@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="board">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <!-- tb_board -->
+  <statement id="create_tb_board">
+CREATE TABLE `tb_board` (
+  `board_id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(60) NOT NULL,
+  `board_cn` text,
+  `use_fg` char(1) NOT NULL DEFAULT 'Y',
+  `auth_id` int(11) DEFAULT '1',
+  `ins_usr` int(11) DEFAULT NULL,
+  `ins_ip` varchar(60) DEFAULT NULL,
+  `ins_dt` datetime DEFAULT NULL,
+  `upd_usr` int(11) DEFAULT NULL,
+  `upd_ip` varchar(60) DEFAULT NULL,
+  `upd_dt` datetime DEFAULT NULL,
+  `file_grp` int(11) DEFAULT '0',
+  `read_cnt` int(11) DEFAULT '0',
+  PRIMARY KEY (`board_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereBoard">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="s_title" prepend="AND">
+           title LIKE CONCAT('%', #s_title#, '%')
+      </isNotEmpty>
+      <isNotEmpty property="s_board_cn" prepend="AND">
+           board_cn LIKE CONCAT('%', #s_board_cn#, '%')
+      </isNotEmpty>
+      <isNotEmpty property="maker_id" prepend="AND">
+           bod.upd_usr = #maker_id#
+      </isNotEmpty>
+      <isNotEmpty property="use_fg" prepend="AND">
+           bod.use_fg = #use_fg#
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectBoardCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_board bod
+    <include refid="whereBoard"/>
+  </select>
+
+  <select id="selectBoardList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT bod.*
+      FROM (
+           SELECT bod.board_id
+                 ,bod.title
+                 ,bod.file_grp
+                 ,ifnull(bod.read_cnt, 0) as read_cnt
+                 ,DATE_FORMAT( bod.upd_dt, '%Y-%m-%d %h:%i' ) as write_date
+                 ,usr.user_nm as writer
+             FROM tb_board bod
+        LEFT JOIN tb_user usr
+               ON usr.user_id = bod.upd_usr
+    <include refid="whereBoard"/>
+         ORDER BY board_id desc
+           ) bod
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectBoard" resultClass="hashmap" parameterClass="hashmap">
+    SELECT bod.*
+          ,DATE_FORMAT( bod.upd_dt, '%Y-%m-%d %h:%i' ) as write_date
+          ,usr.user_nm as writer
+      FROM tb_board bod
+ LEFT JOIN tb_user usr
+        ON usr.user_id = bod.upd_usr
+     WHERE board_id = #board_id#
+  </select>
+
+  <insert id="insertBoard" parameterClass="hashmap">
+    INSERT INTO tb_board (
+                title
+               ,board_cn
+               ,file_grp
+               ,ins_usr
+               ,ins_ip
+               ,ins_dt
+               ,upd_usr
+               ,upd_ip
+               ,upd_dt
+              ) values (
+                #title#
+               ,#board_cn#
+               ,#file_grp#
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+              )
+  </insert>
+
+  <update id="updateBoard" parameterClass="hashmap">
+    UPDATE tb_board SET
+           title = #title#
+    <isNotNull property="board_cn">
+          ,board_cn = #board_cn#
+    </isNotNull>
+    <isNotNull property="file_grp">
+          ,file_grp = #file_grp#
+    </isNotNull>
+    <isNotEmpty property="use_fg">
+          ,use_fg = #use_fg#
+    </isNotEmpty>
+          ,upd_usr = #usr_id#
+          ,upd_ip = #usr_ip#
+          ,upd_dt = now()
+     WHERE board_id = #board_id#
+  </update>
+
+  <update id="deleteBoardFlag" parameterClass="hashmap">
+    UPDATE tb_board SET
+           use_fg = 'N'
+     WHERE board_id = #board_id#
+  </update>
+
+  <delete id="deleteBoard" parameterClass="hashmap">
+    DELETE
+      FROM tb_board
+     WHERE board_id = #board_id#
+  </delete>
+
+  <update id="increaseBoardReadCount" parameterClass="hashmap">
+    UPDATE tb_board SET
+           read_cnt = ifnull(read_cnt, 0) + 1
+     WHERE board_id = #board_id#
+  </update>
+
+
+  <statement id="create_tb_board_cmt">
+CREATE TABLE `tb_board_cmt` (
+  `cmt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `board_id` int(11) NOT NULL,
+  `user_nick` varchar(20) DEFAULT NULL,
+  `cmt_cn` varchar(600) DEFAULT NULL,
+  `set_usr` int(11) DEFAULT NULL,
+  `set_ip` varchar(60) DEFAULT NULL,
+  `set_dt` datetime DEFAULT NULL,
+  PRIMARY KEY (`cmt_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereBoardCmt">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="board_id" prepend="AND">
+           cmt.board_id = #board_id#
+      </isNotEmpty>
+      <isNotEmpty property="s_cmt_cn" prepend="AND">
+           cmt_cn LIKE CONCAT('%', #s_cmt_cn#, '%')
+      </isNotEmpty>
+      <isNotEmpty property="maker_id" prepend="AND">
+           cmt.upd_usr = #maker_id#
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectBoardCmtCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_board_cmt cmt
+    <include refid="whereBoardCmt"/>
+  </select>
+
+  <select id="selectBoardCmtList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT cmt.*
+      FROM (
+           SELECT cmt.*
+                 ,DATE_FORMAT( cmt.upd_dt, '%Y-%m-%d %h:%i' ) as write_date
+             FROM tb_board_cmt cmt
+    <include refid="whereBoardCmt"/>
+         ORDER BY cmt_id desc
+           ) cmt
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectBoardCmt" resultClass="hashmap" parameterClass="hashmap">
+    SELECT cmt.*
+          ,DATE_FORMAT( cmt.upd_dt, '%Y-%m-%d %h:%i' ) as write_date
+      FROM tb_board_cmt cmt
+     WHERE cmt_id = #cmt_id#
+  </select>
+
+  <insert id="insertBoardCmt" parameterClass="hashmap">
+    INSERT INTO tb_board_cmt (
+                board_id
+               ,user_nick
+               ,cmt_cn
+               ,set_usr
+               ,set_ip
+               ,set_dt
+              ) values (
+                #board_id#
+               ,#user_nick#
+               ,#cmt_cn#
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+              )
+  </insert>
+
+  <delete id="deleteBoardCmt" parameterClass="hashmap">
+    DELETE
+      FROM tb_board_cmt
+     WHERE board_id = #board_id#
+    <isNotEmpty property="cmt_id" prepend="AND">
+           cmt_id = #cmt_id#
+    </isNotEmpty>
+  </delete>
+
+</sqlMap>

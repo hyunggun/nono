@@ -1,0 +1,114 @@
+@CHARSET "EUC-KR";
+/* confirm창 사용 css  */
+#cfConfirmArea {
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:9998;
+	background-color:rgba(0, 0, 0, 0.8);
+	display:none;
+}
+#cfConfirmBox{
+	width:300px;
+	position:absolute;
+	top:100px;
+	left:0;
+	right:0;
+	margin-left:auto;
+	margin-right:auto;
+	z-index:9999;
+	border:1px #1b315c solid;
+	background-color:white;
+	opacity:1;
+}
+.cf-confirm-header {
+	background-color:#1b315c;
+	color:white;
+	font-size:15px;
+	font-weight:bold;
+	text-align:center;
+	padding:10px 0;
+}
+.cf-confirm-body {
+	font-size:12px;
+	text-align:center;
+	font-weight:bold;
+	padding:15px 0;
+}
+.cf-confirm-btnbox {
+	width:100%;
+	display:inline-block;
+}
+.cf-confirm-btn {
+	text-align:center;
+	background-color:#2778af;
+	padding:10px 0;
+	border:1px white solid;
+	color:white;
+	font-weight:bold;
+	font-size:15px;
+	margin:0;
+	cursor:pointer;
+}
+/* alert창 사용 css  */
+#cfAlertArea {
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:9998;
+	background-color:rgba(0, 0, 0, 0.8);
+	display:none;
+}
+#cfAlertBox{
+	width:500px;
+	position:absolute;
+	top:100px;
+	left:0;
+	right:0;
+	margin-left:auto;
+	margin-right:auto;
+	z-index:9999;
+	border:1px #1b315c solid;
+	background-color:white;
+	opacity:1;
+}
+.cf-alert-header {
+	background-color:#2f3b4c;
+	color:white;
+	font-size:30px;
+	font-weight:bold;
+	font-family:NanumGothic;
+	text-align:center;
+	padding:20px 0;
+}
+.cf-alert-body {
+	font-size:18px;
+	color:#343434;
+	text-align:center;
+	font-weight:bold;
+	font-family:NanumGothic;
+	padding:50px 0;
+}
+.cf-alert-btnbox {
+	width:100%;
+	display:inline-block;
+}
+.cf-alert-btn {
+	text-align:center;
+	width:70%;
+	margin:4% 15% 10% 15% !important;
+	background-color:#00bbff;
+	padding:10px 0;
+	border:1px white solid;
+	border-radius:5px;
+	color:white;
+	font-weight:bold;
+	font-size:22px;
+	font-family:NanumGothic;
+	margin:0;
+	cursor:pointer;
+}

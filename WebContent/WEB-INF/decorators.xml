@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/common/jsp">
+  <excludes>
+    <pattern>/common/jsp/*</pattern>
+    <pattern>*/mobile/*</pattern>
+    <pattern>*/popup/*</pattern>
+    <pattern>*/ajax*</pattern>
+    <pattern>*Proc.*</pattern>
+    <pattern>*login.*</pattern>
+    <pattern>*make.jsp*</pattern>
+    <pattern>*Pop.jsp*</pattern>
+    <pattern>*editFrame.jsp*</pattern>
+  </excludes>
+
+<!--   <decorator name="worker" page="worker.jsp"> -->
+<!--   	<pattern>/index.jsp*</pattern> -->
+<!--   	<pattern>/view/worker/*.jsp*</pattern> -->
+<!--   </decorator> -->
+  
+  <decorator name="admin" page="admin.jsp">
+    <pattern>/admin/*.jsp*</pattern>
+  </decorator>
+
+</decorators>

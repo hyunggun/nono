@@ -1,0 +1,89 @@
+body {
+	background-color: #ffffff;
+}
+
+/* Color Themes - Variables */
+
+$skyblue: #1A7DA8;
+$blue: #1F69A0;
+$deepblue: #0D417F;
+$orange: #DB5800;
+$brown: #6D2D19;
+$green: #2A5E1B;
+$purple: #533B8C;
+$pink: #B7066B;
+
+/* Common Colors - Variables */
+
+$off-wht: rgba(white,.2);
+
+/* Mixins */
+
+@mixin btn-theme($btn-color) {
+	border-color: darken($btn-color, 5%);
+	background-img: url(/images/btn_deco.png) no-repeat ;
+	background:
+	             -webkit-repeating-linear-gradient(0deg, hsla(0,0%,100%,.05) 1%, hsla(0,0%,100%,.05) 2%, hsla(0,0%,100%,.05) 3%),
+                     -webkit-repeating-linear-gradient(60deg, hsla(0,0%,  0%,0) 1%, hsla(0,0%,  0%,0)   2%, hsla(0,0%,  0%,.3) 3%),
+                     -webkit-repeating-linear-gradient(150deg, hsla(0,0%,100%,.1) 1%, hsla(0,0%,100%,.1) 2%, hsla(0,0%,100%,.15) 3%),     
+	              linear-gradient(to bottom,darken($btn-color, 3%),darken($btn-color, 6%),darken($btn-color, 9%))	              ;
+	&:hover {
+		background-color: darken($btn-color, 3%);
+		box-shadow: 0 .125em $off-wht, inset 0 .063em $off-wht, inset 0 -.188em lighten($btn-color, .052%);
+	}
+	&:active {
+	        box-shadow: 0 .063em $off-wht, inset 0 0 1.094em darken($btn-color, 10%), inset 0 .063em darken($btn-color, 5%),inset 0 -0.188em darken($btn-color, 1%); 
+	}
+	&_font {color: $btn-color; }
+	&_bt_infobg{background:linear-gradient(to right,darken($btn-color,10%),darken($btn-color,8%),darken($btn-color,3%));}
+        &_bt_info_title{
+	       background: linear-gradient(to bottom,darken($btn-color,25%),darken($btn-color, 10%),darken($btn-color, 25%));
+	       box-shadow: inset 0 0 1.094em darken($btn-color, 40%), inset 0 .063em darken($btn-color, 20%),inset 0 -0.188em darken($btn-color, 20%);
+	  }
+}
+
+@mixin trans($val...) {
+	-webkit-transition: $val;
+	-moz-transition: $val; 
+	-o-transition: $val; 
+	transition: $val; 
+}
+
+/* Button Global */
+
+.btn_cl {
+	display: inline-block;
+	border-radius: .925em;
+	box-shadow: 0 .375em .313em -.313em rgba(black,.8), inset 0 .063em $off-wht, inset 0 -.188em rgba(black,.15);
+	color: #FFF;
+	font: bold 1.8rem sans-serif;
+	@include trans(0.2s ease-in-out); 	
+        cursor:pointer;
+}
+
+/* Themes */
+
+.skyblue {
+	@include btn-theme($skyblue);
+}
+.blue {
+	@include btn-theme($blue);
+}
+.deepblue {
+	@include btn-theme($deepblue);
+}
+.orange {
+	@include btn-theme($orange);
+}
+.brown {
+	@include btn-theme($brown);
+}
+.green {
+	@include btn-theme($green);
+}
+.purple {
+	@include btn-theme($purple);
+}
+.pink {
+	@include btn-theme($pink);
+}

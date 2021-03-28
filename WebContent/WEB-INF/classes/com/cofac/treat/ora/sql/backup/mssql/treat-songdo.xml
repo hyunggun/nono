@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="treat">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+  
+  <resultMap id="treatMap" class="java.util.HashMap">
+       <result column="DspPatSeq" property="treat_id" javaType="java.lang.String"/>
+       <result column="DspDepCod" property="view_id" javaType="java.lang.String"/>
+       <result column="DspPatNam" property="patient_nm" javaType="java.lang.String"/>
+       <result column="status" property="status" javaType="java.lang.String"/>
+       <result column="alertCount" property="alert_count" javaType="java.lang.Integer"/>
+  </resultMap>
+	
+	<sql id="whereTreat">
+    <dynamic prepend="WHERE">
+	    <isNotEmpty property="doctorKey" prepend="AND">
+          DspDepCod = #doctorKey#
+	    </isNotEmpty>
+	    <isNotEmpty property="search_text" prepend="AND">
+				<isEqual property="search_type" compareValue="P">
+	           	DspPatNam LIKE ('%' + #search_text# + '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="R">
+	           	DspDepCod LIKE ('%' + #search_text# + '%')
+				</isEqual>
+			</isNotEmpty>
+    </dynamic>
+  </sql>
+  
+  <select id="selectTreatCount" resultClass="int" parameterClass="hashmap">
+   SELECT count(*)
+     FROM StandbyDisplay
+     <include refid="whereTreat"/>
+	</select>
+	
+	<select id="selectTreatList" resultMap="treatMap" parameterClass="hashmap">
+   SELECT
+   	   		DspDepCod,
+          DspPatSeq,
+          DspPatNam,
+          'S' as status,
+          0 as alertCount
+     FROM StandbyDisplay
+     <include refid="whereTreat"/>
+ ORDER BY DspDepCod, DspPatSeq
+  </select>
+
+</sqlMap>

@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="application/json;" pageEncoding="UTF-8" %>
+<%@page import="java.util.HashMap"%>
+<%@page import="startkr.util.RequestUtils"%>
+<%@page import="com.cofac.treat.ora.biz.non.MachineBiz"%>
+<%
+RequestUtils util = new RequestUtils();
+HashMap paramMap = util.makeParamMap(request);
+
+boolean isSuccess = false;
+MachineBiz machineBiz = null;
+try {
+	machineBiz = new MachineBiz();
+	isSuccess = machineBiz.deleteMachineAlert(paramMap);
+} catch(Exception ex) {
+    ex.printStackTrace();
+}
+%>
+{
+  "resultCode":<%=isSuccess%>
+}

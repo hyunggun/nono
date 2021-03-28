@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="group">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <!-- tb_group -->
+  <statement id="create_tb_group">
+    CREATE TABLE `tb_group` (
+      `group_id` INT(11) NOT NULL AUTO_INCREMENT,
+      `group_nm` VARCHAR(60) NOT NULL,
+      `leader_id` INT(11) NOT NULL DEFAULT 0,
+      `group_type` VARCHAR(12) NOT NULL DEFAULT '00',
+      `repr_in` CHAR(1) NOT NULL DEFAULT 'R',
+      `use_fg` CHAR(1) NOT NULL DEFAULT 'Y',
+      `auth_id` INT(11) DEFAULT 1,
+      `ins_usr` INT(11),
+      `ins_ip` VARCHAR(60),
+      `ins_dt` DATETIME,
+      `upd_usr` INT(11),
+      `upd_ip` VARCHAR(60),
+      `upd_dt` DATETIME,
+      `file_id` INT(11) DEFAULT 0,
+      `up_grp_id` INT(11) DEFAULT 0,
+	  `open_fg` CHAR(1) NOT NULL DEFAULT 'Y',
+ 	  `group_cn` VARCHAR(200),
+      PRIMARY KEY (`group_id`) 
+    ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+  </statement>
+
+  <statement id="create_fn_get_group_nm">
+    DELIMITER $$
+    CREATE FUNCTION `fn_get_group_nm`(`i_group_id` INT)
+      RETURNS VARCHAR(60) CHARSET utf8
+      LANGUAGE SQL
+      NOT DETERMINISTIC
+      CONTAINS SQL
+      SQL SECURITY DEFINER
+    COMMENT '그룹 이름 반환'
+    BEGIN
+      DECLARE o_group_nm VARCHAR(60);	
+      SELECT group_nm INTO o_group_nm
+      FROM tb_group
+      WHERE group_id = i_group_id;
+      RETURN o_group_nm;
+    END $$
+  </statement>
+
+  <sql id="whereGroup">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="use_fg" prepend="AND">
+           grp.use_fg = #use_fg#
+      </isNotEmpty>
+      <isNotEmpty property="group_id" prepend="AND">
+           grp.group_id = #group_id#
+      </isNotEmpty>
+      <isNotEmpty property="leader_id" prepend="AND">
+           grp.leader_id = #leader_id#
+      </isNotEmpty>
+      <isNotEmpty property="repr_in" prepend="AND">
+           repr_in = #repr_in#
+      </isNotEmpty>
+      <isNotEmpty property="up_grp_id" prepend="AND">
+           grp.up_grp_id = #up_grp_id#
+      </isNotEmpty>
+      <isEqual property="hasRoot" compareValue="N" prepend="AND">
+           grp.up_grp_id &lt;&gt; 0
+      </isEqual>
+      <isNotEmpty property="s_group_nm" prepend="AND">
+           grp.group_nm LIKE CONCAT('%', #s_group_nm#, '%')
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectGroupCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_group grp
+    <include refid="whereGroup"/>
+  </select>
+
+  <select id="selectGroupList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT grp.*
+      FROM (
+           SELECT grp.*
+             FROM tb_group grp
+    <include refid="whereGroup"/>
+         ORDER BY group_id desc
+           ) grp
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectGroup" resultClass="hashmap" parameterClass="hashmap">
+    SELECT grp.*
+      FROM tb_group grp
+     WHERE group_id = #group_id#
+  </select>
+
+  <insert id="insertGroup" parameterClass="hashmap">
+    INSERT INTO tb_group (
+                group_nm
+               ,leader_id
+               ,group_type
+               ,repr_in
+               ,up_grp_id
+               ,open_fg
+               ,group_cn
+               ,ins_usr
+               ,ins_ip
+               ,ins_dt
+               ,upd_usr
+               ,upd_ip
+               ,upd_dt
+              ) values (
+                #group_nm#
+               ,#leader_id#
+               ,#group_type#
+               ,#repr_in#
+               ,#up_grp_id#
+               ,#open_fg#
+               ,#group_cn#
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+              )
+  </insert>
+
+  <update id="updateGroup" parameterClass="hashmap">
+    UPDATE tb_group SET
+           group_nm = #group_nm#
+    <isNotEmpty property="group_cn">
+          ,group_cn = #group_cn#
+    </isNotEmpty>
+    <isNotEmpty property="leader_id">
+          ,leader_id = #leader_id#
+    </isNotEmpty>
+    <isNotEmpty property="group_type">
+          ,group_type = #group_type#
+    </isNotEmpty>
+    <isNotEmpty property="repr_in">
+          ,repr_in = #repr_in#
+    </isNotEmpty>
+    <isNotEmpty property="file_id">
+          ,file_id = #file_id#
+    </isNotEmpty>
+    <isNotEmpty property="use_fg">
+          ,use_fg = #use_fg#
+    </isNotEmpty>
+    <isNotEmpty property="open_fg">
+          ,open_fg = #open_fg#
+    </isNotEmpty>
+          ,upd_usr = #usr_id#
+          ,upd_ip = #usr_ip#
+          ,upd_dt = now()
+     WHERE group_id = #group_id#
+  </update>
+
+  <update id="deleteGroupFlag" parameterClass="hashmap">
+    UPDATE tb_group SET
+           use_fg = 'N'
+     WHERE group_id = #group_id#
+  </update>
+
+  <delete id="deleteGroup" parameterClass="hashmap">
+    DELETE
+      FROM tb_group
+     WHERE group_id = #group_id#
+  </delete>
+
+
+  <!-- tb_user_group_rel -->
+  <statement id="create_tb_user_group_rel">
+    CREATE TABLE `tb_user_group_rel` (
+      `rel_id` INT(11) NOT NULL AUTO_INCREMENT,
+      `user_id` INT(11) NOT NULL,
+      `group_id` INT(11) NOT NULL,
+      `user_role` VARCHAR(12) NOT NULL DEFAULT '01',
+      `ins_usr` INT(11),
+      `ins_ip` VARCHAR(60),
+      `ins_dt` DATETIME,
+      `upd_usr` INT(11),
+      `upd_ip` VARCHAR(60),
+      `upd_dt` DATETIME,
+      UNIQUE KEY (`user_id`, `group_id`),
+      PRIMARY KEY (`rel_id`)
+    ) COLLATE='utf8_general_ci' ENGINE=InnoDB;
+  </statement>
+
+  <insert id="insertUserGroup" parameterClass="hashmap">
+    INSERT INTO tb_user_group_rel (
+                user_id
+               ,group_id
+               ,user_role
+               ,ins_usr
+               ,ins_ip
+               ,ins_dt
+               ,upd_usr
+               ,upd_ip
+               ,upd_dt
+              ) values (
+                #user_id#
+               ,#group_id#
+               ,#user_role#
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+              )
+  </insert>
+
+  <update id="updateUserGroup" parameterClass="hashmap">
+    UPDATE tb_user_group_rel SET
+           user_role = #user_role#
+          ,upd_usr = #usr_id#
+          ,upd_ip = #usr_ip#
+          ,upd_dt = now()
+     WHERE user_id = #user_id#
+       AND group_id = #group_id#
+  </update>
+
+  <delete id="deleteUserGroup" parameterClass="hashmap">
+    DELETE
+      FROM tb_user_group_rel
+     WHERE user_id = #user_id#
+       AND group_id = #group_id#
+  </delete>
+
+</sqlMap>

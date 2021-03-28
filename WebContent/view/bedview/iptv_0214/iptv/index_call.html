@@ -1,0 +1,735 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+ <head>
+  <title> 병상용TV </title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/innks/NanumSquare/master/NanumSquare.min.css">
+  <link rel="stylesheet" type="text/css" href="css/color.css">
+  <link rel="stylesheet" type="text/css" href="/css/design.css">
+  <link rel="stylesheet" type="text/css" href="scss/btn.css">
+  <style>
+          .ns_top{
+              width: 1920px ;
+              height: 100px;
+              float: left;
+              text-align: center;
+              background-color: rgba( 40,75,124,0.5);
+              border-radius: 0% 0% 10% 10%;
+          }
+          
+          .if_title {
+          color: white;
+          font-size: 4em;
+          font-family: "NanumSquare";
+          font-weight: bolder;
+          margin: 10px;
+          }
+          
+          .ns_top2  {
+          width: 1920px ;
+          height: 93px;
+          float: left;
+          text-align: center;
+          background-color: rgba( 40,75,124,1);
+          border-radius: 0% 0% 18% 18%;
+          }
+          
+          .ns_mid   {
+          width: 1920px ;
+          height: 748px;
+          float: left;
+          text-align: center;
+          margin: 1px 0px;
+          padding: 0px;
+          }
+          
+          .ns_mid_l {
+          width: 952px;
+          height: 748px;
+          float: left;
+          margin: 0px 2px 0px 4px;
+          background-color: d2d2d2;
+          border-radius: 3%;
+          }
+          
+          .ns_mid_r {
+          width: 952px;
+          height: 748px;
+          float: right;
+          margin: 0px 4px 0px 2px;
+          background-color: d2d2d2;
+          border-radius: 3%;
+          }
+          
+          .ns_bt    {
+          width: 1920px ;
+          height: 230px;
+          float: left;
+          text-align: center;
+          margin: 0px;
+          padding: 0px;
+          background-color: rgba(40,75,124,0.5);
+          border-radius: 10% 10% 0% 0%;
+          }
+          
+          .ns_bt2 {
+          width: 1920px ;
+          height: 225px;
+          float: left;
+          text-align: center;
+          margin-top: 5px;
+          padding: 0px;
+          background-color: rgba(40,75,124,1);
+          border-radius: 18% 18% 0% 0%;
+          }
+          
+          .ns_bt_l {
+          width: 758px ;
+          height: 223px;
+          float: left;
+          text-align: center;
+          margin-top: 0px;
+          padding: 0px;
+          border-radius: 3%;
+          }
+          
+          .ns_bt_r {
+          width: 1158px ;
+          height: 223px;
+          float: left;
+          text-align: center;
+          margin-top: 0px;
+          padding: 0px;
+          border-radius: 3%;
+          }
+          
+          .bt_title {
+          color: black;
+          font-size: 2em;
+          font-family: "NanumSquare";
+          font-weight: bolder;
+          margin: 5px 40px;
+          
+          }
+          
+          .bt_bar_title{
+          max-width: 300px;
+          height: 30;
+          background-color: #fff;
+          border-radius: 20px;
+          display:inline-block; 
+          margin: 10px; 0;
+          }
+          table.type08   {
+          border-collapse: collapse;
+          text-align: left;
+          line-height: 1.5;
+          margin: 20px 10px;
+          }
+          
+          
+          table.type08 thead th {
+          padding: 0px;
+          font-weight: bold;
+          border-bottom: 2px solid #c00;
+          background: #dcdcd1;
+          text-align: center;
+          border-right: 2px solid #ccc;
+          border-radius: 25px 0px 0px 0px;
+          }
+          table.type08 tbody th {
+          width: 150px;
+          padding: 0px;
+          font-size: 1.624em;
+          font-weight: bold;
+          vertical-align: top;
+          border-top: 1px solid #ccc;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;	
+          background: #ececec;
+          text-align: center;
+          }
+          
+          table.type08 td {
+          width: 350px;
+          padding: 0px;
+          font-size: 1.3em;
+          font-weight: bold;
+          color: #fff;
+          vertical-align: top;
+          border-top: 1px solid #ccc;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+          border-left: 1px solid #ccc;
+          text-align: center;
+          }
+          table.type09 {
+          border-collapse: collapse;
+          text-align: left;
+          line-height: 1.5;
+          border-left: 1px solid #ccc;
+          margin: 3px 15px;
+          }
+          table.type09 thead th {
+          padding: 0px;
+          font-weight: bold;
+          border-top: 3px solid #ccc;
+          border-right: 3px solid #ccc;
+          border-bottom: 3px solid #ccc;
+          background: #dcdcd1;
+          text-align: center;
+          border-radius: 15px 0px 0px 0px;
+          }
+          table.type09 tbody th {
+          width: 150px;
+          padding: 0px;
+          font-size: 1.624em;
+          font-weight: bold;
+          vertical-align: middle;
+          border-top: 3px solid #ccc;
+          border-right: 3px solid #ccc;
+          border-bottom: 3px solid #ccc;
+          background: #ececec;
+          text-align: center;
+          }
+          table.type09 td {
+          width: 350px;
+          padding: 0px;
+          font-size: 1.3em;
+          font-weight: bold;
+          color: #fff;
+          vertical-align: middle;
+          border-top: 3px solid #ccc;
+          border-right: 3px solid #ccc;
+          border-bottom: 3px solid #ccc;
+          text-align: center;
+          }
+          
+          table.type07   {
+          border-collapse: collapse;
+          text-align: left;
+          line-height: 1.5;
+          margin: 20px 10px;
+          }
+          
+          
+          table.type07 thead th {
+          padding: 0px;
+          font-weight: bold;
+          border-bottom: 2px solid #c00;
+          background: #dcdcd1;
+          text-align: center;
+          border-right: 2px solid #ccc;
+          border-radius: 0px;
+          }
+          table.type07 tbody th {
+          width: 150px;
+          padding: 0px;
+          font-size: 1.624em;
+          font-weight: bold;
+          vertical-align: top;
+          border-top: 1px solid #ccc;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;	
+          background: #ececec;
+          text-align: center;
+          }
+          
+          table.type07 td {
+          width: 350px;
+          height: 45px;
+          margin: 0px;
+          padding: 0px;
+          font-size: 1.4em;
+          font-weight: bold;
+          color: #000;
+          vertical-align: center;
+          border-right: 1px solid #ccc;
+          border-bottom: 1px solid #ccc;
+          border-left: 1px solid #ccc;
+          text-align: center;
+          }
+          
+          
+          table.type07 .even {
+          background: rgba(0,0,0,0.15);
+          .bt_bar_v{        
+          height: 180px;
+          border-left: 6px solid #fff;
+          border-radius: 4px;
+          position: absolute;
+          left: 749px;
+          top: 890px;
+          }
+          </style>
+</head>
+  <body  style="margin: 0px; padding: 0px;">
+     <div>
+         <div class="ns_top">
+           <div class="ns_top2">
+             <div style="width:15%; float:left;"><p class="if_title">M-tv</p></div>
+             <div style="width:70%; float:left;"><p class="if_title">제5병동 병실현황판</p></div>
+             <div style="width:10%; float:left; margin: 10px;"><p class="if_title" style="font-size: 1.6em;">2018-12-12<br>15:00 금요일</p></div>
+          </div>
+        	</div>
+		
+		<div class="ns_mid">
+		<div class="ns_mid_l">
+		   <table class="type07">
+		     <thead>
+               <tr>
+			    <th style="height: 70px; font-size: 1.5em; width: 5%;">순번</th>
+                <th style="font-size: 1.8em; width: 8%;">병실</th>
+				<th style="font-size: 1.8em; width: 10%;">이름</th>
+				<th style="font-size: 1.5em; width: 5%;">성별</th>
+				<th style="font-size: 1.5em; width: 5%;">나이</th>
+				<th style="font-size: 1.8em; width: 10%;">진료과</th>
+				<th style="font-size: 1.8em; width: 10%;">주치의</th>
+				<th style="font-size: 1.8em; width: 10%;">입원일</th>
+				<th style="font-size: 1.8em;">기타 / 메모</th>
+				</tr>
+              </thead>
+			  <tbody>
+			     <tr>
+				   <td>1</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>2</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr>
+				   <td>3</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>4</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				  <tr>
+				   <td>5</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>6</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr>
+				   <td>7</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>8</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 			     <tr>
+				   <td>9</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>10</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr>
+				   <td>11</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>12</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				  <tr>
+				   <td>13</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>14</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				
+			  </tbody>
+			  </table>
+		</div>
+		<div class="ns_mid_r">
+				   <table class="type07">
+		     <thead>
+               <tr>
+			    <th style="height: 70px; font-size: 1.5em; width: 5%;">순번</th>
+                <th style="font-size: 1.8em; width: 8%;">병실</th>
+				<th style="font-size: 1.8em; width: 10%;">이름</th>
+				<th style="font-size: 1.5em; width: 5%;">성별</th>
+				<th style="font-size: 1.5em; width: 5%;">나이</th>
+				<th style="font-size: 1.8em; width: 10%;">진료과</th>
+				<th style="font-size: 1.8em; width: 10%;">주치의</th>
+				<th style="font-size: 1.8em; width: 10%;">입원일</th>
+				<th style="font-size: 1.8em;">기타 / 메모</th>
+				</tr>
+              </thead>
+			  <tbody>
+			     <tr>
+				   <td>15</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>16</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr>
+				   <td>17</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>18</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				  <tr>
+				   <td>19</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>20</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr>
+				   <td>21</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>22</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 			     <tr>
+				   <td>23</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>24</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr>
+				   <td>25</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>26</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				  <tr>
+				   <td>27</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				 <tr class="even">
+                   <td>28</td>
+                   <td>501호</td>
+				   <td>홍길동</td>
+				   <td>남</td>
+				   <td>32</td>
+				   <td>OS</td>
+				   <td>김병원</td>
+				   <td>2018/02/12</td>
+				   <td>12:30분 수액투여</td>
+				 </tr>
+				
+			  </tbody>
+			  </table>
+		</div>
+		</div>
+		<div class="ns_bt"><div class="ns_bt2">
+		<div class="ns_bt_l">
+		   <div class="bt_bar_title"><p class="bt_title">입/퇴원 현황</p>
+		   </div>
+
+
+		   
+		  <div>
+		     <table class="type08" style="width:30%; float: left;">
+              <thead>
+               <tr>
+                <th scope="cols" style="font-size: 1.8em">입원</th>
+				</tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td scope="row" style="font-size: 3em">10명</td>
+				</tr>
+              </tbody>
+			 </table>			
+			  <table class="type08" style="width:30%; float: left;">
+              <thead>
+               <tr>
+                <th scope="cols" style="font-size: 1.8em">퇴원</th>
+				</tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td scope="row" style="font-size: 3em">10명</td>
+				</tr>
+              </tbody>
+			 </table>			
+			 <table class="type08" style="width:30%; float: left;">
+              <thead>
+               <tr>
+                <th scope="cols" style="font-size: 1.8em">재원</th>
+				</tr>
+              </thead>
+              <tbody>
+               <tr>
+                <td scope="row" style="font-size: 3em">10명</td>
+				</tr>
+              </tbody>
+			 </table>				
+		  </div>
+		  </div>
+          <div class="bt_bar_v"></div>
+
+		  <div class="ns_bt_r"><div class="bt_bar_title"><p class="bt_title">호출 현황</p></div>
+		    <div>
+			 <table class="type09" style="width:47%; float: left;">             
+                <tr>
+                  <th scope="row" style="width: 15%;">101호</th>
+                  <td style="width: 50%;">수액을 제거해주세요.</td>
+				  <td style="width: 25%;">AM 11:37</td>
+				  <td style="width: 10%;">X</td>
+               </tr>
+              </table>
+			  <table class="type09" style="width:47%; float: left;">    
+               <tr>
+                  <th scope="row" style="width: 15%;">102호</th>
+                  <td style="width: 50%;">시트를 교체해 주세요.</td>
+				  <td style="width: 25%;">PM 11:31</td>
+				  <td style="width: 10%;">X</td>
+                </tr>
+			</table>
+			 <table class="type09" style="width:47%; float: left;">    
+             <tr>
+                 <th scope="row" style="width: 15%;">103호</th>
+                  <td style="width: 50%;">약을 확인해 주세요.</td>
+				  <td style="width: 25%;">PM 5:37</td>
+				  <td style="width: 10%;">X</td>
+             </tr>
+			 </table>
+		     <table class="type09" style="width:47%; float: left;">             
+                <tr>
+                  <th scope="row" style="width: 15%;">104호</th>
+                  <td style="width: 50%;">너무 소란스러워요.</td>
+				  <td style="width: 25%;">AM 7:37</td>
+				  <td style="width: 10%;">X</td>
+               </tr>
+              </table>
+			  <table class="type09" style="width:47%; float: left;">    
+               <tr>
+                  <th scope="row" style="width: 15%;">105호</th>
+                  <td style="width: 50%;">일반호출(기타)</td>
+				  <td style="width: 25%;">PM 10:22</td>
+				  <td style="width: 10%;">X</td>
+                </tr>
+			</table>
+			 <table class="type09" style="width:47%; float: left;">    
+             <tr>
+                 <th scope="row" style="width: 15%;">106호</th>
+                  <td style="width: 50%;">청소가 필요 합니다.</td>
+				  <td style="width: 25%;">AM 7:37</td>
+				  <td style="width: 10%;">X</td>
+             </tr>
+			 </table>
+			 </div>
+			 
+           
+		</div>
+		
+		</div>
+		</div>
+	 </div>
+  </body>
+  
+</html>

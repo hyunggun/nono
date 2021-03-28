@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="operation">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+	<resultMap id="operationMap" class="java.util.HashMap">
+       <result column="OperationNumber" property="operation_id" javaType="java.lang.Integer"/>
+       <result column="OperationName" property="operation_nm" javaType="java.lang.String"/>
+       <result column="DepartmentName" property="department_nm" javaType="java.lang.String"/>
+       <result column="Jupsusigan" property="accept_time" javaType="java.lang.String"/>
+       <result column="Yeayaksigan" property="reserv_time" javaType="java.lang.String"/>
+       <result column="AGE_SEX" property="age_sex" javaType="java.lang.String"/>
+       <result column="NOTE" property="notice" javaType="java.lang.String"/>
+       <result column="GoaMok" property="emr_doctor_key" javaType="java.lang.String"/>
+  </resultMap>
+
+  <!-- tb_operation -->
+  <statement id="create_tb_operation">
+    CREATE TABLE `tb_operation` (
+		  `operation_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+		  `operation_nm` varchar(120) DEFAULT NULL,
+		  `reg_no` varchar(120) DEFAULT NULL COMMENT 'registration number or chart number',
+		  `phone` varchar(30) DEFAULT NULL,
+		  `birthday` char(8) DEFAULT NULL,
+		  `use_fg` enum('Y','N') DEFAULT 'Y',
+		  `createdAt` datetime DEFAULT NULL,
+		  `updatedAt` datetime DEFAULT NULL,
+		  PRIMARY KEY (`operation_id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  </statement>
+
+  <!-- tb_operation -->
+  <sql id="whereOperation">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="s_operation_nm" prepend="AND">
+           operation_nm LIKE CONCAT('%', #s_operation_nm#, '%')
+      </isNotEmpty>
+      <isNotEmpty property="operation_id" prepend="AND">
+           operation_id = #operation_id#
+      </isNotEmpty>
+      <isNotEmpty property="hospital_id" prepend="AND">
+           hospital_id = #hospital_id#
+      </isNotEmpty>
+      <isNotEmpty property="reg_no" prepend="AND">
+           reg_no = #reg_no#
+      </isNotEmpty>
+      <isNotEmpty property="use_fg" prepend="AND">
+           use_fg = #use_fg#
+      </isNotEmpty>
+      <isNotEmpty property="search_text">
+      		 <isEqual property="search_type" compareValue="N" prepend="AND">
+						  operation_id in (select ptnt.operation_id from tb_operation ptnt where ptnt.operation_nm LIKE CONCAT('%', #search_text#, '%') )
+					 </isEqual>
+					 <isEqual property="search_type" compareValue="B" prepend="AND">
+						  operation_id in (select ptnt.operation_id from tb_operation ptnt where ptnt.birthday LIKE CONCAT('%', #search_text#, '%') )
+					 </isEqual>
+					 <isEqual property="search_type" compareValue="R" prepend="AND">
+						  operation_id in (select ptnt.operation_id from tb_operation ptnt where ptnt.reg_no LIKE CONCAT('%', #search_text#, '%') )
+					 </isEqual>
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectOperationCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_operation
+    <include refid="whereOperation"/>
+  </select>
+
+  <select id="selectOperationList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT ptnt.*
+      FROM (
+           SELECT ptnt.*
+             FROM tb_operation ptnt
+    <include refid="whereOperation"/>
+         ORDER BY createdAt
+           ) ptnt
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectOperation" resultClass="hashmap" parameterClass="hashmap">
+    SELECT ptnt.*
+      FROM tb_operation ptnt
+    <include refid="whereOperation"/>
+     ORDER BY createdAt
+  </select>
+  
+  <select id="selectOperationIdByCode" resultClass="int" parameterClass="hashmap">
+    SELECT IFNULL((SELECT ptnt.operation_id
+			FROM tb_operation ptnt
+			WHERE ptnt.reg_no = #operation_code#
+			LIMIT 1),0)
+  </select>
+
+  <insert id="insertOperation" parameterClass="hashmap">
+    INSERT INTO tb_operation (
+                operation_nm
+               ,phone
+               ,birthday
+               ,reg_no
+               ,use_fg
+               ,createdAt
+               ,updatedAt
+              ) values (
+                #operation_nm#
+               ,#phone#
+               ,#birthday#
+               ,#reg_no#
+               ,IFNULL(#use_fg#, 'Y')
+               ,now()
+               ,now()
+              )
+   <selectKey keyProperty="operation_id" resultClass="int">
+     SELECT LAST_INSERT_ID()
+	 </selectKey>
+  </insert>
+
+  <update id="updateOperation" parameterClass="hashmap">
+    UPDATE tb_operation SET
+           use_fg = IFNULL(#use_fg#, 'Y')
+    <isNotEmpty property="operation_nm">
+          ,operation_nm = #operation_nm#
+    </isNotEmpty>
+    <isNotEmpty property="reg_no">
+          ,reg_no = #reg_no#
+    </isNotEmpty>
+    <isNotEmpty property="phone">
+          ,phone = #phone#
+    </isNotEmpty>
+    <isNotNull property="birthday">
+          ,birthday = #birthday#
+    </isNotNull>
+    WHERE operation_id = #operation_id#
+  </update>
+
+  <delete id="deleteOperation" parameterClass="hashmap">
+    UPDATE tb_operation SET
+           use_fg = 'N'
+     WHERE operation_id = #operation_id#
+  </delete>
+
+</sqlMap>

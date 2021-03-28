@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="inpatient">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <resultMap id="inpatientMap" class="java.util.HashMap">
+       <result column="INPATIENT_KEY" property="building_no" javaType="java.lang.String"/>
+       <result column="ROOM" property="room_no" javaType="java.lang.String"/>
+       <result column="ROOM" property="room_nm" javaType="java.lang.String"/>
+       <result column="BEDPOS" property="BEDPOS" javaType="java.lang.String"/>
+       <result column="CHARTNO" property="patient_no" javaType="java.lang.String"/>
+       <result column="PATNM" property="patient_nm" javaType="java.lang.String"/>
+       <result column="SEXAGE" property="age" javaType="java.lang.String"/>
+       <result column="AGE" property="age" javaType="java.lang.String"/>
+       <result column="GENDER" property="gender" javaType="java.lang.String"/>
+       <result column="SICKNM" property="SICKNM" javaType="java.lang.String"/>
+       <result column="DIAGCD" property="DIAGCD" javaType="java.lang.String"/>
+       <result column="DIAGNM" property="dept" javaType="java.lang.String"/>
+       <result column="DOCT" property="DOCT" javaType="java.lang.String"/>
+       <result column="DOCTNM" property="doctor_nm" javaType="java.lang.String"/>
+       <result column="DTDIAGCD" property="DTDIAGCD" javaType="java.lang.String"/>
+       <result column="WARD" property="WARD" javaType="java.lang.String"/>
+       <result column="INDAT" property="addt" javaType="java.lang.String"/>
+<!--
+  <result column="INROOM_FG" property="inRoom_fg" javaType="java.lang.String"/>
+  <result column="ADST" property="adst" javaType="java.lang.String"/>
+  <result column="DSDT" property="dsdt" javaType="java.lang.String"/>
+  <result column="OPDT" property="opdt" javaType="java.lang.String"/>
+  <result column="PTDS" property="ptds" javaType="java.lang.String"/>
+-->
+  </resultMap>
+
+  <select id="selectInpatientCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM VWNAMEPAPER_INPATLIST emrinp
+    <dynamic prepend="WHERE">
+      <!--
+      <isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+      </isEmpty>
+      <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="inpatientKey" prepend="AND">
+           INPATIENT_KEY = #inpatientKey#
+      </isNotEmpty>
+      <isNotEmpty property="inRoomFg" prepend="AND">
+           INROOM_FG = #inRoomFg#
+      </isNotEmpty>
+      <isNotEmpty property="adst" prepend="AND">
+           ADST = #adst#
+      </isNotEmpty>
+      <isNotEmpty property="srchdt" prepend="AND">
+           #srchdt# between ADDT and DSDT
+      </isNotEmpty>
+    -->
+
+      <isNotEmpty property="roomNo" prepend="AND">
+           ROOM_NO = #roomNo#
+      </isNotEmpty>
+
+      <isNotEmpty property="sPatientName" prepend="AND">
+           PATNM LIKE '%' || #sPatientName# || '%'
+      </isNotEmpty>
+    </dynamic>
+  </select>
+
+  <select id="selectInpatientList" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+           SELECT CONCAT(CONCAT(emrinp.DIAGCD, emrinp.ROOM), emrinp.CHARTNO)as INPATIENT_KEY
+                 ,emrinp.ROOM
+                 ,emrinp.BEDPOS
+                 ,emrinp.CHARTNO
+                 ,emrinp.PATNM
+                 ,emrinp.SEXAGE
+                 ,substr(emrinp.SEXAGE,0, 1)as GENDER
+                 ,substr(emrinp.SEXAGE,3, 5)as AGE
+                 ,emrinp.INDAT
+                 ,emrinp.SICKNM
+                 ,emrinp.DIAGCD
+                 ,emrinp.DIAGNM
+                 ,emrinp.DOCT
+                 ,emrinp.DOCTNM
+                 ,emrinp.DTDIAGCD
+                 ,emrinp.WARD
+                 , CASE emrinp.BEDPOS WHEN '3' THEN '4'
+                                      WHEN '4' THEN '3'
+                                      ELSE emrinp.BEDPOS
+                  END as prioirty
+             FROM VWNAMEPAPER_INPATLIST emrinp
+    <dynamic prepend="WHERE">
+      <!--
+      <isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+      </isEmpty>
+      <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="inRoomFg" prepend="AND">
+                  INROOM_FG = #inRoomFg#
+      </isNotEmpty>
+      <isNotEmpty property="adst" prepend="AND">
+                  ADST = #adst#
+      </isNotEmpty>
+      <isNotEmpty property="inpatientKey" prepend="AND">
+                  INPATIENT_KEY = #inpatientKey#
+      </isNotEmpty>
+      <isNotEmpty property="srchdt" prepend="AND">
+           				#srchdt# between ADDT and DSDT
+      </isNotEmpty>
+      <isEqual property="search_type" compareValue="PN" prepend="AND">
+                PATIENT_NO LIKE ('%' || #search_text# || '%')
+      </isEqual>
+      -->
+      <isNotEmpty property="roomNo" prepend="AND">
+                  ROOM = #roomNo#
+      </isNotEmpty>
+      <isNotEmpty property="sPatientName" prepend="AND">
+                  PATNM LIKE '%' || #sPatientName# || '%'
+      </isNotEmpty>
+      <isNotEmpty property="search_text">
+				<isEqual property="search_type" compareValue="P" prepend="AND">
+	                PATNM LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="R" prepend="AND">
+	                ROOM LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="RN" prepend="AND">
+	                ROOM LIKE ('%' || #search_text# || '%')
+				</isEqual>
+			</isNotEmpty>
+    </dynamic>
+           ) emrinp
+    <isNotEmpty property="lastRowNum">
+     WHERE rownum &lt;= #lastRowNum#
+    </isNotEmpty>
+    ORDER BY  prioirty
+  </select>
+
+  <select id="selectInpatient" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+           SELECT CONCAT(CONCAT(emrinp.DIAGCD, emrinp.ROOM), emrinp.CHARTNO)as INPATIENT_KEY
+                 ,emrinp.ROOM
+                 ,emrinp.BEDPOS
+                 ,emrinp.CHARTNO
+                 ,emrinp.PATNM
+                 ,emrinp.SEXAGE
+                 ,substr(emrinp.SEXAGE,0, 1)as GENDER
+                 ,substr(emrinp.SEXAGE,3, 5)as AGE
+                 ,emrinp.INDAT
+                 ,emrinp.SICKNM
+                 ,emrinp.DIAGCD
+                 ,emrinp.DIAGNM
+                 ,emrinp.DOCT
+                 ,emrinp.DOCTNM
+                 ,emrinp.DTDIAGCD
+                 ,emrinp.WARD
+             FROM VWNAMEPAPER_INPATLIST emrinp
+             ) emrinp
+     WHERE PATIENT_NO = #patientNo#
+     <!--
+     <isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+     </isEmpty>
+     <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="srchdt" prepend="AND">
+           #srchdt# between ADDT and DSDT
+      </isNotEmpty>
+     -->
+    <isNotEmpty property="roomNo" prepend="AND">
+           ROOM = #roomNo#
+    </isNotEmpty>
+    <isNotEmpty property="inpatientKey" prepend="AND">
+           INPATIENT_KEY = #inpatientKey#
+    </isNotEmpty>
+  </select>
+
+</sqlMap>

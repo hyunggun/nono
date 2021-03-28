@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="notice">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+	<resultMap id="noticeMap" class="java.util.HashMap">
+       <result column="notice_id" property="notice_id" javaType="java.lang.Integer"/>
+       <result column="writer_id" property="writer_id" javaType="java.lang.Integer"/>
+       <result column="title" property="title" javaType="java.lang.String"/>
+       <result column="content" property="content" javaType="java.lang.String"/>
+       <result column="due_de" property="due_de" javaType="java.lang.String"/>
+       <result column="posi_type" property="posi_type" javaType="java.lang.String"/>
+       <result column="single_multi" property="single_multi" javaType="java.lang.String"/>
+       <result column="use_fg" property="use_fg" javaType="java.lang.String"/>
+       <result column="createdAt" property="createdAt" javaType="java.lang.String"/>
+       <result column="updatedAt" property="updatedAt" javaType="java.lang.String"/>
+       
+       <result column="writer_nm" property="writer_nm" javaType="java.lang.String"/>
+       <result column="writed_dttm" property="writed_dttm" javaType="java.lang.String"/>
+  </resultMap>
+
+  <resultMap id="targetMap" class="java.util.HashMap">
+       <result column="content" property="content" javaType="java.lang.String"/>
+       <result column="user_nm" property="user_nm" javaType="java.lang.String"/>
+       <result column="sign_id" property="sign_id" javaType="java.lang.String"/>
+       <result column="notice_id" property="notice_id" javaType="java.lang.Integer"/>
+       <result column="target_id" property="target_id" javaType="java.lang.Integer"/>
+  </resultMap>
+
+  <!-- tb_notice -->
+  <statement id="create_tb_notice">
+CREATE TABLE `tb_notice` (
+  `notice_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `writer_id` int(11) DEFAULT '0',
+  `title` varchar(100) DEFAULT NULL,
+  `content` varchar(300) DEFAULT NULL,
+  `due_de` char(8) DEFAULT '21991231',
+  `posi_type` enum('T','B','R') DEFAULT 'T' COMMENT 'T 현황판 B 침상용 R 입원실용',
+  `single_multi` enum('S','M'),
+  `use_fg` enum('Y','N') DEFAULT 'Y',
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`notice_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  </statement>
+
+  <!-- tb_notice -->
+  <sql id="whereNotice">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="s_title" prepend="AND">
+           ntc.title LIKE ('%' || #s_title# || '%')
+      </isNotEmpty>
+      <isNotEmpty property="s_content" prepend="AND">
+           ntc.content LIKE ('%' || #s_content# || '%')
+      </isNotEmpty>
+      <isNotEmpty property="writer_id" prepend="AND">
+           ntc.writer_id = #writer_id#
+      </isNotEmpty>
+      <isNotEmpty property="posi_type" prepend="AND">
+           ntc.posi_type = #posi_type#
+      </isNotEmpty>
+      <isNotEmpty property="single_multi" prepend="AND">
+           ntc.single_multi = #single_multi#
+      </isNotEmpty>
+			<isNotEmpty property="use_fg" prepend="AND">
+	           ntc.use_fg = #use_fg#
+			</isNotEmpty>
+			<isNotEmpty property="search_text">
+				<isEqual property="search_type" compareValue="W" prepend="AND">
+	           usr.user_nm LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="C" prepend="AND">
+	           ntc.content LIKE ('%' || #search_text# || '%')
+				</isEqual>
+			</isNotEmpty>
+			<isNotEmpty property="skipResults">
+	     		 rownums >= #skipResults#
+	    </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectNoticeCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_notice ntc
+      JOIN tb_user usr
+        ON usr.user_id = ntc.writer_id
+    <include refid="whereNotice"/>
+  </select>
+
+  <select id="selectNoticeList" resultMap="noticeMap" parameterClass="hashmap">
+    SELECT ntc.*
+      FROM (
+           SELECT ntc.*
+                 ,usr.user_nm as writer_nm
+                 ,ntc.updatedAt as writed_dttm
+             FROM tb_notice ntc
+             LEFT JOIN tb_user usr
+               ON usr.user_id = ntc.writer_id
+    <include refid="whereNotice"/>
+         ORDER BY ntc.createdAt
+           ) ntc
+    <isNotEmpty property="maxResults">
+     WHERE rownums &lt;= #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectNotice" resultMap="noticeMap" parameterClass="hashmap">
+           SELECT ntc.*
+                 ,usr.user_nm as writer_nm
+                 ,ntc.updatedAt as writed_dttm
+             FROM tb_notice ntc
+             LEFT JOIN tb_user usr
+               ON usr.user_id = ntc.writer_id
+            WHERE ntc.notice_id = #notice_id#
+  </select>
+
+  <insert id="insertNotice" parameterClass="hashmap">
+    INSERT INTO tb_notice (
+                title
+               ,content
+               ,writer_id
+               ,due_de
+               ,posi_type
+               ,single_multi
+               ,createdAt
+               ,updatedAt
+              ) values (
+                #title#
+               ,#content#
+               ,#usr_id#
+               ,#due_de#
+               ,#posi_type#
+               ,#single_multi#
+               ,now()
+               ,now()
+              )
+  </insert>
+
+  <update id="updateNotice" parameterClass="hashmap">
+    UPDATE tb_notice SET
+           updatedAt = now()
+    <isNotNull property="title">
+          ,title = #title#
+    </isNotNull>
+    <isNotNull property="content">
+          ,content = #content#
+    </isNotNull>
+    <isNotNull property="due_de">
+          ,due_de = #due_de#
+    </isNotNull>
+    <isNotNull property="single_multi">
+          ,single_multi = #single_multi#
+    </isNotNull>
+    <isNotNull property="posi_type">
+          ,posi_type = #posi_type#
+    </isNotNull>
+     WHERE notice_id = #notice_id#
+  </update>
+
+  <delete id="deleteNotice" parameterClass="hashmap">
+    DELETE
+      FROM tb_notice
+     WHERE notice_id = #notice_id#
+  </delete>
+
+
+  <!-- tb_notice_target -->
+  <statement id="create_tb_notice_target">
+CREATE TABLE `tb_notice_target` (
+  `notice_id` int(11) NOT NULL,
+  `target_id` int(11) DEFAULT '0' COMMENT 'case when 0 then all',
+  `createdAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`notice_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereNoticeTarget">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="notice_id" prepend="AND">
+           ntmc.notice_id = #notice_id#
+      </isNotEmpty>
+      <isNotEmpty property="target_id" prepend="AND">
+           ntmc.target_id = #target_id#
+      </isNotEmpty>
+      <isNotEmpty property="posi_type" prepend="AND">
+           ntc.posi_type = #posi_type#
+      </isNotEmpty>
+			<isNotEmpty property="search_text">
+				<isEqual property="search_type" compareValue="W" prepend="AND">
+	           usr.user_nm LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="M" prepend="AND">
+	           mchn.sign_id LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="MB" prepend="AND">
+	           bdv.sign_id LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="C" prepend="AND">
+	           ntc.content LIKE ('%' || #search_text# || '%')
+				</isEqual>
+			</isNotEmpty>
+    </dynamic>
+  </sql>
+  
+  <select id="selectNoticeTargetCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_notice_target ntmc
+      JOIN tb_notice ntc
+        ON ntc.notice_id = ntmc.notice_id
+      LEFT JOIN tb_user usr
+        ON usr.user_id = ntc.writer_id
+      LEFT JOIN tb_machine mchn
+        ON mchn.machine_id = ntmc.target_id
+    <include refid="whereNoticeTarget"/>
+  </select>
+
+  <select id="selectNoticeTargetList" resultMap="targetMap" parameterClass="hashmap">
+    SELECT ntmc.*
+      FROM (
+           SELECT ntc.content
+           			 ,usr.user_nm
+                 ,usr.user_nm as writer_nm
+                 ,mchn.sign_id
+                 ,ntmc.notice_id
+                 ,ntmc.target_id
+             FROM tb_notice_target ntmc
+             JOIN tb_notice ntc
+               ON ntc.notice_id = ntmc.notice_id
+             LEFT JOIN tb_user usr
+               ON usr.user_id = ntc.writer_id
+             LEFT JOIN tb_machine mchn
+        			 ON mchn.machine_id = ntmc.target_id
+    <include refid="whereNoticeTarget"/>
+         ORDER BY ntc.createdAt
+           ) ntmc
+  </select>
+  
+  <select id="selectNoticeBedviewTargetCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_notice_target ntmc
+      JOIN tb_notice ntc
+        ON ntc.notice_id = ntmc.notice_id
+      LEFT JOIN tb_user usr
+        ON usr.user_id = ntc.writer_id
+      LEFT JOIN tb_bedview bdv
+        ON bdv.bedview_id = ntmc.target_id
+    <include refid="whereNoticeTarget"/>
+  </select>
+
+  <select id="selectNoticeBedviewTargetList" resultMap="targetMap" parameterClass="hashmap">
+    SELECT ntmc.*
+      FROM (
+           SELECT ntc.content
+           			 ,usr.user_nm
+                 ,usr.user_nm as writer_nm
+                 ,bdv.sign_id
+                 ,ntmc.notice_id
+                 ,ntmc.target_id
+             FROM tb_notice_target ntmc
+             JOIN tb_notice ntc
+               ON ntc.notice_id = ntmc.notice_id
+             LEFT JOIN tb_user usr
+               ON usr.user_id = ntc.writer_id
+             LEFT JOIN tb_bedview bdv
+       	 			 ON bdv.bedview_id = ntmc.target_id
+    <include refid="whereNoticeTarget"/>
+         ORDER BY ntc.createdAt
+           ) ntmc
+  </select>
+  
+  <insert id="insertNoticeTarget" parameterClass="hashmap">
+    INSERT INTO tb_notice_target (
+                notice_id
+               ,target_id
+               ,createdAt
+              ) values (
+                #notice_id#
+               ,#target_id#
+               ,now()
+              )
+  </insert>
+
+  <delete id="deleteNoticeTarget" parameterClass="hashmap">
+    DELETE
+      FROM tb_notice_target
+     WHERE notice_id = #notice_id#
+      <isNotEmpty property="target_id" prepend="AND">
+           target_id = #target_id#
+      </isNotEmpty>
+  </delete>
+
+</sqlMap>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="code">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <!-- tb_code -->
+  <statement id="create_tb_code">
+CREATE TABLE `tb_code` (
+  `cd_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cd_nm` varchar(45) NOT NULL COMMENT '코드명',
+  `p_id` int(11) DEFAULT '0' COMMENT '상위코드id',
+  `code` varchar(12) DEFAULT NULL COMMENT '코드값(문자형)',
+  `use_fg` char(1) DEFAULT 'Y' COMMENT '사용여부',
+  `cd_cn` varchar(300) DEFAULT NULL COMMENT '코드내용',
+  PRIMARY KEY (`cd_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  </statement>
+
+  <statement id="create_fn_get_cd_nm_bycd">
+    DELIMITER $$
+    CREATE FUNCTION `fn_get_cd_nm_bycd`(`i_p_id` VARCHAR(12), `i_code` VARCHAR(12))
+      RETURNS VARCHAR(120) CHARSET utf8
+      LANGUAGE SQL
+      NOT DETERMINISTIC
+      CONTAINS SQL
+      SQL SECURITY DEFINER
+    COMMENT '코드 명칭 반환'
+    BEGIN
+      DECLARE o_cd_nm VARCHAR(120);	
+      SELECT cd_nm INTO o_cd_nm
+      FROM tb_code
+      WHERE p_id = i_p_id
+      AND code = i_code;
+      RETURN o_cd_nm;
+    END $$
+  </statement>
+
+  <statement id="create_fn_get_cd_nm_byid">
+    DELIMITER $$
+    CREATE FUNCTION `fn_get_cd_nm_byid`(`i_cd_id` int(11))
+      RETURNS VARCHAR(120) CHARSET utf8
+      LANGUAGE SQL
+      NOT DETERMINISTIC
+      CONTAINS SQL
+      SQL SECURITY DEFINER
+    COMMENT '코드 명칭 반환'
+    BEGIN
+      DECLARE o_cd_nm VARCHAR(120);	
+      SELECT cd_nm INTO o_cd_nm
+      FROM tb_code
+      WHERE id = i_cd_id;
+      RETURN o_cd_nm;
+    END $$
+  </statement>
+
+  <sql id="whereCode">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="cd_id" prepend="AND">
+           cd_id= #cd_id#
+      </isNotEmpty>
+        <isNotEmpty property="p_id" prepend="AND">
+           p_id = #p_id#
+      </isNotEmpty>
+      <isNotEmpty property="code" prepend="AND">
+           code = #code#
+      </isNotEmpty>
+      <isNotEmpty property="s_code" prepend="AND">
+           code LIKE CONCAT('%', #s_code#, '%')
+      </isNotEmpty>
+      <isNotEmpty property="s_cd_nm" prepend="AND">
+           cd_nm LIKE CONCAT('%', #s_cd_nm#, '%')
+      </isNotEmpty>
+      <isNotEmpty property="use_fg" prepend="AND">
+           use_fg = #use_fg#
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectCodeCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_code cd
+    <include refid="whereCode"/>
+  </select>
+
+  <select id="selectCodeList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT cd.*
+      FROM (
+           SELECT cd.*
+             FROM tb_code cd
+    <include refid="whereCode"/>
+         ORDER BY p_id, code
+           ) cd
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectCode" resultClass="hashmap" parameterClass="hashmap">
+    SELECT cd.*
+      FROM tb_code cd
+     WHERE cd_id = #cd_id#
+  </select>
+
+  <insert id="insertCode" parameterClass="hashmap">
+    INSERT INTO tb_code (
+                p_id
+               ,code
+               ,cd_nm
+               ,cd_cn
+              ) values (
+                #p_id#
+               ,#code#
+               ,#cd_nm#
+               ,#cd_cn#
+              )
+  </insert>
+
+  <update id="updateCode" parameterClass="hashmap">
+    UPDATE tb_code SET
+           cd_nm = #cd_nm#
+    <isNotNull property="cd_cn">
+          ,cd_cn = #cd_cn#
+    </isNotNull>
+    <isNotEmpty property="use_fg">
+          ,use_fg = #use_fg#
+    </isNotEmpty>
+     WHERE cd_id = #cd_id#
+  </update>
+
+  <update id="deleteCodeFlag" parameterClass="hashmap">
+    UPDATE tb_code SET
+           use_fg = 'N'
+     WHERE cd_id = #cd_id#
+  </update>
+
+  <delete id="deleteCode" parameterClass="hashmap">
+    DELETE
+      FROM tb_code
+     WHERE cd_id = #cd_id#
+  </delete>
+
+</sqlMap>

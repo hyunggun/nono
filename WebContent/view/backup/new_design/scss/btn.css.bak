@@ -1,0 +1,72 @@
+body {
+  background-color: #ffffff; }
+
+/* Color Themes - Variables */
+/* Common Colors - Variables */
+/* Mixins */
+/* Button Global */
+.btn_cl {
+  display: inline-block;
+  border-radius: .925em;
+  box-shadow: 0 0.375em 0.313em -0.313em rgba(0, 0, 0, 0.8), inset 0 0.063em rgba(255, 255, 255, 0.4), inset 0 -0.188em rgba(0, 0, 0, 0.15);
+  color: #FFF;
+  font: bold 1.8rem sans-serif;
+  -webkit-transition: 0.2s ease-in-out;
+  -moz-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-shadow: 0 0.063em rgba(0, 0, 0, 0.3);
+  cursor: pointer; }
+
+/* Themes */
+.purple {
+  border-color: #8e55c0;
+   background: #9A68C7 , url(/img/bg_pt.png);
+   background-repeat: repeat,no-repeat;
+   background-position: left, top left;
+   }
+  .purple:hover {
+    background-color: #8b52bf;
+    box-shadow: 0 0.125em rgba(255, 255, 255, 0.4), inset 0 0.063em rgba(255, 255, 255, 0.4), inset 0 -0.188em #9f6fca; }
+  .purple:active {
+    box-shadow: 0 0.063em rgba(255, 255, 255, 0.4), inset 0 0 1.094em #331b48, inset 0 0.063em #673693, inset 0 -0.188em #673693; }
+
+.blue {
+  border-color: #259fe1;
+  background-color: #3BA9E4; }
+  .blue:hover {
+    background-color: #209de0;
+    box-shadow: 0 0.125em rgba(255, 255, 255, 0.4), inset 0 0.063em rgba(255, 255, 255, 0.4), inset 0 -0.188em #44ade5; }
+  .blue:active {
+    box-shadow: 0 0.063em rgba(255, 255, 255, 0.4), inset 0 0 1.094em #0a3349, inset 0 0.063em #1672a3, inset 0 -0.188em #1672a3; }
+
+.green {
+  border-color: #69a03c;
+  background-color: #75B343; }
+  .green:hover {
+    background-color: #669d3b;
+    box-shadow: 0 0.125em rgba(255, 255, 255, 0.4), inset 0 0.063em rgba(255, 255, 255, 0.4), inset 0 -0.188em #7aba46; }
+  .green:active {
+    box-shadow: 0 0.063em rgba(255, 255, 255, 0.4), inset 0 0 1.094em #141f0b, inset 0 0.063em #446927, inset 0 -0.188em #446927; }
+
+.orange {
+  border-color: #ff5629;
+  background-color: #FF6A42; }
+  .orange:hover {
+    background-color: #ff5223;
+    box-shadow: 0 0.125em rgba(255, 255, 255, 0.4), inset 0 0.063em rgba(255, 255, 255, 0.4), inset 0 -0.188em #ff724c; }
+  .orange:active {
+    box-shadow: 0 0.063em rgba(255, 255, 255, 0.4), inset 0 0 1.094em #751900, inset 0 0.063em #db2e00, inset 0 -0.188em #db2e00; }
+
+.gray {
+  border-color: #c5c5c5;
+  background-color: #D2D2D2; }
+  .gray:hover {
+    background-color: #c3c3c3;
+    box-shadow: 0 0.125em rgba(255, 255, 255, 0.4), inset 0 0.063em rgba(255, 255, 255, 0.4), inset 0 -0.188em #d7d7d7; }
+  .gray:active {
+    box-shadow: 0 0.063em rgba(255, 255, 255, 0.4), inset 0 0 1.094em #6c6c6c, inset 0 0.063em #9f9f9f, inset 0 -0.188em #9f9f9f; }
+
+/*# sourceMappingURL=btn.css.map */

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="floor">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <!-- tb_bedview_floor -->
+  <statement id="create_tb_bedview_floor">
+ CREATE TABLE `tb_bedview_floor` (
+  `floor_id` int(11) NOT NULL,
+  `floor_nm` varchar(50) NOT NULL,
+  `floor_code` varchar(45) NOT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`floor_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  </statement>
+
+  <!-- tb_bedview_floor -->
+  <sql id="whereFloor">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="s_floor_nm" prepend="AND">
+           flr.floor_nm LIKE CONCAT('%', #s_floor_nm#, '%')
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectFloorCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_bedview_floor flr
+    <include refid="whereFloor"/>
+  </select>
+
+  <select id="selectFloorList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT flr.*
+      FROM (
+           SELECT flr.*
+             FROM tb_bedview_floor flr
+    <include refid="whereFloor"/>
+         ORDER BY createdAt
+           ) flr
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectFloor" resultClass="hashmap" parameterClass="hashmap">
+	  SELECT flr.*
+	    FROM tb_bedview_floor flr
+     WHERE floor_id = #floor_id#
+  </select>
+
+  <insert id="insertFloor" parameterClass="hashmap">
+    INSERT INTO tb_bedview_floor (
+               floor_nm
+               ,floor_code
+               ,createdAt
+              ) values (
+               #floor_nm#
+               ,#floor_code#
+               ,now()
+              )
+  </insert>
+
+  <update id="updateFloor" parameterClass="hashmap">
+    UPDATE tb_bedview_floor SET
+	    floor_nm = #floor_nm#
+      <isNotNull property="floor_code">
+          ,floor_code = #floor_code#
+    	</isNotNull>
+    WHERE floor_id = #floor_id#
+  </update>
+
+  <delete id="deleteFloor" parameterClass="hashmap">
+    DELETE
+      FROM tb_bedview_floor
+     WHERE floor_id = #floor_id#
+  </delete>
+
+</sqlMap>

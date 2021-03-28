@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="user">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+	<resultMap id="userMap" class="java.util.HashMap">
+       <result column="user_id" property="user_id" javaType="java.lang.Integer"/>
+       <result column="sign_id" property="sign_id" javaType="java.lang.String"/>
+       <result column="password" property="password" javaType="java.lang.String"/>
+       <result column="role" property="role" javaType="java.lang.String"/>
+       <result column="position" property="position" javaType="java.lang.String"/>
+       <result column="use_fg" property="use_fg" javaType="java.lang.String"/>
+       <result column="createdAt" property="createdAt" javaType="java.lang.String"/>
+       <result column="updatedAt" property="updatedAt" javaType="java.lang.String"/>
+	   <result column="doctor_id" property="doctor_id" javaType="java.lang.Integer"/>
+       <result column="medical_kind" property="medical_kind" javaType="java.lang.String"/>
+       <result column="color" property="color" javaType="java.lang.String"/>
+       <result column="emr_doctor_key" property="emr_doctor_key" javaType="java.lang.String"/>
+       
+       <result column="nurse_id" property="nurse_id" javaType="java.lang.Integer"/>
+       <result column="doctor_id" property="doctor_id" javaType="java.lang.Integer"/>
+  </resultMap>
+
+  <!-- tb_user -->
+  <statement id="create_tb_user">
+CREATE TABLE `tb_user` (
+  `user_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sign_id` varchar(120) NOT NULL,
+  `password` varchar(120) NOT NULL,
+  `user_nm` varchar(120) DEFAULT NULL,
+  `role` enum('S','M','D','N') DEFAULT 'N' COMMENT 'Supervisor, Manager, Doctor, Nurse',
+  `position` varchar(20) DEFAULT '',
+  `use_fg` enum('Y','N') DEFAULT 'Y',
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `sign_id` (`sign_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereUser">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="s_sign_id" prepend="AND">
+           sign_id LIKE ('%' || #s_sign_id# || '%')
+      </isNotEmpty>
+      <isNotEmpty property="user_id" prepend="AND">
+           user_id = #user_id#
+      </isNotEmpty>
+      <isNotEmpty property="role" prepend="AND">
+           role = #role#
+      </isNotEmpty>
+      <isNotEmpty property="s_user_nm" prepend="AND">
+           user_nm LIKE ('%' || #s_user_nm# || '%')
+      </isNotEmpty>
+      <isNotEmpty property="use_fg" prepend="AND">
+           use_fg = #use_fg#
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectUserCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_user usr
+    <include refid="whereUser"/>
+  </select>
+
+  <select id="selectUserList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT usr.*
+      FROM (
+           SELECT usr.*
+             FROM tb_user usr
+    <include refid="whereUser"/>
+         ORDER BY createdAt
+           ) usr
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectUser" resultClass="hashmap" parameterClass="hashmap">
+          SELECT usr.*
+            FROM tb_user usr
+	<dynamic prepend="WHERE">
+		<isNotEmpty property="user_id" prepend="AND">
+			     usr.user_id = #user_id#
+		</isNotEmpty>
+		<isNotEmpty property="sign_id" prepend="AND">
+			     usr.sign_id = #sign_id#
+		</isNotEmpty>
+	</dynamic>
+  </select>
+
+  <select id="selectMaxUserId" resultClass="int">
+    SELECT max(user_id)
+      FROM tb_user
+  </select>
+
+  <insert id="insertUser" parameterClass="hashmap">
+    INSERT INTO tb_user (
+                sign_id
+               ,password
+               ,user_nm
+               ,role
+               ,position
+               ,createdAt
+               ,updatedAt
+              ) values (
+                #sign_id#
+               ,#password#
+               ,#user_nm#
+               ,#role#
+               ,#position#
+               ,now()
+               ,now()
+              )
+  </insert>
+
+  <update id="updateUser" parameterClass="hashmap">
+    UPDATE tb_user SET
+           updatedAt = now()
+    <isNotNull property="user_nm">
+          ,user_nm = #user_nm#
+    </isNotNull>
+    <isNotNull property="password">
+          ,password = #password#
+    </isNotNull>
+    <isNotNull property="sign_id">
+          ,sign_id = #sign_id#
+    </isNotNull>
+    <isNotNull property="role">
+          ,role = #role#
+    </isNotNull>
+    <isNotNull property="position">
+          ,position = #position#
+    </isNotNull>
+    <isNotNull property="use_fg">
+          ,use_fg = #use_fg#
+    </isNotNull>
+    WHERE user_id = #user_id#
+  </update>
+  
+  <update id="resetPassword" parameterClass="hashmap">
+    UPDATE tb_user SET
+           password = #password#
+    WHERE sign_id = #sign_id#
+  </update>
+
+  <update id="dormancyUser" parameterClass="hashmap">
+    UPDATE tb_user SET
+           use_fg = 'N'
+     WHERE user_id = #user_id#
+  </update>
+
+  <delete id="deleteUser" parameterClass="hashmap">
+    DELETE
+      FROM tb_user
+     WHERE user_id = #user_id#
+  </delete>
+
+
+  <!-- tb_doctor -->
+  <statement id="create_tb_doctor">
+CREATE TABLE `tb_doctor` (
+  `doctor_id` int(11) NOT NULL DEFAULT '0',
+  `room_id` int(11) DEFAULT '0',
+  `medical_kind` varchar(120) DEFAULT NULL,
+  `emr_doctor_key` varchar(20) DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`doctor_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereDoctor">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="user_id" prepend="AND">
+           usr.user_id = #user_id#
+      </isNotEmpty>
+      <isNotEmpty property="s_user_nm" prepend="AND">
+           usr.user_nm LIKE ('%' || #s_user_nm# || '%')
+      </isNotEmpty>
+      <isNotEmpty property="room_id" prepend="AND">
+           dcr.room_id = #room_id#
+      </isNotEmpty>
+      <isNotEmpty property="emr_doctor_key" prepend="AND">
+           dcr.emr_doctor_key = #emr_doctor_key#
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectDoctorCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_doctor dcr
+      JOIN tb_user usr
+        ON usr.user_id = dcr.doctor_id
+    <include refid="whereDoctor"/>
+  </select>
+
+  <select id="selectDoctorList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT dcr.*
+      FROM (
+           SELECT dcr.*
+                 ,usr.user_id
+           			 ,usr.user_nm
+           			 ,usr.sign_id
+           			 ,usr.role
+           			 ,usr.position
+           			 ,usr.use_fg
+             FROM tb_doctor dcr
+      
+             JOIN tb_user usr
+               ON usr.user_id = dcr.doctor_id
+    <include refid="whereDoctor"/>
+         ORDER BY dcr.createdAt
+           ) dcr
+    <isNotEmpty property="nurse_id" >
+           WHERE doctor_id IN (SELECT doctor_id FROM tb_nurse nr WHERE nr.nurse_id = #nurse_id#)
+    </isNotEmpty>
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectDoctor" resultClass="hashmap" parameterClass="hashmap">
+           SELECT dcr.*
+           			 ,usr.user_id
+           			 ,usr.user_nm
+           			 ,usr.sign_id
+           			 ,usr.role
+           			 ,usr.position
+           			 ,usr.use_fg
+             FROM tb_doctor dcr
+             JOIN tb_user usr
+               ON usr.user_id = dcr.doctor_id
+            WHERE dcr.doctor_id = #doctor_id#
+  </select>
+  
+  <insert id="insertDoctor" parameterClass="hashmap">
+    INSERT INTO tb_doctor (
+                doctor_id
+               ,medical_kind
+               ,emr_doctor_key
+               ,createdAt
+               ,updatedAt
+              ) values (
+                #doctor_id#
+               ,#medical_kind#
+               ,#emr_doctor_key#
+               ,now()
+               ,now()
+              )
+  </insert>
+
+  <update id="updateDoctor" parameterClass="hashmap">
+    UPDATE tb_doctor SET
+           updatedAt = now()
+    <isNotNull property="room_id">
+          ,room_id = #room_id#
+    </isNotNull>
+    <isNotNull property="medical_kind">
+          ,medical_kind = #medical_kind#
+    </isNotNull>
+    <isNotNull property="emr_doctor_key">
+          ,emr_doctor_key = #emr_doctor_key#
+    </isNotNull>
+    <isNotNull property="color">
+          ,color = #color#
+    </isNotNull>
+    WHERE doctor_id = #doctor_id#
+  </update>
+
+  <delete id="deleteDoctor" parameterClass="hashmap">
+    DELETE
+      FROM tb_doctor
+     WHERE doctor_id = #doctor_id#
+  </delete>
+
+
+  <!-- tb_nurse -->
+  <statement id="create_tb_nurse">
+CREATE TABLE `tb_nurse` (
+  `nurse_id` int(11) NOT NULL DEFAULT '0',
+  `room_id` int(11) DEFAULT '0',
+  `doctor_id` int(11) DEFAULT '0',
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`nurse_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereNurse">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="user_id" prepend="AND">
+           usr.user_id = #user_id#
+      </isNotEmpty>
+      <isNotEmpty property="s_user_nm" prepend="AND">
+           usr.user_nm LIKE ('%' || #s_user_nm# || '%')
+      </isNotEmpty>
+      <isNotEmpty property="room_id" prepend="AND">
+           nrs.room_id = #room_id#
+      </isNotEmpty>
+      <isNotEmpty property="doctor_id" prepend="AND">
+           nrs.doctor_id = #doctor_id#
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectNurseCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_nurse nrs
+      JOIN tb_user usr
+        ON usr.user_id = nrs.nurse_id
+    <include refid="whereNurse"/>
+  </select>
+
+  <select id="selectNurseList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT nrs.*
+      FROM (
+           SELECT nrs.*
+           			 ,usr.user_id
+           			 ,usr.user_nm
+           			 ,usr.sign_id
+           			 ,usr.role
+           			 ,usr.position
+           			 ,usr.use_fg
+             FROM tb_nurse nrs
+             JOIN tb_user usr
+               ON usr.user_id = nrs.nurse_id
+    <include refid="whereNurse"/>
+         ORDER BY nrs.createdAt
+           ) nrs
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectNurse" resultClass="hashmap" parameterClass="hashmap">
+           SELECT nrs.*
+                 ,usr.user_id
+           			 ,usr.user_nm
+           			 ,usr.sign_id
+           			 ,usr.role
+           			 ,usr.position
+           			 ,usr.use_fg
+           			 ,usr2.user_nm as doctor_nm
+           			 ,dtr.emr_doctor_key as emr_doctor_key
+             FROM tb_nurse nrs
+             JOIN tb_user usr
+               ON usr.user_id = nrs.nurse_id
+        LEFT JOIN tb_user usr2
+               ON usr2.user_id = nrs.doctor_id
+        LEFT JOIN tb_doctor dtr
+               ON dtr.doctor_id = nrs.doctor_id
+            WHERE nrs.nurse_id = #nurse_id#
+  </select>
+  
+  <insert id="insertNurse" parameterClass="hashmap">
+    INSERT INTO tb_nurse (
+                nurse_id
+               ,room_id
+               ,doctor_id
+               ,createdAt
+               ,updatedAt
+              ) values (
+                #nurse_id#
+               ,#room_id#
+               ,#doctor_id#
+               ,now()
+               ,now()
+              )
+  </insert>
+
+  <update id="updateNurse" parameterClass="hashmap">
+    UPDATE tb_nurse SET
+           updatedAt = now()
+    <isNotNull property="room_id">
+          ,room_id = #room_id#
+    </isNotNull>
+    <isNotNull property="doctor_id">
+          ,doctor_id = #doctor_id#
+    </isNotNull>
+    WHERE nurse_id = #nurse_id#
+  </update>
+
+  <delete id="deleteNurse" parameterClass="hashmap">
+    DELETE
+      FROM tb_nurse
+     WHERE nurse_id = #nurse_id#
+  </delete>
+
+</sqlMap>

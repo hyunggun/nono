@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="file">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <!-- tb_file -->
+  <statement id="create_tb_file">
+CREATE TABLE `tb_file` (
+  `file_id` int(11) NOT NULL AUTO_INCREMENT,
+  `file_grp` int(11) NOT NULL,
+  `file_nm` varchar(120) NOT NULL,
+  `file_path` varchar(120) DEFAULT NULL,
+  `file_url` varchar(120) DEFAULT NULL,
+  `file_size` int(11) DEFAULT '0',
+  `file_type` varchar(60) DEFAULT NULL,
+  `set_usr` int(11) DEFAULT NULL,
+  `set_ip` varchar(60) DEFAULT NULL,
+  `set_dt` datetime DEFAULT NULL,
+  PRIMARY KEY (`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  </statement>
+
+  <sql id="whereFile">
+    <dynamic prepend="WHERE">
+      <isNotEmpty property="file_grp" prepend="AND">
+           file_grp= #file_grp#
+      </isNotEmpty>
+      <isNotEmpty property="s_file_nm" prepend="AND">
+           file_nm LIKE CONCAT('%', #s_file_nm#, '%')
+      </isNotEmpty>
+    </dynamic>
+  </sql>
+
+  <select id="selectFileCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_file file
+    <include refid="whereFile"/>
+  </select>
+
+  <select id="selectFileList" resultClass="hashmap" parameterClass="hashmap">
+    SELECT file.*
+      FROM (
+           SELECT file.*
+             FROM tb_file file
+    <include refid="whereFile"/>
+         ORDER BY file_id, file_grp
+           ) file
+    <isNotEmpty property="maxResults">
+     LIMIT
+    <isNotEmpty property="skipResults">
+     #skipResults# ,
+    </isNotEmpty>
+     #maxResults#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectFile" resultClass="hashmap" parameterClass="hashmap">
+    SELECT file.*
+      FROM tb_file file
+     WHERE file_id = #file_id#
+  </select>
+
+  <select id="selectNextFileGrp" resultClass="int">
+    SELECT IFNULL( MAX(file_grp), 0 ) + 1 as next_grp
+      FROM tb_file
+  </select>
+
+  <select id="selectMaxFileId" resultClass="int">
+    SELECT IFNULL( MAX(file_id), 0 ) as max_id
+      FROM tb_file
+  </select>
+
+  <insert id="insertFile" parameterClass="hashmap">
+    INSERT INTO tb_file (
+                file_grp
+               ,file_nm
+               ,file_path
+               ,file_url
+               ,file_size
+               ,file_type
+               ,set_usr
+               ,set_ip
+               ,set_dt
+              ) values (
+                #file_grp#
+               ,#file_nm#
+               ,#file_path#
+               ,#file_url#
+               ,#file_size#
+               ,#file_type#
+               ,#usr_id#
+               ,#usr_ip#
+               ,now()
+              )
+  </insert>
+
+  <update id="updateFile" parameterClass="hashmap">
+    UPDATE tb_file SET
+           file_nm = ifnull( #file_nm#, file_nm )
+    <isNotEmpty property="file_path">
+          ,file_path = #file_path#
+    </isNotEmpty>
+    <isNotEmpty property="file_url">
+          ,file_url = #file_url#
+    </isNotEmpty>
+    <isNotEmpty property="file_size">
+          ,file_size = #file_size#
+    </isNotEmpty>
+    <isNotEmpty property="file_type">
+          ,file_type = #file_type#
+    </isNotEmpty>
+          ,set_usr = #usr_id#
+          ,set_ip = #usr_ip#
+          ,set_dt = now()
+     WHERE file_id = #file_id#
+  </update>
+
+  <delete id="deleteFile" parameterClass="hashmap">
+    DELETE
+      FROM tb_file
+    <isEmpty property="file_id">
+      <isEmpty property="file_grp">
+     WHERE 1 = 2
+      </isEmpty>
+      <isNotEmpty property="file_grp">
+     WHERE file_grp = #file_grp#
+      </isNotEmpty>
+    </isEmpty>
+    <isNotEmpty property="file_id">
+      <isEmpty property="file_grp">
+     WHERE file_id = #file_id#
+      </isEmpty>
+      <isNotEmpty property="file_grp">
+     WHERE file_id = #file_id# AND file_grp = #file_grp#
+      </isNotEmpty>
+    </isNotEmpty>
+  </delete>
+
+</sqlMap>

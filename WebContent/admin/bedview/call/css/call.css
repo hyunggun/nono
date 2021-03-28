@@ -1,0 +1,257 @@
+@CHARSET "EUC-KR";
+.ns_top{
+	width: 100% ;
+	height: 100px;
+	float: left;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	background-color: rgba( 40,75,124,0.5);
+	border-radius: 0% 0% 10% 10%;
+}
+	
+.if_title {
+	color: white;
+	font-size: 4em;
+	font-family: "NanumSquare";
+	font-weight: bolder;
+	margin:30px 10px;
+}
+
+.ns_top2  {
+  width: 100% ;
+  height: 93px;
+  float: left;
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  background-color: red;
+  background-color: rgba( 40,75,124,1);
+  border-radius: 0% 0% 18% 18%;
+}
+
+.ns_mid   {
+	width: 100% ;
+	min-height: 500px;
+	float: left;
+	text-align: center;
+	margin: 1px 0px;
+	padding: 0px;
+}
+
+.ns_mid_l {
+	width: 49%;
+	min-height: 500px;
+	float: left;
+	margin: 0px 2px 0px 4px;
+	background-color: d2d2d2;
+	border-radius: 3%;
+}
+
+.ns_mid_r {
+	width: 49%;
+	min-height: 500px;
+	float: right;
+	margin: 0px 4px 0px 2px;
+	background-color: d2d2d2;
+	border-radius: 3%;
+}
+
+.ns_bt {
+	width: 100% ;
+	height: 230px;
+	float: left;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+	background-color: rgba(40,75,124,0.5);
+	border-radius: 10% 10% 0% 0%;
+}
+
+.ns_bt2 {
+	width: 100% ;
+	height: 225px;
+	float: left;
+	text-align: center;
+	margin-top: 5px;
+	padding: 0px;
+	background-color: rgba(40,75,124,1);
+	border-radius: 18% 18% 0% 0%;
+}
+
+.ns_bt_l {
+	width: 40%;
+	height: 223px;
+	float: left;
+	text-align: center;
+	margin-top: 0px;
+	padding: 0px;
+	border-radius: 3%;
+}
+
+.ns_bt_r {
+	width: 60%;
+	height: 223px;
+	float: left;
+	text-align: center;
+	margin-top: 0px;
+	padding: 0px;
+	border-radius: 3%;
+}
+
+.bt_title {
+	color: black;
+	font-size: 2em;
+	font-family: "NanumSquare";
+	font-weight: bolder;
+	margin: 5px 40px;
+}
+
+.bt_bar_title{
+	max-width: 300px;
+	height: 30;
+	background-color: #fff;
+	border-radius: 20px;
+	display:inline-block; 
+	margin: 10px; 0;
+}
+table.type08 {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	margin: 20px 10px;
+}
+
+
+table.type08 thead th {
+	padding: 0px;
+	font-weight: bold;
+	border-bottom: 2px solid #c00;
+	background: #dcdcd1;
+	text-align: center;
+	border-right: 2px solid #ccc;
+	border-radius: 25px 0px 0px 0px;
+}
+table.type08 tbody th {
+	width: 150px;
+	padding: 0px;
+	font-size: 1.624em;
+	font-weight: bold;
+	vertical-align: top;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;	
+	background: #ececec;
+	text-align: center;
+}
+
+table.type08 td {
+	width: 350px;
+	padding: 0px;
+	font-size: 1.3em;
+	font-weight: bold;
+	color: #fff;
+	vertical-align: top;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	text-align: center;
+}
+table.type09 {	
+  width:47%;
+  float:left;
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border-left: 1px solid #ccc;
+  margin: 3px 10px;
+}
+table.type09 thead th {
+	padding: 0px;
+	font-weight: bold;
+	border-top: 3px solid #ccc;
+	border-right: 3px solid #ccc;
+	border-bottom: 3px solid #ccc;
+	background: #dcdcd1;
+	text-align: center;
+	border-radius: 15px 0px 0px 0px;
+}
+table.type09 tbody th {
+/* 	width: 150px; */
+	padding: 0px;
+	font-size: 1.624em;
+	font-weight: bold;
+	vertical-align: middle;
+	border-top: 3px solid #ccc;
+	border-right: 3px solid #ccc;
+	border-bottom: 3px solid #ccc;
+	background: #ececec;
+	text-align: center;
+}
+table.type09 td {
+/* 	width: 350px; */
+	padding: 0px;
+	font-size: 1.3em;
+	font-weight: bold;
+	color: #fff;
+	vertical-align: middle;
+	border-top: 3px solid #ccc;
+	border-right: 3px solid #ccc;
+	border-bottom: 3px solid #ccc;
+	text-align: center;
+}
+
+table.type07 {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	margin: 20px 10px;
+	min-width:763px;
+}
+
+
+table.type07 thead th {
+	padding: 0px;
+	font-weight: bold;
+	border-bottom: 2px solid #c00;
+	background: #dcdcd1;
+	text-align: center;
+	border-right: 2px solid #ccc;
+	border-radius: 0px;
+}
+table.type07 tbody th {
+	width: 150px;
+	padding: 0px;
+	font-size: 1.624em;
+	font-weight: bold;
+	vertical-align: top;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;	
+	background: #ececec;
+	text-align: center;
+}
+
+table.type07 td {
+	width: 350px;
+	height: 45px;
+	margin: 0px;
+	padding: 0px;
+	font-size: 1.4em;
+	font-weight: bold;
+	color: #000;
+	vertical-align: center;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	text-align: center;
+}
+.bt_bar_v{
+	height: 180px;
+	border-left: 6px solid #fff;
+	border-radius: 4px;
+	position: absolute;
+	left: 749px;
+	top: 890px;
+}

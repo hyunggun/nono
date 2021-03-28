@@ -1,0 +1,169 @@
+
+/*탑인포 공통*/
+.gray_info{	
+background: #ADA996;
+background: -webkit-linear-gradient(to 45deg, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);
+background: linear-gradient(140deg, #EAEAEA, #DBDBDB , #F2F2F2 , #ADA996);}
+
+
+/*puple set*/
+.puple_name_font{
+color:#4e54c8;
+}
+.puple_title{
+  background: #000046;
+  background: -webkit-linear-gradient(to bottom, #7474BF, #000046);
+  background: linear-gradient(to bottom, #7474BF, #000046);
+}
+.puple_bt_info{
+background: #4e54c8;
+background: -webkit-linear-gradient(to bottom, #8f94fb, #4e54c8);
+background: linear-gradient(to bottom, #8f94);
+}
+.puple_btn{
+background: #86A8E7;
+background: -webkit-linear-gradient(135deg, #4e54c8, #4e54c8 80%, #7F7FD5);
+background: linear-gradient(160deg, #4e54c8, #4e54c8 80%, #7F7FD5);
+}
+
+/*blue set*/
+.blue_name_font {color: #2F80ED;}
+.blue_title{
+background: #000046;
+background: -webkit-linear-gradient(to bottom, #1CB5E0, #000046);
+background: linear-gradient(to bottom, #1CB5E0, #000046);
+}
+.blue_bt_info{
+background: #56CCF2;
+background: -webkit-linear-gradient(to top, #2F80ED, #56CCF2);
+background: linear-gradient(to top, #2F80ED, #56CCF2);
+}
+.blue_btn{
+background: #56CCF2;
+background: -webkit-linear-gradient(to top, #2F80ED, #56CCF2); 
+background: linear-gradient(to top, #2F80ED, #56CCF2);
+}
+
+/*blue 2 set*/
+.blue2_name_font {color: #03A9F5;}
+.blue2_title{
+background: #000046;
+background: -webkit-linear-gradient(to bottom, #1CB5E0, #000046);
+background: linear-gradient(to bottom, #1CB5E0, #000046);
+}
+
+.blue2_bt_info{
+background: #418BAB;
+background: -webkit-linear-gradient(to left, #81D5FA,#418BAB 90%);
+background: linear-gradient(to left, #81D5FA,#418BAB 90%);
+}
+.blue2_btn{
+background: #65a9d7;
+background: -webkit-linear-gradient(top, #03A9F5, #02557B);
+background: linear-gradient(top, #03A9F5, #02557B);
+}
+.blue2_sub_btn{
+background: #418BAB;
+background: -webkit-linear-gradient(to left, #81D5FA,#418BAB 90%);
+background: linear-gradient(to left, #81D5FA,#418BAB 90%);
+}
+
+
+/*violet set*/
+.violet_name_font {color: #5C258D;}
+.violet_title {
+  background: #000046;
+  background: -webkit-linear-gradient(to bottom, #7474BF, #000046);
+  background: linear-gradient(to bottom, #7474BF, #000046);
+}
+.violet_bt_info{
+  background: #5C258D; 
+  background: -webkit-linear-gradient(to right, #4389A2, #5C258D);
+  background: linear-gradient(to right, #4389A2, #5C258D);
+}
+.violet_btn{
+  background: #7474BF;
+  background: -webkit-linear-gradient(to top, #7474BF,#348AC7);
+  background: linear-gradient(to top, #7474BF,#348AC7);
+}
+
+/* yellow_green set*/
+.yellow_name_font {color: #6A9113;}
+.yellow_title {
+  background: #6A9113;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #141517, #6A9113);  
+  background: linear-gradient(to bottom, #6A9113, #fff 70%, #6A9113);
+}
+.yellow_bt_info{
+  background: #5C258D; 
+  background: -webkit-linear-gradient(to left, ##a8e063, #6A9113);
+  background: linear-gradient(to left, #a8e063, #6A9113);
+}
+.yellow_btn{
+  background: #000046;
+  background: -webkit-linear-gradient(to bottom, #7474BF, #6A9113);
+  background: linear-gradient(to bottom, #a8e063, #6A9113);
+}
+.yellow_sub_btn{
+  background: #5C258D; 
+  background: -webkit-linear-gradient(to top, ##a8e063, #6A9113);
+  background: linear-gradient(to top, #a8e063, #6A9113);
+ }
+
+/* orange */
+
+.orange_name_font {color: #ffb74d;}
+.orange_title {
+  background: #ef6c00;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom,#ff9800,#ff6d00);  
+  background: linear-gradient(to bottom,#ff9800,#ff6d00);
+}
+.orange_bt_info{
+  background: #ffab40; 
+  background: -webkit-linear-gradient(to right, #ffab40,#fb8c00);
+  background: linear-gradient(to right, #ffab40,#fb8c00);
+}
+.orange_btn{
+  background: #f57c00;
+  background: -webkit-linear-gradient(to top, #f57c00, #ff9800, #ffcc80);
+  background: linear-gradient(to top, #f57c00, #ff9800, #ffcc80);
+}
+.orange_sub_btn{
+ background: #f57c00;
+  background: -webkit-linear-gradient(to top, #f57c00, #ff9800, #ffcc80);
+  background: linear-gradient(to top, #f57c00, #ff9800, #ffcc80);
+ }
+
+ /* Brown */
+
+.Brown_name_font {color: #8d6e63;}
+.Brown_title {
+  background: #6d4c41;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top,#6d4c41,#8d6e63);  
+  background: linear-gradient(to top,#6d4c41,#8d6e63);
+}
+.Brown_bt_info{
+  background: #ffab40; 
+  background: -webkit-linear-gradient(to right, #a1887f,#795548);
+  background: linear-gradient(to right, #a1887f,#795548);
+}
+.Brown_btn{
+  background: #3e2723;
+  background: -webkit-linear-gradient(to top, #3e2723, #6d4c41, #a1887f, #bcaaa4);
+  background: linear-gradient(to top, #3e2723, #6d4c41, #a1887f, #bcaaa4);
+}
+.Brown_sub_btn{
+ background: #3e2723;
+  background: -webkit-linear-gradient(to top, #3e2723, #6d4c41, #a1887f, #bcaaa4);
+  background: linear-gradient(to top, #3e2723, #6d4c41, #a1887f, #bcaaa4);
+}
+
+.metal{
+  background-image: 
+    -webkit-repeating-linear-gradient(90deg, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
+    -webkit-repeating-linear-gradient(90deg, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
+    -webkit-repeating-linear-gradient(90deg, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),      
+    linear-gradient(180deg, hsl(0,0%,78%) 0%, hsl(0,0%,90%) 47%, hsl(0,0%,78%) 53%, hsl(0,0%,70%)100%);
+}
+
+

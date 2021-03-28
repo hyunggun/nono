@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="inpatient">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <resultMap id="inpatientMap" class="java.util.HashMap">
+  		 <result column="INPATIENT_KEY" property="building_no" javaType="java.lang.String"/>
+       <result column="ROOM_NO" property="room_no" javaType="java.lang.String"/>
+       <result column="ROOM_NAME" property="room_nm" javaType="java.lang.String"/>
+       <result column="PATIENT_NO" property="patient_no" javaType="java.lang.String"/>
+       <result column="PATIENT_NAME" property="patient_nm" javaType="java.lang.String"/>
+       <result column="ADST" property="adst" javaType="java.lang.String"/>
+       <result column="INROOM_FG" property="inRoom_fg" javaType="java.lang.String"/>
+       <result column="AGE" property="age" javaType="java.lang.String"/>
+       <result column="GENDER" property="gender" javaType="java.lang.String"/>
+       <result column="DEPT" property="dept" javaType="java.lang.String"/>
+       <result column="DOCT" property="doctor_nm" javaType="java.lang.String"/>
+       <result column="ADDT" property="addt" javaType="java.lang.String"/>
+       <result column="DSDT" property="dsdt" javaType="java.lang.String"/>
+       <result column="OPDT" property="opdt" javaType="java.lang.String"/>
+       <result column="PTDS" property="ptds" javaType="java.lang.String"/>
+  </resultMap>
+
+  <select id="selectInpatientCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM TB_ACCEPT_OUT emrinp
+    <dynamic prepend="WHERE">
+    	<isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+      </isEmpty>
+      <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="roomNo" prepend="AND">
+           ROOM_NO = #roomNo#
+      </isNotEmpty>
+      <isNotEmpty property="inpatientKey" prepend="AND">
+           INPATIENT_KEY = #inpatientKey#
+      </isNotEmpty>
+      <isNotEmpty property="inRoomFg" prepend="AND">
+           INROOM_FG = #inRoomFg#
+      </isNotEmpty>
+      <isNotEmpty property="adst" prepend="AND">
+           ADST = #adst#
+      </isNotEmpty>
+      <isNotEmpty property="srchdt" prepend="AND">
+           #srchdt# between ADDT and DSDT
+      </isNotEmpty>
+      <isNotEmpty property="sPatientName" prepend="AND">
+           PATIENT_NAME LIKE '%' || #sPatientName# || '%'
+      </isNotEmpty>
+    </dynamic>
+  </select>
+
+  <select id="selectInpatientList" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+           SELECT emrinp.*
+             FROM TB_ACCEPT_OUT emrinp
+    <dynamic prepend="WHERE">
+      <isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+      </isEmpty>
+      <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="roomNo" prepend="AND">
+                  ROOM_NO = #roomNo#
+      </isNotEmpty>
+      <isNotEmpty property="inpatientKey" prepend="AND">
+                  INPATIENT_KEY = #inpatientKey#
+      </isNotEmpty>
+      <isNotEmpty property="inRoomFg" prepend="AND">
+                  INROOM_FG = #inRoomFg#
+      </isNotEmpty>
+      <isNotEmpty property="adst" prepend="AND">
+                  ADST = #adst#
+      </isNotEmpty>
+      <isNotEmpty property="srchdt" prepend="AND">
+           				#srchdt# between ADDT and DSDT
+      </isNotEmpty>
+      <isNotEmpty property="sPatientName" prepend="AND">
+                  PATIENT_NAME LIKE '%' || #sPatientName# || '%'
+      </isNotEmpty>
+      <isNotEmpty property="search_text">
+				<isEqual property="search_type" compareValue="P" prepend="AND">
+	                PATIENT_NAME LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="PN" prepend="AND">
+	                PATIENT_NO LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="R" prepend="AND">
+	                ROOM_NAME LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="RN" prepend="AND">
+	                ROOM_NO LIKE ('%' || #search_text# || '%')
+				</isEqual>
+			</isNotEmpty>
+    </dynamic>
+         ORDER BY ROOM_NO
+           ) emrinp
+    <isNotEmpty property="lastRowNum">
+     WHERE rownum &lt;= #lastRowNum#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectInpatient" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM TB_ACCEPT_OUT emrinp
+     WHERE PATIENT_NO = #patientNo#
+     <isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+     </isEmpty>
+     <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+    <isNotEmpty property="roomNo" prepend="AND">
+           ROOM_NO = #roomNo#
+    </isNotEmpty>
+    <isNotEmpty property="inpatientKey" prepend="AND">
+           INPATIENT_KEY = #inpatientKey#
+    </isNotEmpty>
+    <isNotEmpty property="srchdt" prepend="AND">
+         #srchdt# between ADDT and DSDT
+    </isNotEmpty>
+  </select>
+  
+  <select id="selectInpatientCountForADST" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM TB_ACCEPT_OUT emrinp
+    <dynamic prepend="WHERE">
+      <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="inpatientKey" prepend="AND">
+           INPATIENT_KEY = #inpatientKey#
+      </isNotEmpty>
+      <isNotEmpty property="ADST" prepend="AND">
+           ADST = #ADST#
+      </isNotEmpty>
+      <isNotEmpty property="ADDT" prepend="AND">
+           ADDT = to_char(sysdate, 'YYYYMMDD')
+      </isNotEmpty>
+      <isNotEmpty property="DSDT" prepend="AND">
+           DSDT = to_char(sysdate, 'YYYYMMDD')
+      </isNotEmpty>
+    </dynamic>
+  </select>
+  
+</sqlMap>

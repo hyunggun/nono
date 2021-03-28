@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="treat">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+	<resultMap id="treatMap" class="java.util.HashMap">
+       <result column="ACCEPTKEY" property="treat_id" javaType="java.lang.String"/>
+       <result column="DOCTORKEY" property="view_id" javaType="java.lang.String"/>
+       <result column="ROOMNO" property="room_no" javaType="java.lang.String"/>
+       <result column="ROOMNO_NAMER" property="room_nm" javaType="java.lang.String"/>
+       <result column="DOCTORKEY" property="doctor_key" javaType="java.lang.String"/>
+       <result column="DOCTORKEY_NAME" property="doctor_nm" javaType="java.lang.String"/>
+       <result column="PATIENTNAME" property="patient_nm" javaType="java.lang.String"/>
+       <result column="BIRTHDAY" property="birth" javaType="java.lang.String"/>
+       <result column="PHONE" property="phone" javaType="java.lang.String"/>
+       <result column="AGEE" property="age" javaType="java.lang.String"/>
+       <result column="PTBSSEXX" property="gender" javaType="java.lang.String"/>
+       <result column="OTPTMDDT" property="createdAt" javaType="java.lang.String"/>
+       <result column="OTPTNUFG" property="noti_fg" javaType="java.lang.String"/>
+       <result column="STATUS" property="status" javaType="java.lang.String"/>
+       <result column="alert_count" property="alertCount" javaType="java.lang.Integer"/>
+  </resultMap>
+
+  <select id="selectTreatCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM TB_ACCEPT emract
+     WHERE OTPTMDDT = to_char(sysdate, 'YYYYMMDD')
+    <isNotEmpty property="roomNo">
+       AND ROOMNO = #roomNo#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectTreatList" resultMap="treatMap" parameterClass="hashmap">
+    SELECT emract.*
+          ,DECODE(emract.OTPTNUFG, 'Y', 'T', DECODE(emract.OTPTTMFG, 'Y', 'R', 'S')) as status
+          ,-1 as alert_count
+      FROM (
+           SELECT emract.*
+             FROM TB_ACCEPT emract
+            WHERE OTPTMDDT = to_char(sysdate, 'YYYYMMDD')
+    <isNotEmpty property="roomNo">
+              AND ROOMNO = #roomNo#
+    </isNotEmpty>
+    <isNotEmpty property="doctorKey">
+              AND ROOMNO = #doctorKey#   <!-- DOCTORKEY -->
+    </isNotEmpty>
+    <isNotEmpty property="otpttmFg">
+              AND OTPTTMFG = #otpttmFg#
+    </isNotEmpty>
+    <isNotEmpty property="otptdoFg">
+              AND OTPTDOFG = #otptdoFg#
+    </isNotEmpty>
+    <isNotEmpty property="maxTurn">
+              AND TURN &lt;= #maxTurn#
+    </isNotEmpty>
+    <isNotEmpty property="search_text">
+			<isEqual property="search_type" compareValue="D">
+           AND DOCTORKEY LIKE ('%' || #search_text# || '%')
+			</isEqual>
+			<isEqual property="search_type" compareValue="DN">
+           AND DOCTORKEY_NAME LIKE ('%' || #search_text# || '%')
+			</isEqual>
+			<isEqual property="search_type" compareValue="P">
+           AND PATIENTNO LIKE ('%' || #search_text# || '%')
+			</isEqual>
+			<isEqual property="search_type" compareValue="PN">
+           AND PATIENTNAME LIKE ('%' || #search_text# || '%')
+			</isEqual>
+			<isEqual property="search_type" compareValue="R">
+           AND ROOMNO LIKE ('%' || #search_text# || '%')
+			</isEqual>
+		</isNotEmpty>
+         ORDER BY ACCEPTKEY
+           ) emract
+    <isNotEmpty property="lastRowNum">
+     WHERE rownum &lt;= #lastRowNum#
+    </isNotEmpty>
+  </select>
+
+  <select id="selectTreat" resultMap="treatMap" parameterClass="hashmap">
+    SELECT emract.*
+           ,DECODE(emract.OTPTNUFG, 'Y', 'T', DECODE(emract.OTPTTMFG, 'Y', 'R', 'S')) as status
+           ,-1 as alert_count
+      FROM TB_ACCEPT emract
+     WHERE ACCEPTKEY = #acceptKey#
+  </select>
+
+</sqlMap>

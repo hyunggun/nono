@@ -1,0 +1,28 @@
+@CHARSET "EUC-KR";
+@media screen and (min-width:720px) {
+	div.cf-search-area {background-color:#fff; padding:8px; margin-bottom:12px;}
+	input.theme_color {float:left; margin-top:20px;}
+	div.theme_color_box {display:inline-block; margin-right:15px;}
+	div.theme_color {width:50px; height:50px; float:left; margin-left:5px;}
+	div.skyblue {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #18739b, #16698e, #145f80);}
+	div.blue {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #1d6193, #1a5886, #18507a);}
+	div.deepblue {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #0c3a71, #0a3363, #092c55);}
+	div.orange {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #cc5200, #bc4c00, #ad4600);}
+	div.brown {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #612816, #542313, #481e10);}
+	div.green {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #255218, #1f4614, #1a3a11);}
+	div.purple {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #4d3681, #463276, #402d6c);}
+	div.pink {background: -webkit-repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 1%, rgba(255, 255, 255, 0.05) 2%, rgba(255, 255, 255, 0.05) 3%), -webkit-repeating-linear-gradient(60deg, rgba(0, 0, 0, 0) 1%, rgba(0, 0, 0, 0) 2%, rgba(0, 0, 0, 0.3) 3%), -webkit-repeating-linear-gradient(150deg, rgba(255, 255, 255, 0.1) 1%, rgba(255, 255, 255, 0.1) 2%, rgba(255, 255, 255, 0.15) 3%), linear-gradient(to bottom, #a80662, #99055a, #8b0551);}
+}
+@media screen and (max-width:720px) {
+	#mainDataTable_length {text-align:right;}
+	#mainDataTable_length > label > select{width:100%; }
+	#mainDataTable_paginate > ul {margin:0;}
+	#mainDataTable_info {display:none;}
+	.be-datatable-body > .col-sm-12 {padding:10px;}
+	div.cf-search-area {margin:0 5px 12px 5px;  background-color:#fff; padding:8px;}
+	.cf-mobile-margin {padding:5px 0; display:inline-block; width:100%;}
+	.cf-mobile-btn {margin-top:4px;}
+	div.modal-dialog {margin:0; margin-top:10px;}
+	.cf-mobile-padding {padding:0; padding-bottom:12px;}
+	.sidebar-elements {overflow-y:scroll;}
+}
