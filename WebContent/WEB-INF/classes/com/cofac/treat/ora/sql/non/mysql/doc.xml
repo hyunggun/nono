@@ -118,4 +118,10 @@
      WHERE doc_id = #doc_id#
   </delete>
 
+  <select id="selectDocColor" resultClass="hashmap" parameterClass="hashmap">
+          SELECT dc.*
+            FROM tb_doctor dc
+           WHERE emr_doctor_key = #emr_doctor_key#
+  </select>
+  
 </sqlMap>

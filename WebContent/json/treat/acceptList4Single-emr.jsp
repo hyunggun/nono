@@ -7,13 +7,13 @@
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="org.json.simple.JSONObject"%>
 <%@page import="startkr.util.JsonUtils"%>
-<%@page import="com.cofac.treat.ora.biz.interlinked.OratreatBiz"%>
+<%@page import="com.cofac.treat.ora.biz.interlinked.TreatBiz"%>
 <%@page import="com.cofac.treat.ora.biz.non.RoomBiz"%>
 <%
 RequestUtils util = new RequestUtils();
 HashMap paramMap = util.makeParamMap(request);
 
-OratreatBiz treatBiz = null;
+TreatBiz treatBiz = null;
 RoomBiz roomBiz = null;
 JSONArray acceptJAry = new JSONArray();
 JSONObject roomJObj = new JSONObject();
@@ -47,7 +47,7 @@ try {
 	
   paramMap.put("doctorKey", roomMap.get("room_code"));
   
-  treatBiz = new OratreatBiz();
+  treatBiz = new TreatBiz();
   acceptList = treatBiz.selectTreatList(paramMap);
 	acceptJAry = JsonUtils.getJsonArrayFromList(acceptList);
 	

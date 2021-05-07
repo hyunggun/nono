@@ -13,11 +13,11 @@
 <!--       <property name="JDBC.Password" value="mtvdba" /> -->
 <!--     </dataSource> -->
 <!--   </transactionManager> -->
-  
+
   <transactionManager type="JDBC" commitRequired="true">
     <dataSource type="SIMPLE">
       <property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver" />
-      <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@192.168.123.200:1521:EonmDB" />
+      <property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@172.16.1.101:1521:EonmDB" />
       <property name="JDBC.Username" value="EON_CRM" />
       <property name="JDBC.Password" value="EON_CRM" />
     </dataSource>

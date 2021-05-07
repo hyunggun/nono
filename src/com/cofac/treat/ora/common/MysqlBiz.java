@@ -8,4 +8,5 @@ public class MysqlBiz {
 	protected static SqlMapClient sqlMap = IBatisMysqlConfig.getSqlMapInstatnce();
 	protected Logger logger = Logger.getLogger(this.getClass());
 	
+	
 }

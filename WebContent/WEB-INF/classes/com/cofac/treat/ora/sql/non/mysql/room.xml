@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
 <sqlMap namespace="room">
   <typeAlias alias="hashmap" type="java.util.HashMap" />
-  
+
   <resultMap id="roomMap" class="java.util.HashMap">
        <result column="room_id" property="room_id" javaType="java.lang.Integer"/>
        <result column="room_nm" property="room_nm" javaType="java.lang.String"/>
@@ -11,13 +11,12 @@
        <result column="use_fg" property="use_fg" javaType="java.lang.String"/>
        <result column="createdAt" property="createdAt" javaType="java.lang.String"/>
        <result column="updatedAt" property="updatedAt" javaType="java.lang.String"/>
-       
        <result column="status_text" property="status_text" javaType="java.lang.String"/>
        <result column="doctor_nm" property="doctor_nm" javaType="java.lang.String"/>
        <result column="medical_kind" property="medical_kind" javaType="java.lang.String"/>
        <result column="position" property="position" javaType="java.lang.String"/>
   </resultMap>
-  
+
  <!-- tb_room -->
   <statement id="create_tb_room">
 CREATE TABLE `tb_room` (
@@ -69,12 +68,12 @@ CREATE TABLE `tb_room` (
     SELECT room.*
       FROM (
            SELECT room.*
-                 ,CASE room.status WHEN 'O' THEN "진료대기" 
-                                   WHEN 'R' THEN "진료중" 
-                                   WHEN 'C' THEN "진료마감" 
-                                   WHEN 'S' THEN "수술중" 
-                                   WHEN 'E' THEN "내시경" 
-                                   WHEN 'H' THEN "회진" 
+                 ,CASE room.status WHEN 'O' THEN "진료대기"
+                                   WHEN 'R' THEN "진료중"
+                                   WHEN 'C' THEN "진료마감"
+                                   WHEN 'S' THEN "수술중"
+                                   WHEN 'E' THEN "내시경"
+                                   WHEN 'H' THEN "회진"
                   END as status_text
                   ,usr.user_nm as doctor_nm
                   ,usr.position
@@ -99,12 +98,12 @@ CREATE TABLE `tb_room` (
 
   <select id="selectRoom" resultMap="roomMap" parameterClass="hashmap">
     SELECT room.*
-                 ,CASE room.status WHEN 'O' THEN "진료대기" 
-                                   WHEN 'R' THEN "진료중" 
-                                   WHEN 'C' THEN "진료마감" 
-                                   WHEN 'S' THEN "수술중" 
-                                   WHEN 'E' THEN "내시경" 
-                                   WHEN 'H' THEN "회진" 
+                 ,CASE room.status WHEN 'O' THEN "진료대기"
+                                   WHEN 'R' THEN "진료중"
+                                   WHEN 'C' THEN "진료마감"
+                                   WHEN 'S' THEN "수술중"
+                                   WHEN 'E' THEN "내시경"
+                                   WHEN 'H' THEN "회진"
                   END as status_text
     			 ,usr.user_nm as doctor_nm
     			 ,usr.position
@@ -157,12 +156,12 @@ CREATE TABLE `tb_room` (
   </update>
 
   <delete id="deleteRoom" parameterClass="hashmap">
-    DELETE 
+    DELETE
       FROM tb_room
      WHERE room_id = #room_id#
   </delete>
-  
-  
+
+
 
 <statement id="create_tb_room_doctor">
 CREATE TABLE `tb_room_doctor` (
@@ -219,15 +218,15 @@ CREATE TABLE `tb_room_doctor` (
      #maxResults#
     </isNotEmpty>
   </select>
-  
+
   <select id="selectRoomStatus" resultClass="hashmap" parameterClass="hashmap">
           SELECT room.*
-                 ,CASE room.code   WHEN 'O' THEN "진료대기" 
-                                   WHEN 'R' THEN "진료중" 
-                                   WHEN 'C' THEN "진료마감" 
-                                   WHEN 'S' THEN "수술중" 
-                                   WHEN 'E' THEN "내시경" 
-                                   WHEN 'H' THEN "회진" 
+                 ,CASE room.code   WHEN 'O' THEN "진료대기"
+                                   WHEN 'R' THEN "진료중"
+                                   WHEN 'C' THEN "진료마감"
+                                   WHEN 'S' THEN "수술중"
+                                   WHEN 'E' THEN "내시경"
+                                   WHEN 'H' THEN "회진"
                                    ELSE '휴진'
                   END as status_text
 			      FROM tb_room_doctor room
@@ -241,7 +240,7 @@ CREATE TABLE `tb_room_doctor` (
       </dynamic>
          ORDER BY room.room_id
   </select>
-  
+
   <select id="selectRoomDoctorMultiList" resultClass="hashmap" parameterClass="hashmap">
     SELECT rmdt.*
     			 ,usr.user_nm as doctor_nm
@@ -255,12 +254,12 @@ CREATE TABLE `tb_room_doctor` (
 			           ,room.use_fg
 			           ,room.updatedAt
 			           ,IFNULL((select rmdt.emr_doctor_key from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = #time#), room.room_code) as room_code
-                 ,CASE room.status WHEN 'O' THEN "진료대기" 
-                                   WHEN 'R' THEN "진료중" 
-                                   WHEN 'C' THEN "진료마감" 
-                                   WHEN 'S' THEN "수술중" 
-                                   WHEN 'E' THEN "내시경" 
-                                   WHEN 'H' THEN "회진" 
+                 ,CASE room.status WHEN 'O' THEN "진료대기"
+                                   WHEN 'R' THEN "진료중"
+                                   WHEN 'C' THEN "진료마감"
+                                   WHEN 'S' THEN "수술중"
+                                   WHEN 'E' THEN "내시경"
+                                   WHEN 'H' THEN "회진"
                   END as status_text
 			      FROM tb_room room
 			     WHERE room.room_id in (select room_id from tb_machine_room where machine_id = #machineKey#)
@@ -293,22 +292,22 @@ CREATE TABLE `tb_room_doctor` (
                  ,room.use_fg
                  ,room.updatedAt
                  ,IFNULL((select rmdt.emr_doctor_key from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = #time#), room.room_code) as room_code
-                 ,IF( (select count(*) from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = "A") = 0, "휴진", 
+                 ,IF( (select count(*) from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = "A") = 0, "휴진",
                       CASE (select code from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = "A") WHEN "R" THEN "진료대기"
                                                                                                                     WHEN "S" THEN "수술중"
                                                                                                                     WHEN "E" THEN "내시경"
                                                                                                                     WHEN "H" THEN "회진" END)as AM
-                 ,IF( (select count(*) from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = "P") = 0, "휴진", 
+                 ,IF( (select count(*) from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = "P") = 0, "휴진",
                       CASE (select code from tb_room_doctor rmdt where rmdt.room_id = room.room_id and day = #day# and time = "A") WHEN "R" THEN "진료대기"
                                                                                                                     WHEN "S" THEN "수술중"
                                                                                                                     WHEN "E" THEN "내시경"
                                                                                                                     WHEN "H" THEN "회진" END)as PM
-                 ,CASE room.status WHEN 'O' THEN "진료대기" 
-                                   WHEN 'R' THEN "진료중" 
-                                   WHEN 'C' THEN "진료마감" 
-                                   WHEN 'S' THEN "수술중" 
-                                   WHEN 'E' THEN "내시경" 
-                                   WHEN 'H' THEN "회진" 
+                 ,CASE room.status WHEN 'O' THEN "진료대기"
+                                   WHEN 'R' THEN "진료중"
+                                   WHEN 'C' THEN "진료마감"
+                                   WHEN 'S' THEN "수술중"
+                                   WHEN 'E' THEN "내시경"
+                                   WHEN 'H' THEN "회진"
                   END as status_text
             FROM tb_room room
            ) rmdt
@@ -326,7 +325,7 @@ CREATE TABLE `tb_room_doctor` (
     </isNotEmpty>
 
   </select>
-  
+
   <select id="selectRoomDoctor" resultClass="hashmap" parameterClass="hashmap">
     SELECT room.room_id
            ,room.room_nm
@@ -335,12 +334,12 @@ CREATE TABLE `tb_room_doctor` (
            ,room.createdAt
            ,room.updatedAt
            ,rmdt.emr_doctor_key as room_code
-           ,CASE room.status WHEN 'O' THEN "진료대기" 
-                             WHEN 'R' THEN "진료중" 
-                             WHEN 'C' THEN "진료마감" 
-                             WHEN 'S' THEN "수술중" 
-                             WHEN 'E' THEN "내시경" 
-                             WHEN 'H' THEN "회진" 
+           ,CASE room.status WHEN 'O' THEN "진료대기"
+                             WHEN 'R' THEN "진료중"
+                             WHEN 'C' THEN "진료마감"
+                             WHEN 'S' THEN "수술중"
+                             WHEN 'E' THEN "내시경"
+                             WHEN 'H' THEN "회진"
             END as status_text
     			 ,usr.user_nm as doctor_nm
     			 ,usr.position
@@ -352,11 +351,20 @@ CREATE TABLE `tb_room_doctor` (
         ON dt.emr_doctor_key = rmdt.emr_doctor_key
  LEFT JOIN tb_user usr
         ON usr.user_id = dt.doctor_id
-     WHERE rmdt.room_id = (select room_id from tb_machine_room where machine_id = #machineKey# limit 1) and day = #day# and time = #time#
-       AND room.status != #not_status#
+     WHERE
+     	rmdt.room_id = (select room_id from tb_machine_room where machine_id = #machineKey# limit 1)
+   	<isNotEmpty property="day" prepend="AND">
+   		day = #day#
+   	</isNotEmpty>
+   	<isNotEmpty property="time" prepend="AND">
+   		time = #time#
+   	</isNotEmpty>
+     <isNotEmpty property="not_status" prepend="AND">
+       		room.status != #not_status#
+      </isNotEmpty>
   ORDER BY room.room_id
   </select>
-  
+
   <select id="selectRoomDoctorDupl" resultClass="hashmap" parameterClass="hashmap">
     SELECT rmdt.*
       FROM tb_room_doctor rmdt
@@ -382,21 +390,42 @@ CREATE TABLE `tb_room_doctor` (
   </insert>
 
   <delete id="deleteRoomDoctor" parameterClass="hashmap">
-    DELETE 
+    DELETE
       FROM tb_room_doctor
      WHERE rel_id = #rel_id#
   </delete>
-  
+
   <delete id="deleteRoomDoctorByRoomId" parameterClass="hashmap">
-    DELETE 
+    DELETE
       FROM tb_room_doctor
      WHERE room_id = #room_id#
   </delete>
-  
+
   <delete id="deleteRoomMachine" parameterClass="hashmap">
-    DELETE 
+    DELETE
       FROM tb_machine_room
      WHERE room_id = #room_id#
   </delete>
-  
+
+    <select id="selectPatientRoomCount" resultClass="int" parameterClass="hashmap">
+    SELECT count(1)
+      FROM tb_inpat_room iprm
+    <include refid="whereRoom"/>
+  </select>
+
+  <select id="selectPatientRoomList" resultMap="roomMap" parameterClass="hashmap">
+    SELECT iprm.*
+      FROM (
+           SELECT iprm.*
+                  ,usr.user_nm as nurse_nm
+             FROM tb_inpat_room iprm
+             LEFT JOIN tb_user usr
+               ON usr.user_id = iprm.nurse_id
+    <include refid="whereRoom"/>
+         ORDER BY iprm.createdAt
+           ) iprm
+    <isNotEmpty property="maxResults">
+     WHERE rownums &lt;= #maxResults#
+    </isNotEmpty>
+  </select>
 </sqlMap>

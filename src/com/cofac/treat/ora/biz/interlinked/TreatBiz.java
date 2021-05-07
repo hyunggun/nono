@@ -3,7 +3,10 @@ package com.cofac.treat.ora.biz.interlinked;
 import java.util.HashMap;
 import java.util.List;
 
+//연결할 DB종류에 맞춰서 상속받아 사용
 import com.cofac.treat.ora.common.OracleBiz;
+import com.cofac.treat.ora.common.MssqlBiz;
+import com.cofac.treat.ora.common.MysqlBiz;
 
 public class TreatBiz extends OracleBiz {
 
@@ -12,8 +15,8 @@ public class TreatBiz extends OracleBiz {
 	public HashMap selectTreatPage(HashMap paramMap) {
 		HashMap resultMap = new HashMap();
 		try {
-			Integer count = (Integer) sqlMap.queryForObject("oratreat.selectTreatCount", paramMap);
-			List list = sqlMap.queryForList("oratreat.selectTreatList", paramMap );
+			Integer count = (Integer) sqlMap.queryForObject("treat.selectTreatCount", paramMap);
+			List list = sqlMap.queryForList("treat.selectTreatList", paramMap );
 
 			resultMap.put("count", count);
 			resultMap.put("list", list);
@@ -27,7 +30,7 @@ public class TreatBiz extends OracleBiz {
 	public List selectTreatList(HashMap paramMap) {
 		List list = null;
 		try {
-			list = sqlMap.queryForList("oratreat.selectTreatList", paramMap );
+			list = sqlMap.queryForList("treat.selectTreatList", paramMap );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,7 +42,7 @@ public class TreatBiz extends OracleBiz {
 	public HashMap selectTreat(HashMap paramMap) {
 		HashMap resultMap = new HashMap();
 		try {
-			resultMap = (HashMap) sqlMap.queryForObject("oratreat.selectTreat", paramMap);
+			resultMap = (HashMap) sqlMap.queryForObject("treat.selectTreat", paramMap);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -52,7 +55,7 @@ public class TreatBiz extends OracleBiz {
 	public HashMap selectEmrCountPage(HashMap paramMap) {
 		HashMap resultMap = new HashMap();
 		try {
-			Integer acceptCount = (Integer) sqlMap.queryForObject("oratreat.selectTreatCount", paramMap);
+			Integer acceptCount = (Integer) sqlMap.queryForObject("treat.selectTreatCount", paramMap);
 //			Integer inpatientCount = (Integer) sqlMap.queryForObject("inpatient.selectInpatientCount", paramMap);
 
 			resultMap.put("treatCount", acceptCount);
@@ -63,12 +66,35 @@ public class TreatBiz extends OracleBiz {
 		return resultMap;
 	}
 	
+	public HashMap selectTreatCheckPage(HashMap paramMap) {
+		HashMap resultMap = new HashMap();
+		try {
+			Integer count = (Integer) sqlMap.queryForObject("treat.selectTreatCheckCount", paramMap);
+			List list = sqlMap.queryForList("treat.selectTreatCheckList", paramMap );
+
+			resultMap.put("count", count);
+			resultMap.put("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	public List selectTreatCheckList(HashMap paramMap) {
+		List list = null;
+		try {
+			list = sqlMap.queryForList("treat.selectTreatCheckList", paramMap );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 //수술실뷰
  public List selectTreatOperation(HashMap paramMap) {
    List list = null;
    try {
-     list = sqlMap.queryForList("oratreat.selectOperationList", paramMap );
+     list = sqlMap.queryForList("treat.selectOperationList", paramMap );
    } catch (Exception e) {
      e.printStackTrace();
    }
@@ -79,10 +105,23 @@ public class TreatBiz extends OracleBiz {
  public List selectWaitingList(HashMap paramMap) {
    List list = null;
    try {
-     list = sqlMap.queryForList("oratreat.selectWaitingList", paramMap );
+     list = sqlMap.queryForList("treat.selectWaitingList", paramMap );
    } catch (Exception e) {
      e.printStackTrace();
    }
    return list;
+ }
+ 
+ // 수정
+ public Boolean updateTreatFlag( HashMap paramMap ) {
+   Boolean isSuccess = false;
+   try {
+     sqlMap.update( "treat.updateTreatFlag", paramMap );
+     isSuccess = true;
+   } catch (Exception e) {
+     // TODO: handle exception
+     e.printStackTrace();
+   }
+   return isSuccess;
  }
 }

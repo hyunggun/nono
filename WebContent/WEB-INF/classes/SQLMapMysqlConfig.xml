@@ -4,7 +4,7 @@
 <sqlMapConfig>
   <settings enhancementEnabled="true" maxTransactions="8"
         maxRequests="32" maxSessions="8" useStatementNamespaces="true"/>
-        
+
   <transactionManager type="JDBC" commitRequired="true">
     <dataSource type="SIMPLE">
       <property name="JDBC.Driver" value="com.mysql.jdbc.Driver" />
@@ -12,10 +12,10 @@
 <!--       <property name="JDBC.ConnectionURL" value="jdbc:mysql://110.10.130.20:3306/totalview?useUnicode=true&amp;characterEncoding=utf8" /> -->
       <property name="JDBC.ConnectionURL" value="jdbc:mysql://127.0.0.1:3306/totalview?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=true&amp;verifyServerCertificate=false" />
       <property name="JDBC.Username" value="root" />
-      <property name="JDBC.Password" value="rootroot" />
+      <property name="JDBC.Password" value="root" />
     </dataSource>
   </transactionManager>
-	
+
   <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/notice.xml" />
   <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/file.xml" />
   <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/machine.xml" />

@@ -5,24 +5,34 @@
 <%@page import="org.json.simple.JSONArray"%>
 <%@page import="startkr.util.RequestUtils"%>
 <%@page import="startkr.util.JsonUtils"%>
-<%@page import="com.cofac.treat.ora.biz.interlinked.InpatientBiz"%>
+<%@page import="com.cofac.treat.ora.biz.interlinked.PatientBiz"%>
 <%@page import="com.cofac.treat.ora.biz.non.DocBiz"%>
 <%
 RequestUtils util = new RequestUtils();
 HashMap paramMap = util.makeParamMap(request);
-InpatientBiz inpatientBiz = null;
+PatientBiz patientBiz = null;
 JSONArray inpatientJAry = new JSONArray();
 List inpatientList = null;
 List<HashMap<String, String>> inpatientWithColorList = new ArrayList<HashMap<String, String>>(); //화면에 보낼때 쓰일 복제 데이터
 try {
-	inpatientBiz = new InpatientBiz();
-	inpatientList = inpatientBiz.selectInpatientList(paramMap);
+	patientBiz = new PatientBiz();
+	inpatientList = patientBiz.selectPatientList(paramMap);
 	HashMap patientMap = new HashMap();
 	DocBiz docBiz = new DocBiz();
-	System.out.println("result size "+inpatientList.size());
 	
 	for(int i = 0 ; i < inpatientList.size(); i++){
 		patientMap = (HashMap)inpatientList.get(i);
+		
+		String bedpos = (String)patientMap.get("BEDPOS");
+		if( bedpos == "1" ){
+			patientMap.put("BEDPOS", "4");
+		}else if( bedpos == "2" ){
+			patientMap.put("BEDPOS", "2");
+		}else if( bedpos == "3" ){
+			patientMap.put("BEDPOS", "1");
+		}else if( bedpos == "4" ){
+			patientMap.put("BEDPOS", "3");
+		}
 		String emr_doctor_key = (String)patientMap.get("DOCT");
 		HashMap paramForDocMap = new HashMap();
 

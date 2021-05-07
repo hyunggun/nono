@@ -13,9 +13,9 @@
        <result column="use_fg" property="use_fg" javaType="java.lang.String"/>
        <result column="createdAt" property="createdAt" javaType="java.lang.String"/>
        <result column="updatedAt" property="updatedAt" javaType="java.lang.String"/>
-
-			 <result column="doctor_id" property="doctor_id" javaType="java.lang.Integer"/>
+	   <result column="doctor_id" property="doctor_id" javaType="java.lang.Integer"/>
        <result column="medical_kind" property="medical_kind" javaType="java.lang.String"/>
+       <result column="color" property="color" javaType="java.lang.String"/>
        <result column="emr_doctor_key" property="emr_doctor_key" javaType="java.lang.String"/>
        
        <result column="nurse_id" property="nurse_id" javaType="java.lang.Integer"/>
@@ -271,6 +271,9 @@ CREATE TABLE `tb_doctor` (
     </isNotNull>
     <isNotNull property="emr_doctor_key">
           ,emr_doctor_key = #emr_doctor_key#
+    </isNotNull>
+    <isNotNull property="color">
+          ,color = #color#
     </isNotNull>
     WHERE doctor_id = #doctor_id#
   </update>
