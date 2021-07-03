@@ -35,7 +35,7 @@ CREATE TABLE `tb_room` (
   <sql id="whereRoom">
     <dynamic prepend="WHERE">
       <isNotEmpty property="s_room_nm" prepend="AND">
-           room_nm LIKE ('%' || #s_room_nm# || '%')
+           room_nm LIKE concat('%' , #s_room_nm# , '%')
       </isNotEmpty>
       <isNotEmpty property="room_id" prepend="AND">
            room.room_id = #room_id#
@@ -179,7 +179,7 @@ CREATE TABLE `tb_room_doctor` (
   <sql id="whereRoomDoctor">
     <dynamic prepend="WHERE">
       <isNotEmpty property="s_room_nm" prepend="AND">
-           room.room_nm LIKE ('%' || #s_room_nm# || '%')
+           room.room_nm LIKE concat('%' , #s_room_nm# , '%')
       </isNotEmpty>
       <isNotEmpty property="day" prepend="AND">
            day = #day#
@@ -407,13 +407,13 @@ CREATE TABLE `tb_room_doctor` (
      WHERE room_id = #room_id#
   </delete>
 
-    <select id="selectPatientRoomCount" resultClass="int" parameterClass="hashmap">
+    <select id="selectInpatientRoomCount" resultClass="int" parameterClass="hashmap">
     SELECT count(1)
       FROM tb_inpat_room iprm
     <include refid="whereRoom"/>
   </select>
 
-  <select id="selectPatientRoomList" resultMap="roomMap" parameterClass="hashmap">
+  <select id="selectInpatientRoomList" resultMap="roomMap" parameterClass="hashmap">
     SELECT iprm.*
       FROM (
            SELECT iprm.*

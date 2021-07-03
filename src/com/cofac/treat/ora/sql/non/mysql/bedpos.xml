@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+    "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="bedpos">
+  <typeAlias alias="hashmap" type="java.util.HashMap" />
+
+  <resultMap id="bedposMap" class="java.util.HashMap">
+       <result column="addt" property="addt" javaType="java.lang.String"/>
+       <result column="room_no" property="room_no" javaType="java.lang.String"/>
+       <result column="bedpos" property="bedpos" javaType="java.lang.String"/>
+       <result column="patient_no" property="patient_no" javaType="java.lang.String"/>
+       <result column="patient_no" property="patient_no" javaType="java.lang.String"/>
+  </resultMap>
+    <resultMap id="maxCntMap" class="java.util.HashMap">
+       <result column="max_cnt" property="max_cnt" javaType="java.lang.String"/>
+  </resultMap>
+  
+  
+  <!-- tb_bedpos -->
+  <statement id="create_tb_bedpos">
+CREATE TABLE `tb_bedpos` (
+  `addt` varchar(20) NOT NULL COMMENT '입원일',
+  `room_no` varchar(10) NOT NULL,
+  `bedpos` varchar(1) NOT NULL,
+  `patient_no` varchar(20) NOT NULL COMMENT '환자번호',
+  `personnel` varchar(1) NOT NULL DEFAULT '6',
+  PRIMARY KEY (`addt`,`room_no`,`patient_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+  </statement>
+  
+ <select id="selectBedpos" resultMap="bedposMap" parameterClass="hashmap">
+	 SELECT bp.addt,
+			bp.room_no,
+			bp.bedpos,
+			bp.patient_no,
+			ir.max_cnt
+	   FROM totalview.tb_bedpos bp
+  left join totalview.tb_inpat_room ir
+		 on bp.room_no = ir.inprm_id 
+      WHERE room_no = #room_no#
+	    AND addt = #addt#
+	    AND patient_no = #patient_no#
+  </select>
+
+  <insert id="upsertBedpos" parameterClass="hashmap">
+    insert into totalview.tb_bedpos (
+    	addt,
+		room_no,
+		bedpos,
+		patient_no
+    ) values(
+    	#addt#,
+		#room_no#,
+		#bedpos#,
+		#patient_no#
+	)ON DUPLICATE KEY UPDATE
+	  bedpos = #bedpos#
+  </insert>
+   
+   <select id="selectMaxCnt" resultMap="maxCntMap" parameterClass="hashmap">
+	 SELECT ir.max_cnt
+	   FROM totalview.tb_inpat_room ir
+      WHERE inprm_id = #room_no#
+  </select>
+</sqlMap>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
     "http://www.ibatis.com/dtd/sql-map-2.dtd">
-<sqlMap namespace="patient">
+<sqlMap namespace="inpatient">
   <typeAlias alias="hashmap" type="java.util.HashMap" />
 
-	<resultMap id="patientMap" class="java.util.HashMap">
+	<resultMap id="inpatientMap" class="java.util.HashMap">
        <result column="inprm_id" property="inprm_id" javaType="java.lang.Integer"/>
        <result column="inprm_nm" property="inprm_nm" javaType="java.lang.String"/>
        <result column="emr_room_key" property="emr_room_key" javaType="java.lang.String"/>
@@ -43,7 +43,7 @@
        <result column="inprm_nm" property="inprm_nm" javaType="java.lang.String"/>
   </resultMap>
 
-  <!-- tb_patient -->
+  <!-- tb_inpatient -->
   <statement id="create_tb_inpat_room">
 CREATE TABLE `tb_inpat_room` (
   `inprm_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -59,7 +59,7 @@ CREATE TABLE `tb_inpat_room` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='입원실';
   </statement>
 
-  <sql id="wherePatientRoom">
+  <sql id="whereInpatientRoom">
     <dynamic prepend="WHERE">
       <isNotEmpty property="emr_room_key" prepend="AND">
            iprm.emr_room_key = #emr_room_key#
@@ -76,13 +76,13 @@ CREATE TABLE `tb_inpat_room` (
     </dynamic>
   </sql>
 
-  <select id="selectPatientRoomCount" resultClass="int" parameterClass="hashmap">
+  <select id="selectInpatientRoomCount" resultClass="int" parameterClass="hashmap">
     SELECT count(1)
       FROM tb_inpat_room iprm
-    <include refid="wherePatientRoom"/>
+    <include refid="whereInpatientRoom"/>
   </select>
 
-  <select id="selectPatientRoomList" resultMap="patientMap" parameterClass="hashmap">
+  <select id="selectInpatientRoomList" resultMap="inpatientMap" parameterClass="hashmap">
     SELECT iprm.*
       FROM (
            SELECT iprm.*
@@ -90,7 +90,7 @@ CREATE TABLE `tb_inpat_room` (
              FROM tb_inpat_room iprm
              LEFT JOIN tb_user usr
                ON usr.user_id = iprm.nurse_id
-    <include refid="wherePatientRoom"/>
+    <include refid="whereInpatientRoom"/>
          ORDER BY iprm.createdAt
            ) iprm
     <isNotEmpty property="maxResults">
@@ -98,7 +98,7 @@ CREATE TABLE `tb_inpat_room` (
     </isNotEmpty>
   </select>
 
-  <select id="selectPatientRoom" resultMap="patientMap" parameterClass="hashmap">
+  <select id="selectInpatientRoom" resultMap="inpatientMap" parameterClass="hashmap">
            SELECT iprm.*
                   ,usr.user_nm as nurse_nm
              FROM tb_inpat_room iprm
@@ -114,7 +114,7 @@ CREATE TABLE `tb_inpat_room` (
     </dynamic>
   </select>
 
-  <insert id="insertPatientRoom" parameterClass="hashmap">
+  <insert id="insertInpatientRoom" parameterClass="hashmap">
     INSERT INTO tb_inpat_room (
                inprm_nm
                ,emr_room_key
@@ -132,7 +132,7 @@ CREATE TABLE `tb_inpat_room` (
               )
   </insert>
 
-  <update id="updatePatientRoom" parameterClass="hashmap">
+  <update id="updateInpatientRoom" parameterClass="hashmap">
     UPDATE tb_inpat_room SET
            updatedAt = now()
     <isNotNull property="inprm_nm">
@@ -150,7 +150,7 @@ CREATE TABLE `tb_inpat_room` (
      WHERE inprm_id = #inprm_id#
   </update>
 
-  <delete id="deletePatientRoom" parameterClass="hashmap">
+  <delete id="deleteInpatientRoom" parameterClass="hashmap">
     DELETE
       FROM tb_inpat_room
      WHERE inprm_id = #inprm_id#
@@ -168,7 +168,7 @@ CREATE TABLE `tb_inpat_room_file` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
   </statement>
 
-  <sql id="wherePatientFile">
+  <sql id="whereInpatientFile">
     <dynamic prepend="WHERE">
       <isNotEmpty property="inprm_id" prepend="AND">
            infl.inprm_id = #inprm_id#
@@ -185,18 +185,18 @@ CREATE TABLE `tb_inpat_room_file` (
     </dynamic>
   </sql>
 
-  <select id="selectPatientFileCount" resultClass="int" parameterClass="hashmap">
+  <select id="selectInpatientFileCount" resultClass="int" parameterClass="hashmap">
     SELECT count(1)
       FROM tb_inpat_room_file infl
       JOIN tb_inpat_room iprm
         ON iprm.inprm_id = infl.inprm_id
       JOIN tb_file file
         ON file.file_id = infl.file_id
-    <include refid="wherePatientFile"/>
+    <include refid="whereInpatientFile"/>
   </select>
 
-  <select id="selectPatientFileList" resultMap="fileMap" parameterClass="hashmap">
-    /* selectPatientFileList */
+  <select id="selectInpatientFileList" resultMap="fileMap" parameterClass="hashmap">
+    /* selectInpatientFileList */
     SELECT infl.*
       FROM (
            SELECT file.*
@@ -210,12 +210,12 @@ CREATE TABLE `tb_inpat_room_file` (
                ON iprm.inprm_id = infl.inprm_id
              JOIN tb_file file
                ON file.file_id = infl.file_id
-    <include refid="wherePatientFile"/>
+    <include refid="whereInpatientFile"/>
          ORDER BY infl.createdAt
            ) infl
   </select>
 
-  <insert id="insertPatientFile" parameterClass="hashmap">
+  <insert id="insertInpatientFile" parameterClass="hashmap">
     INSERT INTO tb_inpat_room_file (
                 file_id
                ,inprm_id
@@ -229,7 +229,7 @@ CREATE TABLE `tb_inpat_room_file` (
               )
   </insert>
 
-  <delete id="deletePatientFile" parameterClass="hashmap">
+  <delete id="deleteInpatientFile" parameterClass="hashmap">
     DELETE
       FROM tb_inpat_room_file
      WHERE file_id = #file_id#
@@ -252,7 +252,7 @@ CREATE TABLE `tb_inpat_notice` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
   </statement>
 
-  <sql id="wherePatientNotice">
+  <sql id="whereInpatientNotice">
     <dynamic prepend="WHERE">
       <isNotEmpty property="inprm_id" prepend="AND">
            ipnt.inprm_id = #inprm_id#
@@ -275,7 +275,7 @@ CREATE TABLE `tb_inpat_notice` (
     </dynamic>
   </sql>
 
-  <select id="selectPatientNoticeCount" resultClass="int" parameterClass="hashmap">
+  <select id="selectInpatientNoticeCount" resultClass="int" parameterClass="hashmap">
     SELECT count(1)
       FROM tb_inpat_notice ipnt
       JOIN tb_inpat_room iprm
@@ -284,10 +284,10 @@ CREATE TABLE `tb_inpat_notice` (
         ON ntc.notice_id = ipnt.notice_id
       JOIN tb_user usr
         ON usr.user_id = ntc.writer_id
-    <include refid="wherePatientNotice"/>
+    <include refid="whereInpatientNotice"/>
   </select>
 
-  <select id="selectPatientNoticeList" resultMap="noticeMap" parameterClass="hashmap">
+  <select id="selectInpatientNoticeList" resultMap="noticeMap" parameterClass="hashmap">
     SELECT ipnt.*
       FROM (
            SELECT ntc.content
@@ -302,12 +302,12 @@ CREATE TABLE `tb_inpat_notice` (
                ON ntc.notice_id = ipnt.notice_id
              JOIN tb_user usr
                ON usr.user_id = ntc.writer_id
-    <include refid="wherePatientNotice"/>
+    <include refid="whereInpatientNotice"/>
          ORDER BY ntc.createdAt
            ) ipnt
   </select>
 
-  <insert id="insertPatientNotice" parameterClass="hashmap">
+  <insert id="insertInpatientNotice" parameterClass="hashmap">
     INSERT INTO tb_inpat_notice (
                 notice_id
                ,inprm_id
@@ -319,7 +319,7 @@ CREATE TABLE `tb_inpat_notice` (
               )
   </insert>
 
-  <delete id="deletePatientNotice" parameterClass="hashmap">
+  <delete id="deleteInpatientNotice" parameterClass="hashmap">
     DELETE
       FROM tb_inpat_notice
      WHERE notice_id = #notice_id#
@@ -329,13 +329,16 @@ CREATE TABLE `tb_inpat_notice` (
   </delete>
 
   <resultMap id="bedposMap" class="java.util.HashMap">
-       <result column="bedpos_id" property="bedpos_id" javaType="java.lang.String"/>
+       <result column="addt" property="addt" javaType="java.lang.String"/>
        <result column="room_no" property="room_no" javaType="java.lang.String"/>
-       <result column="bedpos" property="bedpos" javaType="java.lang.Integer"/>
-       <result column="chart_no" property="chart_no" javaType="java.lang.String"/>
+       <result column="bedpos" property="bedpos" javaType="java.lang.String"/>
+       <result column="patient_no" property="patient_no" javaType="java.lang.String"/>
   </resultMap>
-  <!-- tb_inpat_notice -->
-  <statement id="create_tb_inpat_notice">
+  
+  
+  
+  <!-- tb_bedpos -->
+  <statement id="create_tb_bedpos">
 	CREATE TABLE `tb_bedpos` (
 	  `bedpos_id` int NOT NULL AUTO_INCREMENT,
 	  `room_no` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
@@ -345,22 +348,28 @@ CREATE TABLE `tb_inpat_notice` (
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   </statement>
   
- <select id="selectBedpos" resultMap="noticeMap" parameterClass="hashmap">
-    SELECT bedpos
-	  FROM totalview.tb_bedpos
-	 WHERE room_no = #roomNo#
-	   AND chart_no = #chartNo#
+ <select id="selectBedpos" resultMap="bedposMap" parameterClass="hashmap">
+	 SELECT addt,
+			room_no,
+			bedpos,
+			patient_no
+	FROM totalview.tb_bedpos
+   WHERE room_no = #room_no#
+	 AND addt = #addt#
+	 AND patient_no = #patient_no#
   </select>
 
   <insert id="upsertBedpos" parameterClass="hashmap">
     insert into totalview.tb_bedpos (
-    	room_no
-      , bedpos
-      , chart_no
+    	addt,
+		room_no,
+		bedpos,
+		patient_no
     ) values(
-		#room_no#
-	  , #bedpos#
-	  , #chart_no#
+    	#addt#,
+		#room_no#,
+		#bedpos#,
+		#patient_no#
 	)ON DUPLICATE KEY UPDATE
 	  bedpos = #bedpos#
   </insert> 

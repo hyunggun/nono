@@ -8,16 +8,16 @@ import com.cofac.treat.ora.common.MssqlBiz;
 import com.cofac.treat.ora.common.MysqlBiz;
 import com.cofac.treat.ora.common.OracleBiz;
 
-public class PatientBiz extends OracleBiz {
+public class InpatientBiz extends OracleBiz {
 	
 
-	/* Patient 기본기능 : 시작 */
+	/* Inpatient 기본기능 : 시작 */
 	// 목록 페이징 조회
-	public HashMap selectPatientPage(HashMap paramMap) {
+	public HashMap selectInpatientPage(HashMap paramMap) {
 		HashMap resultMap = new HashMap();
 		try {
-			Integer count = (Integer) sqlMap.queryForObject("patient.selectPatientCount", paramMap);
-			List list = sqlMap.queryForList("patient.selectPatientList", paramMap );
+			Integer count = (Integer) sqlMap.queryForObject("patient.selectInpatientCount", paramMap);
+			List list = sqlMap.queryForList("patient.selectInpatientList", paramMap );
 
 			resultMap.put("count", count);
 			resultMap.put("list", list);
@@ -28,10 +28,10 @@ public class PatientBiz extends OracleBiz {
 	}
 
 	// 목록 조회
-	public List selectPatientList(HashMap paramMap) {
+	public List selectInpatientList(HashMap paramMap) {
 		List list = null;
 		try {
-			list = sqlMap.queryForList("patient.selectPatientList", paramMap );
+			list = sqlMap.queryForList("patient.selectInpatientList", paramMap );
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,34 +39,34 @@ public class PatientBiz extends OracleBiz {
 	}
 
 	// 단건 조회
-	public HashMap selectPatient(HashMap paramMap) {
+	public HashMap selectInpatient(HashMap paramMap) {
 		HashMap resultMap = new HashMap();
 		try {
-			resultMap = (HashMap) sqlMap.queryForObject("patient.selectPatient", paramMap);
+			resultMap = (HashMap) sqlMap.queryForObject("patient.selectInpatient", paramMap);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return resultMap;
 	}
-	/* Patient 기본기능 : 종료 */
+	/* Inpatient 기본기능 : 종료 */
 	
-	public HashMap selectPatientCountForADST(HashMap paramMap) {
+	public HashMap selectInpatientCountForADST(HashMap paramMap) {
 		HashMap resultMap = new HashMap();
 		try {
 			
 			paramMap.put("ADST", "A");
-			Integer count = (Integer) sqlMap.queryForObject("patient.selectPatientCountForADST", paramMap);
+			Integer count = (Integer) sqlMap.queryForObject("patient.selectInpatientCountForADST", paramMap);
 			resultMap.put("allCount", count); //�옱�썝
 			
 			paramMap.put("ADDT","Y");
-			count = (Integer) sqlMap.queryForObject("patient.selectPatientCountForADST", paramMap);
+			count = (Integer) sqlMap.queryForObject("patient.selectInpatientCountForADST", paramMap);
 			resultMap.put("inCount", count); //湲덉씪 �엯�썝
 			
 			paramMap.put("ADST", "D");
 			paramMap.put("DSDT","Y");
 			paramMap.put("ADDT", "");
-			count = (Integer) sqlMap.queryForObject("patient.selectPatientCountForADST", paramMap);
+			count = (Integer) sqlMap.queryForObject("patient.selectInpatientCountForADST", paramMap);
 			resultMap.put("outCount", count); //湲덉씪 �눜�썝
 			
 		} catch (Exception e) {

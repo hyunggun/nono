@@ -238,4 +238,33 @@ public class InpatientBiz extends MysqlBiz {
 
 	/* InpatientFile 기본기능 : 종료 */
 
+
+	/**
+	 * bedpos
+	 * @param paramMap room_no(3WD 301) , patient_no (0072636)
+	 * @return int bedpos
+	 */
+	// select
+	public HashMap selectBedpos(HashMap paramMap) {
+		HashMap resultMap = new HashMap();
+		try {
+			resultMap = (HashMap) sqlMap.queryForObject("inpatient.selectBedpos", paramMap);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	// update
+	public Boolean upsertBedpos( HashMap paramMap ) {
+		Boolean isSuccess = false;
+		try {
+			sqlMap.update( "inpatient.upsertBedpos", paramMap );
+			isSuccess = true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return isSuccess;
+	}
 }

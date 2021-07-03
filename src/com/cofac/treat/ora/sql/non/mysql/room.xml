@@ -35,7 +35,7 @@ CREATE TABLE `tb_room` (
   <sql id="whereRoom">
     <dynamic prepend="WHERE">
       <isNotEmpty property="s_room_nm" prepend="AND">
-           room_nm LIKE ('%' || #s_room_nm# || '%')
+           room_nm LIKE concat('%' , #s_room_nm# , '%')
       </isNotEmpty>
       <isNotEmpty property="room_id" prepend="AND">
            room.room_id = #room_id#
@@ -179,7 +179,7 @@ CREATE TABLE `tb_room_doctor` (
   <sql id="whereRoomDoctor">
     <dynamic prepend="WHERE">
       <isNotEmpty property="s_room_nm" prepend="AND">
-           room.room_nm LIKE ('%' || #s_room_nm# || '%')
+           room.room_nm LIKE concat('%' , #s_room_nm# , '%')
       </isNotEmpty>
       <isNotEmpty property="day" prepend="AND">
            day = #day#

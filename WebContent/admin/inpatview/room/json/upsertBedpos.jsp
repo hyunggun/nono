@@ -12,16 +12,16 @@ BedposBiz bedposBiz = null;
 JSONArray inpatientJAry = new JSONArray();
 HashMap<String, String> resultMap = new HashMap<String, String>();
 String bedpos = "";
+Boolean isSuccess = false;
 try {
 	bedposBiz = new BedposBiz();
-	resultMap = bedposBiz.selectBedpos(paramMap);
-	
-	bedpos = resultMap.get("bedpos");
-	
+	isSuccess = bedposBiz.upsertBedpos(paramMap);
 } catch (Exception ex) {
 	ex.printStackTrace();
 }
 %>
 {
-  "bedpos" : <%=bedpos%>
+  "resultData":{
+    "resultCode":<%=isSuccess%>
+  }
 }

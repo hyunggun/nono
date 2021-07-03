@@ -32,5 +32,6 @@
   <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/doc.xml" />
   <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/floor.xml" />
   <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/testemr.xml" />
+  <sqlMap resource="com/cofac/treat/ora/sql/non/mysql/bedpos.xml" />
 
 </sqlMapConfig>

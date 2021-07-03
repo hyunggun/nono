@@ -27,6 +27,7 @@ try {
 
 <head>
 <script type="text/javascript">
+	var oraInpatientList = new Array();
       $(document).ready(function() {
     	  //selectNurseList();
 	    });
@@ -66,7 +67,7 @@ try {
           });
       }
       function getOraclePatientList(roomNo){
-    	  var returnList = new Array();
+    	  
     	  $.ajax({
               url : "${inpatviewPath}/room/json/selectOraPatientList.jsp",
               type : "get",
@@ -75,57 +76,113 @@ try {
               async : false,
               data : {roomNo : roomNo},
               success: function( returnVal ) {
-            	  returnList = returnVal.resultData.oraInpatientList;
+            	  oraInpatientList = returnVal.resultData.oraInpatientList;
+            	  for(var i = 0; i < oraInpatientList.length; i++){
+            		  var roomNo = oraInpatientList[i].room_no;
+            		  var patientNo = oraInpatientList[i].patient_no;
+            		  var addt = oraInpatientList[i].addt;
+            		  getBedpos( patientNo, addt, roomNo, i );
+            	  }
               },
               error: function(request,status,error) {
               },
               complete: function(jqXHR, textStatus) {
-            	  return returnList;
+            	  //oracle에서 가져온 환자정보로 popup 창에 환자 리스트 생성
+            	  if(oraInpatientList.length  < 1 ) {
+        			  console.log("EMR에서 해당 roomNo의 입원된 환자 정보를 받아올 수 없습니다.");
+        			  return;
+        		  }
+                  
               }
           });
+    	  
+    	  console.log(oraInpatientList);
+    	  var html = "";
+    	  for(var i = 0; i < oraInpatientList.length; i++){
+   			  html += '<div>';
+   			  html += '<label>'+ oraInpatientList[i].patient_nm +'</label>';
+   	          html += '<select id='+ oraInpatientList[i].patient_no +'>';
+   	          for(var j = 1; j < 10 ; j ++){
+       	          html += '<option value="'+ j +'"';
+       	          if( j == oraInpatientList[i].bedpos){
+       	        	  html += ' selected ';
+       	          };
+       	          html += '>'+ j +'</option>';
+   	          }
+   	          html += '</select>';
+   			  html += '</div>';
+    	  }
+          $("#patient-list").html(html);
       }
-      function getBedpos(chartNo, roomNo){
-    	  var returnList = new Array();
+      /*
+      *	patientNo : 환자번호 , addt: 입원날짜, roomNo: 방번호
+      */
+      
+      
+      function getBedpos(patientNo, addt, roomNo, idx){
+    	  var bedpos = "";
     	  $.ajax({
               url : "${inpatviewPath}/room/json/selectBedpos.jsp",
               type : "get",
               cache : false,
               dataType : "json",
               async : false,
-              data : {roomNo : roomNo, chartNo: chartNo},
+              data : {patient_no : patientNo, addt: addt, room_no: roomNo},
               success: function( returnVal ) {
-            	  returnList = returnVal.resultData.oraInpatientList;
+            	  oraInpatientList[idx].bedpos = returnVal.bedpos;
               },
               error: function(request,status,error) {
               },
               complete: function(jqXHR, textStatus) {
-            	  return returnList;
+            	  return bedpos;
               }
           });
       }
+      function evClickSaveBedpos() {
+		  var failList = "";
+		  for(var i = 0 ; i < oraInpatientList.length; i++){
+			  var patient_no = oraInpatientList[i].patient_no;
+			  oraInpatientList[i].bedpos = $("#"+patient_no).val();
+			  
+			  console.log();
+			  $.ajax({
+	              url : "${inpatviewPath}/room/json/upsertBedpos.jsp",
+	              type : "POST",
+	              cache : false,
+	              dataType : "json",
+	              data : oraInpatientList[i],
+	              success: function( result ) {
+	              	if(!result.resultData.resultCode) {
+	                	if(failList.length > 0){
+	                		failList += ',';		
+	                	}
+	                	failList += oraInpatientList[i];
+	                }
+	              },
+	              error: function(request,status,error) {
+	              },
+	              complete: function(jqXHR, textStatus) {
+	            	  
+	              }
+	          });
+			  
+		  }
+		  
+		  if(failList.length > 0){
+    		  alert("업데이트에 실패하였습니다. ("+ failList+")");
+    	  }else{
+    		  $('#cfBedPosModal').modal('hide');  
+    		  oraInpatientList = [];
+    	  }
+  	      
+		  
+		}
 	  function evClickBedposSetting( roomNo ){
           $("#patient-list").empty();
           $("#bedpos_inprm_nm").val(roomNo);
           $('#cfBedPosModal').modal('show');
-          var html = "";
-		  //oracle 에서 환자 리스트 받아와서 해당 환자의 chart 번호를 다시 select 하여 표시
-		  var oraInpatientList = getOraclePatientList(roomNo);
-		  
-		  if(oraInpatientList.length  = 0 ) {
-			  console.log("oraInpatientList length is zero ");
-			  return;
-		  }
-		  
-		  for(int i = 0 ; i < oraInpatientList.length; i++){
-			  html += '<label>일번환자</label>';
-	          html += '<select>';
-	          html += '<option value="1">1</option>';
-	          html += '<option value="2">2</option>';
-	          html += '<option value="3">3</option>';
-	          html += '<option value="4">4</option>';
-	          html += '</select>';
-		  }
-          $("#patient-list").html(html);
+// 		  //oracle 에서 환자 리스트 받아와서 해당 환자의 chart 번호를 다시 select 하여 표시
+		  getOraclePatientList(roomNo);
 	  }
       function evClickSave() {
           if( !validate() ) {
@@ -379,8 +436,7 @@ try {
 
 					<div class="modal-footer">
 						<button type="button" data-dismiss="modal" class="btn btn-default md-close">취소</button>
-						<button type="button" class="btn btn-success" onclick="evClickSave()">저장</button>
-						<button id="cfDeleteButton" type="button" class="btn btn-warning" onclick="evClickDelete()">삭제</button>
+						<button type="button" class="btn btn-success" onclick="evClickSaveBedpos()">저장</button>
 					</div>
 
 				</div>

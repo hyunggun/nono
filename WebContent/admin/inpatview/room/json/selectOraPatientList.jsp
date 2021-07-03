@@ -19,7 +19,7 @@ try {
 	inpatientList = inpatientBiz.selectInpatientList(paramMap);
 	HashMap patientMap = new HashMap();
 	
-	inpatientJAry = JsonUtils.getJsonArrayFromList(inpatientWithColorList);
+	inpatientJAry = JsonUtils.getJsonArrayFromList(inpatientList);
 } catch (Exception ex) {
 	ex.printStackTrace();
 }
