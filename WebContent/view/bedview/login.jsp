@@ -102,16 +102,16 @@
       
       //Pwd 쿠키 저장 
       var userInputPwd = getCookie("userInputPwd");
-      $("#patient_code").val(userInputPwd); 
+      $("#patient_key").val(userInputPwd); 
        
-      if($("#patient_code").val() != ""){ 
+      if($("#patient_key").val() != ""){ 
           $("#pwdSaveCheck").attr("checked", true);
           $("#pwdSaveCheck").removeClass('no_act');
       }
        
       $("#pwdSaveCheck").change(function(){ 
           if($("#pwdSaveCheck").is(":checked")){ 
-              var userInputPwd = $("#patient_code").val();
+              var userInputPwd = $("#patient_key").val();
               setCookie("userInputPwd", userInputPwd, 365);
           }else{ 
               deleteCookie("userInputPwd");
@@ -119,9 +119,9 @@
       });
        
     
-      $("#patient_code").keyup(function(){ 
+      $("#patient_key").keyup(function(){ 
           if($("#pwdSaveCheck").is(":checked")){ 
-              var userInputPwd = $("#patient_code").val();
+              var userInputPwd = $("#patient_key").val();
               setCookie("userInputPwd", userInputPwd, 365);
           }
       });
@@ -129,12 +129,12 @@
 
 
     $(document).ready(function(){
-      $("#patient_code").keydown(function (key) {
+      $("#patient_key").keydown(function (key) {
         if (key.which == 13){
-          $("#patient_code").focus();
+          $("#patient_key").focus();
         }
       });
-      $("#patient_code").keydown(function (key) {
+      $("#patient_key").keydown(function (key) {
         if (key.which == 13){
           $("#cfLoginForm").submit();
         }
@@ -163,13 +163,10 @@
                   </div>
                   <div class="form-group">
                     <div style="display: inline-block;"><img src="${contextPath}/common/img/icon_03.png"></div>
-                    <input id="patient_code" name="patient_code" type="password" placeholder="비밀번호">
+                    <input id="patient_key" name="patient_key" type="text" placeholder="차트번호">
                   </div>
                   <div class="checkbox">
                     <label><input type="checkbox" id="idSaveCheck"/> 아이디 저장</label>
-                  </div>
-                  <div class="checkbox">
-                    <label><input type="checkbox" disabled id="pwdSaveCheck" class="no_act"/> 비밀번호 저장</label>
                   </div>
                 </form>
                 <div class="login-submit">

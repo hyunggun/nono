@@ -8,7 +8,7 @@ import com.cofac.treat.ora.common.OracleBiz;
 import com.cofac.treat.ora.common.MssqlBiz;
 import com.cofac.treat.ora.common.MysqlBiz;
 
-public class TreatBiz extends OracleBiz {
+public class TreatBiz extends MssqlBiz {
 
 	/* Treat 기본기능 : 시작 */
 	// 목록 페이징 조회

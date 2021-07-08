@@ -8,7 +8,7 @@ import com.cofac.treat.ora.common.MssqlBiz;
 import com.cofac.treat.ora.common.MysqlBiz;
 import com.cofac.treat.ora.common.OracleBiz;
 
-public class InpatientBiz extends OracleBiz {
+public class InpatientBiz extends MssqlBiz {
 	
 
 	/* Inpatient 기본기능 : 시작 */

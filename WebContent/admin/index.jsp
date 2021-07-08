@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="java.util.HashMap"%>
 <%@page import="startkr.util.RequestUtils"%>
-<%@page import="com.cofac.treat.ora.biz.interlinked.OratreatBiz"%>
 <%-- <%@page import="com.cofac.treat.ora.biz.non.PatientBiz"%> --%>
 <%@page import="com.cofac.treat.ora.biz.non.UserBiz"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -17,7 +16,6 @@ HashMap treatMap = null;
 HashMap patientMap = null;
 
 UserBiz userBiz = null;
-OratreatBiz treatBiz = null;
 // PatientBiz patientBiz = null;
 try {
     userBiz = new UserBiz();

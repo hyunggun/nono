@@ -4,7 +4,7 @@
 <sqlMap namespace="patient">
   <typeAlias alias="hashmap" type="java.util.HashMap" />
 	
-	<resultMap id="patientMap" class="java.util.HashMap">
+<!-- 	<resultMap id="patientMap" class="java.util.HashMap">
        <result column="PatientNumber" property="patient_id" javaType="java.lang.Integer"/>
        <result column="PatientName" property="patient_nm" javaType="java.lang.String"/>
        <result column="DepartmentName" property="department_nm" javaType="java.lang.String"/>
@@ -13,8 +13,33 @@
        <result column="AGE_SEX" property="age_sex" javaType="java.lang.String"/>
        <result column="NOTE" property="notice" javaType="java.lang.String"/>
        <result column="GoaMok" property="emr_doctor_key" javaType="java.lang.String"/>
-  </resultMap>
-	
+  </resultMap> -->
+  <resultMap id="inpatientMap" class="java.util.HashMap">
+       <result column="INPATIENT_KEY" property="building_no" javaType="java.lang.String"/>
+       <result column="ROOM" property="room_no" javaType="java.lang.String"/>
+       <result column="ROOM" property="room_nm" javaType="java.lang.String"/>
+       <result column="BEDPOS" property="BEDPOS" javaType="java.lang.String"/>
+       <result column="CHARTNO" property="patient_no" javaType="java.lang.String"/>
+       <result column="PATNM" property="patient_nm" javaType="java.lang.String"/>
+       <result column="AGE" property="age" javaType="java.lang.String"/>
+       <result column="GENDER" property="gender" javaType="java.lang.String"/>
+       <result column="SICKNM" property="SICKNM" javaType="java.lang.String"/>
+       <result column="DIAGCD" property="DIAGCD" javaType="java.lang.String"/>
+       <result column="DIAGNM" property="dept" javaType="java.lang.String"/>
+       <result column="DOCT" property="DOCT" javaType="java.lang.String"/>
+       <result column="DOCTNM" property="doctor_nm" javaType="java.lang.String"/>
+      <!--  <result column="DTDIAGCD" property="DTDIAGCD" javaType="java.lang.String"/> -->
+       <result column="WARD" property="WARD" javaType="java.lang.String"/>
+       <result column="INDAT" property="addt" javaType="java.lang.String"/>
+       <result column="PATDAY" property="patient_day" javaType="java.lang.String"/>
+<!--
+  <result column="INROOM_FG" property="inRoom_fg" javaType="java.lang.String"/>
+  <result column="ADST" property="adst" javaType="java.lang.String"/>
+  <result column="DSDT" property="dsdt" javaType="java.lang.String"/>
+  <result column="OPDT" property="opdt" javaType="java.lang.String"/>
+  <result column="PTDS" property="ptds" javaType="java.lang.String"/>
+-->
+  </resultMap>	
 	<!-- tb_room -->
   <sql id="wherePatient">
     <dynamic prepend="WHERE">
@@ -37,34 +62,149 @@
 	
   <select id="selectPatientCount" resultClass="int" parameterClass="hashmap">
     SELECT count(1)
-     	FROM Standbytable1
+     	FROM TB_입원정보
      	<include refid="wherePatient"/>
   </select>
 
-  <select id="selectPatientList" resultMap="patientMap" parameterClass="hashmap">
-    SELECT PatientNumber
-					 ,PatientName
-					 ,DepartmentName
-					 ,Jupsusigan
-					 ,Yeayaksigan
-					 ,(CAST(AGE as varchar)+ ' ( ' + SEX + ' )') AS AGE_SEX
-					 ,NOTE
-					 ,GoaMok
-			FROM Standbytable1
-		 <include refid="wherePatient"/>
+  <select id="selectPatientList" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+		SELECT emrinp.챠트번호 as INPATIENT_KEY
+					,emrinp.병실명 as ROOM
+					,emrinp.침대 as BEDPOS
+					,emrinp.챠트번호 as CHARTNO
+					,emrinp.환자이름 as PATNM
+					,emrinp.환자성별 as GENDER
+					,emrinp.환자나이 as AGE
+					,emrinp.입원일자 as INDAT
+					,emrinp.상병명칭 as SICKNM
+					,emrinp.진료실코드 as DIAGCD
+					,emrinp.진료과목 as DIAGNM
+					,emrinp.담당의사 as DOCT
+					,emrinp.담당의사 as DOCTNM
+				  ,emrinp.병동명 as WARD
+          ,DATEDIFF(day, emrinp.입원일자, GETDATE()) as PATDAY
+					,CASE emrinp.병동명 
+						WHEN '3' THEN '4'
+						WHEN '4' THEN '3'
+						ELSE emrinp.병동명 
+					END as prioirty
+				FROM TB_입원정보 emrinp
+	  )as emrinp
+	 WHERE 입원상태 = 1
+	<include refid="wherePatient"/>
   </select>
   
-  <select id="selectPatient" resultMap="patientMap" parameterClass="hashmap">
-    SELECT PatientNumber
-					 ,PatientName
-					 ,DepartmentName
-					 ,Jupsusigan
-					 ,Yeayaksigan
-					 ,(CAST(AGE as varchar)+ ' ( ' + SEX + ' )') AS age_sex
-					 ,NOTE
-					 ,GoaMok
-      FROM Standbytable1
-     WHERE PatientNumber = #patient_id#
+  <select id="selectPatient" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+		  SELECT emrinp.챠트번호 as INPATIENT_KEY
+                 ,emrinp.병실명 as ROOM
+                 ,emrinp.침대 as BEDPOS
+                 ,emrinp.챠트번호 as CHARTNO
+                 ,emrinp.환자이름 as PATNM
+                 ,emrinp.환자성별 as GENDER
+                 ,emrinp.환자나이 as AGE
+                 ,emrinp.입원일자 as INDAT
+                 ,emrinp.상병명칭 as SICKNM
+                 ,emrinp.진료실코드 as DIAGCD
+                 ,emrinp.진료과목 as DIAGNM
+                 ,emrinp.담당의사 as DOCT
+                 ,emrinp.담당의사 as DOCTNM
+				 ,emrinp.병동명 as WARD
+                 ,CASE emrinp.병동명 
+				 	WHEN '3' THEN '4'
+                    WHEN '4' THEN '3'
+                    ELSE emrinp.병동명 
+				 END as prioirty
+             FROM TB_입원정보 emrinp
+     WHERE 챠트번호 = #sPatientKey#
+	  )as emrinp
   </select>
-  
+
+  <select id="selectInpatientList" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+           SELECT emrinp.챠트번호 as INPATIENT_KEY
+                 ,emrinp.병실명 as ROOM
+                 ,emrinp.침대 as BEDPOS
+                 ,emrinp.챠트번호 as CHARTNO
+                 ,emrinp.환자이름 as PATNM
+                 ,emrinp.환자성별 as GENDER
+                 ,emrinp.환자나이 as AGE
+                 ,emrinp.입원일자 as INDAT
+                 ,emrinp.상병명칭 as SICKNM
+                 ,emrinp.진료실코드 as DIAGCD
+                 ,emrinp.진료과목 as DIAGNM
+                 ,emrinp.담당의사 as DOCT
+                 ,emrinp.담당의사 as DOCTNM
+				 ,emrinp.병동명 as WARD
+                 ,CASE emrinp.병동명 
+				 	WHEN '3' THEN '4'
+                    WHEN '4' THEN '3'
+                    ELSE emrinp.병동명
+				 END as prioirty
+             FROM TB_입원정보 emrinp
+	  WHERE 입원상태 = 1
+      <isNotEmpty property="roomNo" prepend="AND">
+                  병실명 = #roomNo#
+      </isNotEmpty>
+      <isNotEmpty property="sPatientName" prepend="AND">
+                  환자이름 LIKE '%' || #sPatientName# || '%'
+      </isNotEmpty>
+      <isNotEmpty property="search_text">
+				<isEqual property="search_type" compareValue="P" prepend="AND">
+	                환자이름 LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="R" prepend="AND">
+	                병실명 LIKE ('%' || #search_text# || '%')
+				</isEqual>
+				<isEqual property="search_type" compareValue="RN" prepend="AND">
+	                병실명 LIKE ('%' || #search_text# || '%')
+				</isEqual>
+			</isNotEmpty>
+           ) emrinp
+    <isNotEmpty property="lastRowNum">
+     WHERE rownum &lt;= #lastRowNum#
+    </isNotEmpty>
+    ORDER BY  prioirty
+  </select>
+
+  <select id="selectInpatient" resultMap="inpatientMap" parameterClass="hashmap">
+    SELECT emrinp.*
+      FROM (
+           SELECT emrinp.챠트번호 as INPATIENT_KEY
+                 ,emrinp.병실명 as ROOM
+                 ,emrinp.침대 as BEDPOS
+                 ,emrinp.챠트번호 as CHARTNO
+                 ,emrinp.환자이름 as PATNM
+                 ,emrinp.환자성별 as GENDER
+                 ,emrinp.환자나이 as AGE
+                 ,emrinp.입원일자 as INDAT
+                 ,emrinp.상병명칭 as SICKNM
+                 ,emrinp.진료실코드 as DIAGCD
+                 ,emrinp.진료과목 as DIAGNM
+                 ,emrinp.담당의사 as DOCT
+                 ,emrinp.담당의사 as DOCTNM
+                 ,CONCAT(emrinp.병실명 , '호') as WARD
+                 ,DATEDIFF(day, emrinp.입원일자, GETDATE()) as PATDAY
+             FROM TB_입원정보 emrinp
+              WHERE 챠트번호 = CAST(#sPatientKey# as VARCHAR)
+             ) emrinp
+     <!--
+     <isEmpty property="INROOM_FG" prepend="AND">
+           INROOM_FG = 'Y'
+     </isEmpty>
+     <isEmpty property="MSCS" prepend="AND">
+           MSCS = 'M'
+      </isEmpty>
+      <isNotEmpty property="srchdt" prepend="AND">
+           #srchdt# between ADDT and DSDT
+      </isNotEmpty>
+     -->
+    <isNotEmpty property="roomNo" prepend="AND">
+           병실명 = #roomNo#
+    </isNotEmpty>
+  </select>
+
 </sqlMap>

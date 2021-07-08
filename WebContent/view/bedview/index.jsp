@@ -168,11 +168,13 @@ $(document).ready(function(){
 	  $.ajax({
       url:'${contextPath}/json/bedview/ajaxRespSelectBedviewInfo.jsp',
       type:'POST',
-      data:{bedview_id:"${sessionScope.SESSION_BEDVIEW_ID}"},
+      data:{bedview_id:"${sessionScope.SESSION_BEDVIEW_ID}", sPatientKey : "${sessionScope.SESSION_PATIENT_KEY}"},
       datatype:'json',
       success:function(result){
     	  if(result.resultCode) {
     			var data = result.resultData;
+				console.log("getBedviewInfo")
+				console.log(data)
     			$("#ward").text(data.ward);
     			$("#patient_nm").text(data.patient_nm);
     	  }

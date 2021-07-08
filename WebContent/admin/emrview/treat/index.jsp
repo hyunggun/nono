@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="startkr.util.RequestUtils"%>
-<%@page import="com.cofac.treat.ora.biz.interlinked.OratreatBiz"%>
+<%@page import="com.cofac.treat.ora.biz.interlinked.TreatBiz"%>
 <%@page import="com.cofac.treat.ora.biz.non.TestemrBiz"%>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

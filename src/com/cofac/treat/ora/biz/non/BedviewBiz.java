@@ -252,27 +252,9 @@ public class BedviewBiz extends MysqlBiz {
 		try {
 			resultMap = (HashMap) sqlMap.queryForObject("bedview.selectBedview", paramMap);
 			if( resultMap != null ) {
-				String dbUseFlag = String.valueOf(resultMap.get("use_fg"));
-				if( dbUseFlag == null  || dbUseFlag.equals("N")) {
-					resultMap.put("checkBedView", "Closed");
-					result = 4; // 해당 아이디 사용자 휴면
-				} else {
-					resultMap.put("checkBedView", "Valid");
-					String patientCode = (String) resultMap.get("patient_code");
-					if( patientCode != null && !patientCode.isEmpty() ) {
-						String reqCode = (String) paramMap.get("patient_code");
-						if( patientCode.equals(reqCode) ) {
-							resultMap.put("checkCode", "Right");
-							result = 1; // 아이디, 암호 일치
-						} else {
-							resultMap.put("checkCode", "Wrong");
-							result = 2; // 아이디 일치, 암호 불일치
-						}
-					} else {
-						resultMap.put("checkCode", "None");
-						result = 5; // 아이디 일치, 암호 없음 / 에러 상황
-					}
-				}
+				resultMap.put("checkCode", "Right");
+				result = 1; // 아이디, 암호 일치
+					
 			} else {
 				resultMap = new HashMap();
 				resultMap.put("checkBedView", "None");
